@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이심률 Eccentricity — 행성 공전 궤도</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --panel: #ffffff;
+    --border: #d0daea;
+    --accent: #0077cc;
+    --accent2: #e63900;
+    --gold: #c8860a;
+    --text: #1a2a3a;
+    --muted: #6a8aaa;
+    --orbit-color: #0077cc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Starfield */
+  #stars { display: none; }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+
+  /* Header */
+  header { text-align: center; margin-bottom: 48px; }
+  .title-en {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 88px);
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-shadow: 0 2px 12px rgba(0,119,204,0.15);
+    line-height: 1;
+  }
+  .title-kr {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .subtitle {
+    margin-top: 18px;
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    color: var(--muted);
+  }
+
+  /* Main layout */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Canvas panel */
+  .canvas-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* Slider */
+  .slider-section {
+    margin-top: 20px;
+  }
+  .slider-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  .slider-label span:first-child {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+  .e-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--accent);
+    text-shadow: none;
+    letter-spacing: 0.05em;
+  }
+  .e-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: -2px;
+    text-align: right;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct, 0%), var(--border) var(--pct, 0%), var(--border) 100%);
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(0,119,204,0.4);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 20px rgba(0,119,204,0.7);
+  }
+
+  /* Shape label */
+  .shape-badge {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 8px 22px;
+    border-radius: 999px;
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border: 2px solid;
+    transition: all 0.3s;
+  }
+
+  /* Right panel */
+  .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+  .info-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  /* Planet rows */
+  .planet-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(26,42,74,0.5);
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 8px 6px;
+    transition: background 0.2s;
+  }
+  .planet-row:hover { background: rgba(79,195,247,0.05); }
+  .planet-row:last-child { border-bottom: none; }
+  .planet-row.active { background: rgba(79,195,247,0.08); }
+
+  .planet-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .planet-name {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .planet-name-en {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .planet-bar-wrap {
+    width: 80px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .planet-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s;
+  }
+  .planet-ecc {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    width: 56px;
+    text-align: right;
+  }
+
+  /* Formula card */
+  .formula {
+    font-family: 'Space Mono', monospace;
+    font-size: 17px;
+    text-align: center;
+    padding: 16px;
+    background: rgba(0,119,204,0.06);
+    border: 1px solid rgba(0,119,204,0.2);
+    border-radius: 8px;
+    line-height: 2;
+    color: var(--text);
+  }
+  .formula .sym { color: var(--accent); font-weight: 700; }
+  .formula .sym2 { color: var(--gold); }
+
+  /* Definition card */
+  .definition {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #3a5a7a;
+  }
+  .definition strong { color: var(--accent); font-weight: 700; }
+  .definition .vocab-highlight {
+    display: inline-block;
+    background: rgba(255,112,67,0.15);
+    border: 1px solid rgba(255,112,67,0.3);
+    color: var(--accent2);
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  /* Tick marks */
+  .tick-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+  .tick {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .tick.highlight { color: var(--accent); }
+
+  .focus-line {
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
+  <header>
+    <div class="title-en">ECCENTRICITY</div>
+    <div class="title-kr">이심률 — 궤도의 이탈 정도</div>
+    <div class="subtitle">e = c / a &nbsp;|&nbsp; 타원에서 c = 초점거리, a = 장반축</div>
+  </header>
+
+  <div class="main-grid">
+    <!-- Canvas -->
+    <div class="canvas-panel">
+      <canvas id="orbit" width="600" height="480"></canvas>
+
+      <div class="slider-section">
+        <div class="slider-label">
+          <span>이심률 ECCENTRICITY</span>
+          <div style="text-align:right">
+            <div class="e-value" id="eDisplay">0.00</div>
+            <div class="e-label" id="eShapeLabel">완전한 원 (Circle)</div>
+          </div>
+        </div>
+        <input type="range" id="eccSlider" min="0" max="0.99" step="0.01" value="0">
+        <div class="tick-row">
+          <span class="tick highlight">0</span>
+          <span class="tick">0.25</span>
+          <span class="tick">0.5</span>
+          <span class="tick">0.75</span>
+          <span class="tick highlight">1</span>
+        </div>
+        <div style="margin-top: 10px; display:flex; gap:8px; flex-wrap:wrap">
+          <span class="shape-badge" id="shapeBadge" style="color:#4fc3f7; border-color:#4fc3f7">● 원 Circle</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+
+      <!-- Formula -->
+      <div class="info-card">
+        <div class="card-title">📐 공식 Formula</div>
+        <div class="formula">
+          <span class="sym">e</span> = <span class="sym2">c</span> / <span class="sym2">a</span><br>
+          <span style="font-size:14px; color:var(--muted)">c = 중심~초점 거리</span><br>
+          <span style="font-size:14px; color:var(--muted)">a = 장반축 (긴 반지름)</span>
+        </div>
+      </div>
+
+      <!-- Planets -->
+      <div class="info-card">
+        <div class="card-title">🪐 태양계 행성 이심률</div>
+        <div id="planetList"></div>
+      </div>
+
+      <!-- GRE Vocab -->
+      <div class="info-card">
+        <div class="card-title">📚 GRE Vocabulary</div>
+        <div class="definition">
+          수학적 이심률 → <strong>중심에서 벗어난 정도</strong><br><br>
+          영어에서 <span class="vocab-highlight">eccentric</span>은<br>
+          "관습·기준에서 벗어난 사람"<br>
+          즉 <strong>괴짜, 별난 사람</strong>을 뜻함.<br><br>
+          <span class="vocab-highlight">eccentricity</span> = 별남, 기이함<br><br>
+          <em style="color:var(--muted); font-size:14px">"Her eccentricity was endearing."</em>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Starfield ────────────────────────────────────────
+const sc = document.getElementById('stars');
+const sx = sc.getContext('2d');
+sc.width = window.innerWidth;
+sc.height = window.innerHeight;
+const stars = Array.from({length: 220}, () => ({
+  x: Math.random() * sc.width,
+  y: Math.random() * sc.height,
+  r: Math.random() * 1.4 + 0.2,
+  a: Math.random()
+}));
+function drawStars() {
+  sx.clearRect(0,0,sc.width,sc.height);
+  stars.forEach(s => {
+    sx.beginPath();
+    sx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    sx.fillStyle = `rgba(180,210,255,${s.a})`;
+    sx.fill();
+  });
+}
+drawStars();
+window.addEventListener('resize', () => {
+  sc.width = window.innerWidth; sc.height = window.innerHeight; drawStars();
+});
+
+// ── Planets ──────────────────────────────────────────
+const planets = [
+  { name: '수성', en: 'Mercury', ecc: 0.206, color: '#b0bec5' },
+  { name: '금성', en: 'Venus',   ecc: 0.007, color: '#fff176' },
+  { name: '지구', en: 'Earth',   ecc: 0.017, color: '#4fc3f7' },
+  { name: '화성', en: 'Mars',    ecc: 0.093, color: '#ff7043' },
+  { name: '목성', en: 'Jupiter', ecc: 0.049, color: '#ffcc80' },
+  { name: '토성', en: 'Saturn',  ecc: 0.057, color: '#f9a825' },
+  { name: '천왕성', en: 'Uranus', ecc: 0.047, color: '#80deea' },
+  { name: '해왕성', en: 'Neptune',ecc: 0.010, color: '#5c6bc0' },
+];
+
+const maxEcc = 0.21;
+const list = document.getElementById('planetList');
+planets.forEach((p, i) => {
+  const row = document.createElement('div');
+  row.className = 'planet-row';
+  row.dataset.idx = i;
+  row.innerHTML = `
+    <div class="planet-dot" style="background:${p.color}"></div>
+    <div>
+      <div class="planet-name">${p.name}</div>
+      <div class="planet-name-en">${p.en}</div>
+    </div>
+    <div class="planet-bar-wrap">
+      <div class="planet-bar" style="width:${(p.ecc/maxEcc)*100}%; background:${p.color}"></div>
+    </div>
+    <div class="planet-ecc">e=${p.ecc}</div>
+  `;
+  row.addEventListener('click', () => {
+    slider.value = p.ecc;
+    slider.dispatchEvent(new Event('input'));
+    document.querySelectorAll('.planet-row').forEach(r => r.classList.remove('active'));
+    row.classList.add('active');
+  });
+  list.appendChild(row);
+});
+
+// ── Orbit Canvas ─────────────────────────────────────
+const canvas = document.getElementById('orbit');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const cx = W/2, cy = H/2;
+
+let animPlanet = 0; // angle for animated planet
+let animFrame;
+let currentEcc = 0;
+let prevEcc = 0;
+let transitionT = 0;
+
+function getShapeInfo(e) {
+  if (e === 0) return { label: '완전한 원 (Circle)', badge: '● 원  Circle', color: '#0077cc' };
+  if (e < 0.3) return { label: '거의 원형 타원 (Near-circular Ellipse)', badge: '◯ 타원  Ellipse', color: '#0077cc' };
+  if (e < 0.7) return { label: '타원 (Ellipse)', badge: '◯ 타원  Ellipse', color: '#0055aa' };
+  if (e < 0.95) return { label: '납작한 타원 (Elongated Ellipse)', badge: '◯ 타원  Ellipse', color: '#c07000' };
+  return { label: '포물선에 근접 (Near-Parabola)', badge: '∪ 포물선 근접', color: '#cc2200' };
+}
+
+function drawOrbit(e) {
+  ctx.clearRect(0, 0, W, H);
+
+  // Background (white)
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, W, H);
+
+  // Ellipse parameters
+  const a = 200; // semi-major axis
+  const c = a * e; // focus distance
+  const b = Math.sqrt(a*a - c*c); // semi-minor axis
+
+  // Focus position (Sun is at right focus)
+  const focusX = cx + c;
+  const focusY = cy;
+
+  // ── Draw orbit path ──
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, a, b, 0, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(0,90,180,0.85)';
+    ctx.lineWidth = 4.5;
+  ctx.setLineDash([8, 8]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // ── Draw axes labels ──
+  // Semi-major axis (a)
+  ctx.save();
+  ctx.setLineDash([6,6]);
+  ctx.strokeStyle = 'rgba(160,110,0,0.85)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(cx + a, cy);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#a07000';
+  ctx.font = 'italic bold 22px Space Mono, monospace';
+  ctx.fillText('a', cx + a/2 - 6, cy - 14);
+  ctx.restore();
+
+  // c distance
+  if (e > 0.01) {
+    ctx.save();
+    ctx.setLineDash([6,6]);
+    ctx.strokeStyle = 'rgba(200,50,0,0.85)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(focusX, focusY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#c03000';
+    ctx.font = 'italic bold 20px Space Mono, monospace';
+    const midCX = (cx + focusX) / 2;
+    ctx.fillText('c', midCX - 6, cy + 24);
+    ctx.restore();
+  }
+
+  // ── Sun ──
+  const sunGlow = ctx.createRadialGradient(focusX, focusY, 0, focusX, focusY, 42);
+  sunGlow.addColorStop(0, 'rgba(255,230,100,0.95)');
+  sunGlow.addColorStop(0.35, 'rgba(255,160,30,0.55)');
+  sunGlow.addColorStop(1, 'rgba(255,100,0,0)');
+  ctx.beginPath();
+  ctx.arc(focusX, focusY, 42, 0, Math.PI*2);
+  ctx.fillStyle = sunGlow;
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(focusX, focusY, 16, 0, Math.PI*2);
+  ctx.fillStyle = '#FFD54F';
+  ctx.strokeStyle = '#c08000';
+  ctx.lineWidth = 2;
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = 'rgba(120,80,0,1)';
+  ctx.font = 'bold 16px Noto Sans KR, sans-serif';
+  ctx.fillText('☀ 태양', focusX + 20, focusY - 20);
+
+  // ── Other focus (empty) ──
+  if (e > 0.05) {
+    const emptyFocusX = cx - c;
+    ctx.beginPath();
+    ctx.arc(emptyFocusX, focusY, 7, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(200,50,0,0.75)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(150,30,0,1)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(150,30,0,1)';
+    ctx.font = 'bold 16px Space Mono, monospace';
+    ctx.fillText('F₂', emptyFocusX - 14, focusY + 28);
+  }
+
+  // ── Animated planet ──
+  const px = cx + a * Math.cos(animPlanet) - c;
+  const py = cy + b * Math.sin(animPlanet);
+
+  // Line from sun to planet (radius vector)
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(focusX, focusY);
+  ctx.lineTo(px, py);
+  ctx.strokeStyle = 'rgba(0,90,180,0.4)';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+  ctx.restore();
+
+  // Planet glow
+  const pGlow = ctx.createRadialGradient(px, py, 0, px, py, 28);
+  pGlow.addColorStop(0, 'rgba(0,120,220,0.5)');
+  pGlow.addColorStop(1, 'rgba(0,120,220,0)');
+  ctx.beginPath();
+  ctx.arc(px, py, 28, 0, Math.PI*2);
+  ctx.fillStyle = pGlow;
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(px, py, 13, 0, Math.PI*2);
+  ctx.fillStyle = '#0077cc';
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 2.5;
+  ctx.fill();
+  ctx.stroke();
+
+  // ── Info overlay ──
+  ctx.fillStyle = '#0055aa';
+  ctx.font = '700 22px Space Mono, monospace';
+  ctx.fillText(`e = ${e.toFixed(2)}`, 18, 36);
+
+  ctx.fillStyle = '#a07000';
+  ctx.font = '700 16px Space Mono, monospace';
+  ctx.fillText(`a = ${a}px`, 18, 62);
+  ctx.fillStyle = '#c03000';
+  ctx.fillText(`c = ${Math.round(c)}px`, 18, 84);
+  ctx.fillStyle = '#006699';
+  ctx.fillText(`b = ${Math.round(b)}px`, 18, 106);
+
+  // perihelion / aphelion labels
+  if (e > 0.05) {
+    // Perihelion (closest)
+    const perX = cx + (a - c) - c;
+    ctx.fillStyle = 'rgba(140,90,0,1)';
+    ctx.font = 'bold 15px Noto Sans KR, sans-serif';
+    ctx.fillText('근일점', perX - 26, cy + 30);
+
+    // Aphelion (farthest)
+    const aphX = cx - (a + c) - c;
+    ctx.fillStyle = 'rgba(0,70,160,1)';
+    ctx.fillText('원일점', aphX - 22, cy + 30);
+  }
+}
+
+// Kepler speed: dθ/dt ∝ 1/r² (simplified)
+function keplerSpeed(angle, e) {
+  const a = 200;
+  const c = a * e;
+  const r = Math.sqrt(Math.pow(a * Math.cos(angle) - c, 2) + Math.pow(Math.sqrt(a*a - c*c) * Math.sin(angle), 2));
+  return 2200 / (r * r + 1);
+}
+
+function animate() {
+  const e = parseFloat(slider.value);
+  animPlanet -= keplerSpeed(animPlanet, e) * 0.00012;
+  drawOrbit(e);
+  animFrame = requestAnimationFrame(animate);
+}
+
+// ── Slider ───────────────────────────────────────────
+const slider = document.getElementById('eccSlider');
+const eDisplay = document.getElementById('eDisplay');
+const eShapeLabel = document.getElementById('eShapeLabel');
+const shapeBadge = document.getElementById('shapeBadge');
+
+slider.addEventListener('input', () => {
+  const e = parseFloat(slider.value);
+  const pct = (e / 0.99 * 100).toFixed(1);
+  slider.style.setProperty('--pct', pct + '%');
+  eDisplay.textContent = e.toFixed(2);
+  const info = getShapeInfo(e);
+  eShapeLabel.textContent = info.label;
+  shapeBadge.textContent = info.badge;
+  shapeBadge.style.color = info.color;
+  shapeBadge.style.borderColor = info.color;
+});
+
+// Init
+slider.style.setProperty('--pct', '0%');
+animate();
+</script>
+</body>
+</html>
