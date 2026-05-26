@@ -1849,6 +1849,397 @@
     line-height: 1.55; word-break: keep-all;
   }
   .concept-tile p b { color: var(--ink); font-weight: 800; }
+
+  /* ==========================================================
+     Mobile Responsive · Phones (≤ 640px wide)
+     ========================================================== */
+  @media (max-width: 640px) {
+    /* ---- Slide & layout ---- */
+    .slide {
+      padding: 11vh 5vw 9vh;
+      min-height: 100vh;
+    }
+    .pagebar {
+      top: 22px;
+      left: 5vw; right: 5vw;
+      font-size: 10px;
+      letter-spacing: .14em;
+    }
+    .pagebar .l { gap: 10px; }
+    .pagebar .mark { width: 18px; height: 1.5px; }
+
+    /* ---- Typography ---- */
+    .eyebrow {
+      font-size: 11.5px;
+      letter-spacing: .2em;
+      margin-bottom: 16px;
+    }
+    h1.display {
+      font-size: clamp(38px, 11vw, 56px) !important;
+      line-height: 1.05;
+      margin: 0 0 20px;
+    }
+    h2.title {
+      font-size: clamp(30px, 9vw, 44px) !important;
+      line-height: 1.1;
+      margin: 0 0 16px;
+    }
+    p.lead {
+      font-size: 15.5px !important;
+      line-height: 1.55;
+      max-width: 100% !important;
+    }
+    .rule-line { width: 40px; height: 2px; margin-bottom: 16px; }
+
+    /* ---- Top progress bar ---- */
+    .progress-top {
+      width: auto !important;
+      left: 0 !important; right: 0 !important;
+      top: 0 !important;
+      background: rgba(20,24,31,.1);
+    }
+
+    /* ---- Cover ---- */
+    .cover-grid {
+      grid-template-columns: 1fr !important;
+      gap: 30px;
+    }
+    .cover-left .meta {
+      margin-top: 22px;
+      padding-top: 18px;
+      max-width: 100%;
+    }
+    .cover-left .meta b { font-size: 21px; }
+    .cover-left .meta .pages { font-size: 13.5px; }
+    .cover-figure {
+      aspect-ratio: 1 / 0.95;
+      max-width: 240px;
+      margin: 0 auto;
+    }
+    .cover-figure .numerals { font-size: clamp(100px, 30vw, 160px); }
+    .cover-figure .numerals .step-label { font-size: clamp(24px, 7.5vw, 32px); }
+    .cover-figure::before { font-size: 9px; bottom: 12px; letter-spacing: .18em; }
+    .scroll-hint { bottom: 20px; font-size: 9px; }
+    .scroll-hint .line { height: 22px; }
+
+    /* ---- Steps (3→1 col) ---- */
+    .steps {
+      grid-template-columns: 1fr !important;
+      border-left: 2px solid var(--rule);
+      border-right: 2px solid var(--rule);
+      margin-top: 24px;
+    }
+    .step {
+      padding: 22px 22px 24px !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .steps .step:last-child { border-bottom: none; }
+    .step .stepnum { font-size: 52px !important; margin-bottom: 6px !important; }
+    .step h3 { font-size: 26px !important; margin-bottom: 10px !important; }
+    .step p { font-size: 15.5px !important; }
+
+    /* ---- Devices grid (RC) ---- */
+    .devices {
+      grid-template-columns: 1fr !important;
+      border: 2px solid var(--rule);
+      margin-top: 22px;
+    }
+    .devices .device {
+      padding: 18px 22px 20px !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--rule-soft) !important;
+    }
+    .devices .device.fallback { grid-column: 1 !important; border-bottom: none !important; }
+    .device .ix { font-size: 30px !important; margin-bottom: 6px !important; }
+    .device h4 { font-size: 17px !important; margin-bottom: 6px !important; }
+    .device p { font-size: 14.5px !important; }
+    .device code { font-size: 12.5px; }
+
+    /* ---- Rules cards (RC) ---- */
+    .rules {
+      grid-template-columns: 1fr !important;
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .rule-card { padding: 22px !important; }
+    .rule-card h4 { font-size: 23px !important; margin-bottom: 12px !important; }
+    .rule-card .arrow { font-size: 24px !important; }
+    .rule-card p { font-size: 15.5px !important; }
+
+    /* ---- Quiz pages (RC) ---- */
+    .quiz-wrap {
+      grid-template-columns: 1fr !important;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .sentences { padding: 18px 20px !important; }
+    .sentences .legend { font-size: 10px !important; margin-bottom: 12px !important; padding-bottom: 10px !important; }
+    .sent { padding: 8px 10px !important; gap: 12px !important; }
+    .sent .nb { flex: 0 0 22px !important; font-size: 14px !important; }
+    .sent .text { font-size: 17px !important; }
+    .panel { padding: 20px !important; }
+    .panel .prompt h3 { font-size: 20px !important; margin-bottom: 10px !important; }
+    .panel .prompt p { font-size: 14.5px !important; }
+    .feedback h4 { font-size: 20px !important; }
+    .feedback p { font-size: 14px !important; }
+    .feedback .qual { font-size: 13.5px !important; padding: 12px 14px !important; }
+    .feedback .verdict { font-size: 15px !important; }
+    .actions { flex-wrap: wrap; margin-top: 14px; }
+    .btn { font-size: 10.5px !important; padding: 8px 14px !important; letter-spacing: .1em !important; }
+
+    /* ---- Flow (RC) ---- */
+    .flow {
+      grid-template-columns: 1fr !important;
+      border-top: none !important;
+      border: 2px solid var(--rule);
+      margin-top: 26px !important;
+    }
+    .flow-card {
+      padding: 22px !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--rule-soft) !important;
+    }
+    .flow-card:last-child { border-bottom: none !important; }
+    .flow-card h4 { font-size: 23px !important; margin-bottom: 12px !important; }
+    .flow-card p { font-size: 15.5px !important; }
+
+    /* ---- FAC frame (RC slide 9) ---- */
+    .slide.fac-overview .fac-frame { padding: 14px 14px 18px !important; }
+    .fac-row { gap: 8px !important; margin-bottom: 10px !important; }
+    .fac-row.top, .fac-row.center, .fac-row.bottom, .fac-row.last {
+      grid-template-columns: 1fr !important;
+      max-width: 100% !important;
+    }
+    .fac { padding: 10px 12px 12px !important; }
+    .fac h5 { font-size: 16px !important; margin-bottom: 2px !important; }
+    .fac .concept { font-size: 9.5px !important; margin-bottom: 5px !important; }
+    .fac .markers { font-size: 11.5px !important; line-height: 1.45 !important; }
+    .fac-row-label { flex-direction: column !important; align-items: flex-start !important; gap: 2px !important; margin-bottom: 4px !important; }
+    .fac-row-label .lbl { font-size: 9.5px !important; }
+    .fac-row-label .desc { font-size: 11px !important; }
+    .fac-divider { margin: 2px 0 6px !important; }
+    .fac-divider .arrow { font-size: 10px !important; }
+    .memorize-note { gap: 10px !important; padding: 10px 12px !important; margin-top: 10px !important; }
+    .memorize-note .icon { width: 28px !important; height: 28px !important; font-size: 17px !important; flex-basis: 28px !important; flex: 0 0 28px !important; }
+    .memorize-note .txt { font-size: 12px !important; line-height: 1.4 !important; }
+
+    /* ---- FAC detail / trigger detail (2-col → 1-col) ---- */
+    .fac-detail {
+      grid-template-columns: 1fr !important;
+      gap: 22px !important;
+    }
+    .fac-detail .left h2.detail-title { font-size: clamp(38px, 12vw, 58px) !important; margin-bottom: 12px !important; }
+    .fac-detail .left .concept-en { font-size: 17px !important; margin-bottom: 16px !important; }
+    .fac-detail .left .concept-kr { font-size: 15.5px !important; max-width: 100% !important; }
+    .fac-detail .left .role { font-size: 11px !important; margin-bottom: 14px !important; }
+    .fac-detail .right {
+      border-left: none !important;
+      border-top: 2px solid var(--rule) !important;
+      padding-left: 0 !important;
+      padding-top: 20px !important;
+    }
+    .fac-detail .right .label { font-size: 11px !important; margin-bottom: 14px !important; }
+    .marker-grid { gap: 6px !important; }
+    .marker-chip { font-size: 14px !important; padding: 6px 11px !important; }
+    .fac-detail .right .note { font-size: 13.5px !important; padding-top: 14px !important; }
+    .fac-detail .right .rules-list { padding-top: 14px !important; }
+    .fac-detail .right .rules-list li { font-size: 14px !important; margin-bottom: 8px !important; padding-left: 16px !important; }
+    .fac-detail .right .rules-list li::before { font-size: 20px !important; left: 2px !important; }
+    .fac-detail .right .rules-list li code { font-size: 12px !important; }
+    .fac-detail .right .special-pattern { padding: 12px 14px !important; margin-top: 14px !important; }
+    .fac-detail .right .special-pattern .sp-title { font-size: 17px !important; }
+    .fac-detail .right .special-pattern p { font-size: 12.5px !important; }
+    .fac-detail .right .special-pattern .sp-formulas .formula { font-size: 12.5px !important; padding: 8px 12px !important; }
+
+    /* ---- Principles (RC slide 19, CR principles) ---- */
+    .principles {
+      grid-template-columns: 1fr !important;
+      border-top: none !important;
+      border: 2px solid var(--rule);
+      margin-top: 26px !important;
+    }
+    .principle {
+      padding: 22px !important;
+      border-right: none !important;
+      border-bottom: 1px solid var(--rule-soft) !important;
+    }
+    .principle:last-child { border-bottom: none !important; }
+    .principle h4 { font-size: 21px !important; margin-bottom: 10px !important; }
+    .principle p { font-size: 14.5px !important; }
+
+    /* ---- Types overview tables (RC ptype, CR cr-types) → card stack ---- */
+    .slide.types-overview { padding-top: 9vh !important; padding-bottom: 7vh !important; }
+    .slide.types-overview .heading-block h2.title { font-size: clamp(26px, 8vw, 36px) !important; }
+    .slide.types-overview .heading-block p.lead { font-size: 13.5px !important; }
+    .ptype-table, .cr-types-table { margin-top: 14px !important; }
+    .ptype-head, .cr-types-head { display: none !important; }
+    .ptype-row, .cr-types-row {
+      grid-template-columns: 1fr !important;
+      padding: 12px 16px !important;
+    }
+    .ptype-row > div, .cr-types-row > div {
+      border-right: none !important;
+      padding: 4px 0 !important;
+    }
+    .ptype-row .type-name, .cr-types-row .type-name { font-size: 16px !important; margin-bottom: 2px; }
+    .ptype-row .type-name small, .cr-types-row .type-name small { font-size: 9px !important; }
+    .ptype-row .terms, .cr-types-row .terms { font-size: 13.5px !important; line-height: 1.55 !important; }
+    .ptype-row .approach, .cr-types-row .approach { font-size: 13px !important; }
+    .cr-section-row {
+      grid-column: 1 !important;
+      padding: 7px 16px !important;
+      font-size: 9.5px !important;
+    }
+
+    /* ---- Ptype detail (RC slides 21-30) ---- */
+    .ptype-detail {
+      grid-template-columns: 1fr !important;
+      gap: 22px !important;
+    }
+    .ptype-detail .left .role { font-size: 11px !important; }
+    .ptype-detail .left .kr-name { font-size: clamp(34px, 11vw, 50px) !important; margin-bottom: 8px !important; }
+    .ptype-detail .left .en-name { font-size: 19px !important; margin-bottom: 20px !important; }
+    .ptype-detail .left .approach-label { font-size: 11px !important; margin-bottom: 12px !important; padding-bottom: 10px !important; }
+    .ptype-detail .left .approach { font-size: 16px !important; }
+    .ptype-detail .right {
+      border-left: none !important;
+      border-top: 2px solid var(--rule) !important;
+      padding-left: 0 !important;
+      padding-top: 20px !important;
+    }
+    .ptype-detail .right .label { font-size: 11px !important; margin-bottom: 14px !important; }
+    .term-chip { font-size: 14px !important; padding: 7px 12px !important; margin: 4px 6px 4px 0 !important; }
+
+    /* ---- TCSE Zones diagram (slide 3) ---- */
+    .zones-diagram { padding: 16px 14px !important; margin-top: 20px !important; }
+    .zones-row { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+    .zone-cell { padding: 12px 8px 14px !important; }
+    .zone-cell .num { font-size: 15px !important; margin-bottom: 4px !important; }
+    .zone-cell .name { font-size: 16px !important; margin-bottom: 4px !important; }
+    .zone-cell .role { font-size: 9px !important; letter-spacing: .1em !important; }
+    .zones-note { padding: 12px 14px !important; font-size: 12.5px !important; margin-top: 14px !important; }
+
+    /* ---- TCSE Connectors grid (slide 4) ---- */
+    .connectors-grid {
+      grid-template-columns: 1fr !important;
+      gap: 12px;
+      margin-top: 20px !important;
+    }
+    .connector-card { padding: 22px !important; }
+    .connector-card .conn-symbol { font-size: clamp(50px, 16vw, 80px) !important; margin-bottom: 10px !important; }
+    .connector-card .conn-name { font-size: 21px !important; }
+    .connector-card .conn-en { font-size: 14px !important; margin-bottom: 12px !important; }
+    .connector-card p { font-size: 14px !important; }
+    .zone-flow { flex-direction: column !important; gap: 8px !important; }
+    .zone-flow .z-tag { font-size: 10.5px !important; padding: 5px 10px !important; }
+    .zone-flow .arrow { font-size: 18px !important; }
+
+    /* ---- TCSE TW pairs (slide 5) ---- */
+    .tw-pairs {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+      margin-top: 22px !important;
+    }
+    .tw-pair { padding: 22px !important; }
+    .tw-pair h4 { font-size: 24px !important; margin-bottom: 12px !important; }
+    .tw-pair p { font-size: 15.5px !important; }
+
+    /* ---- Concept tiles (TCSE slide 5, CR slide 3) ---- */
+    .concept-tiles {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+      margin-top: 22px !important;
+    }
+    .concept-tile { padding: 22px !important; }
+    .concept-tile h4 { font-size: 20px !important; margin-bottom: 10px !important; }
+    .concept-tile p { font-size: 15px !important; }
+
+    /* ---- TCSE Terms grid (slide 15) ---- */
+    .terms-grid {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+      margin-top: 22px !important;
+    }
+    .term-col { padding: 22px !important; }
+    .term-col .kr { font-size: 30px !important; }
+    .term-col .en { font-size: 16px !important; margin-bottom: 14px !important; }
+    .term-col .verbs span { font-size: 13.5px !important; padding: 5px 10px !important; }
+    .terms-note {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+      padding: 16px 20px !important;
+    }
+    .terms-note .item { font-size: 14.5px !important; }
+    .terms-note .item .eq { font-size: 17px !important; }
+
+    /* ---- TCSE Verification flow (slide 16) ---- */
+    .verif-flow {
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+      margin-top: 22px !important;
+    }
+    .verif-stage { padding: 20px 22px !important; }
+    .verif-stage h4 { font-size: 22px !important; margin-bottom: 12px !important; }
+    .verif-stage .components { font-size: 13px !important; padding: 10px 12px !important; }
+    .verif-stage .components span { font-size: 12.5px !important; }
+    .verif-stage .summary { font-size: 13.5px !important; }
+    .verif-stage .keywords span { font-size: 11.5px !important; padding: 4px 8px !important; }
+    .verif-arrow { font-size: 26px !important; padding: 6px 0 !important; transform: rotate(90deg); }
+    .verif-note { padding: 14px 16px !important; font-size: 13.5px !important; margin-top: 18px !important; }
+
+    /* ---- CR Pattern pair (slides 4, 6) ---- */
+    .pattern-pair {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+      margin-top: 22px !important;
+    }
+    .pattern-card { padding: 22px !important; }
+    .pattern-card h4 { font-size: 24px !important; margin-bottom: 12px !important; }
+    .pattern-steps li { font-size: 12.5px !important; padding: 6px 10px !important; }
+    .pattern-steps li.connector { font-size: 13.5px !important; }
+    .pattern-card .pat-note { font-size: 13.5px !important; }
+
+    /* ---- CR Formula notation (slide 5) ---- */
+    .cr-formula { padding: 18px !important; margin-top: 22px !important; }
+    .cr-formula-row {
+      grid-template-columns: 1fr 0.3fr 0.7fr !important;
+      gap: 10px !important;
+      padding: 10px 0 !important;
+    }
+    .cr-formula-row .name { font-size: 18px !important; }
+    .cr-formula-row .name small { font-size: 9px !important; }
+    .cr-formula-row .equals { font-size: 15px !important; }
+    .cr-formula-row .formula { font-size: 16px !important; }
+    .cr-formula-note { padding: 12px 14px !important; font-size: 13.5px !important; }
+
+    /* ---- CR Role chart (slide 9) ---- */
+    .role-chart { margin-top: 20px !important; }
+    .role-chart-row { grid-template-columns: 1fr !important; }
+    .role-chart-row .role-cell {
+      padding: 16px 20px !important;
+      text-align: left !important;
+      justify-content: flex-start !important;
+      font-size: 14.5px !important;
+    }
+    .role-chart-row .role-cell > div { text-align: left !important; }
+    .role-chart-row .role-cell.left { border-bottom: 1px solid var(--rule-soft); }
+    .role-chart-row .role-cell.right { border-top: 1px solid var(--rule-soft); }
+    .role-chart-row .role-cell .role-name { font-size: 19px !important; }
+    .role-chart-row .connector-cell {
+      padding: 14px 18px !important;
+      font-size: 22px !important;
+    }
+    .role-chart-row .connector-cell .conn-en { font-size: 11px !important; }
+
+    /* ---- Closing slide ---- */
+    .closing-content .eyebrow { font-size: 10.5px !important; margin-bottom: 28px !important; letter-spacing: .24em !important; }
+    .cheer { font-size: clamp(38px, 13vw, 58px) !important; line-height: 1.15 !important; }
+    .cheer .line + .line { margin-top: 10px !important; }
+    .cheer em { margin-left: 4px !important; }
+    .cheer-rule { width: 56px !important; margin: 32px auto 16px !important; }
+    .cheer-sig { font-size: 13.5px !important; }
+  }
 </style>
 </head>
 <body>
