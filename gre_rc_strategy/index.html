@@ -1116,6 +1116,121 @@
     text-transform: uppercase;
     font-weight: 700;
   }
+
+  /* ---------- Closing slide (recap + cheer) — VERTICAL · dramatic ---------- */
+  .slide.closing {
+    background: radial-gradient(ellipse at center top, #1F2630 0%, #14181F 60%, #0B0E13 100%);
+    color: #F4EFE6;
+    text-align: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .slide.closing::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center 60%, rgba(185, 56, 30, 0.18) 0%, transparent 55%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2s cubic-bezier(0.22,1,0.36,1) 1.5s;
+  }
+  .slide.closing.in-view::after { opacity: 1; }
+  .slide.closing .pagebar { color: rgba(244,239,230,.55); z-index: 2; }
+  .slide.closing .pagebar .mark { background: rgba(244,239,230,.55); }
+  .closing-content {
+    width: 100%; max-width: 1300px;
+    margin: 0 auto; text-align: center;
+    position: relative; z-index: 2;
+  }
+  .closing-content .eyebrow {
+    color: var(--highlight); margin-bottom: 64px;
+    font-size: 15px; letter-spacing: .34em;
+  }
+  .cheer {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 500;
+    font-size: clamp(60px, 8.2vw, 156px);
+    line-height: 1.12;
+    letter-spacing: -0.028em;
+    margin: 0;
+    color: #F4EFE6;
+  }
+  .cheer .line { display: block; position: relative; }
+  .cheer .line + .line { margin-top: 22px; }
+  .cheer em {
+    font-style: normal;
+    color: var(--accent);
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 10px;
+    text-shadow: 0 0 32px rgba(185, 56, 30, 0.45);
+  }
+  .cheer-rule {
+    width: 96px; height: 2px;
+    background: var(--highlight);
+    margin: 72px auto 28px;
+    transform-origin: center;
+    box-shadow: 0 0 24px rgba(246, 217, 118, 0.4);
+  }
+  .cheer-sig {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-size: clamp(18px, 1.5vw, 24px);
+    color: rgba(244,239,230,.7);
+    margin: 0;
+  }
+
+  /* DRAMATIC entrance — blur clear, scale-up, tilted-pop "!" */
+  .slide.closing .closing-content .eyebrow {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 1s cubic-bezier(0.22,1,0.36,1),
+                transform 1s cubic-bezier(0.22,1,0.36,1);
+  }
+  .slide.closing.in-view .closing-content .eyebrow {
+    opacity: 1; transform: translateY(0); transition-delay: 0.3s;
+  }
+  .slide.closing .cheer .line {
+    opacity: 0;
+    transform: translateY(100px) scale(0.86);
+    filter: blur(14px);
+    transition: opacity 1.4s cubic-bezier(0.22,1,0.36,1),
+                transform 1.4s cubic-bezier(0.22,1,0.36,1),
+                filter 1.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  .slide.closing.in-view .cheer .line {
+    opacity: 1; transform: translateY(0) scale(1); filter: blur(0);
+  }
+  .slide.closing.in-view .cheer .line:nth-child(1) { transition-delay: 0.7s; }
+  .slide.closing.in-view .cheer .line:nth-child(2) { transition-delay: 1.6s; }
+  .slide.closing .cheer em {
+    opacity: 0;
+    transform: scale(0.3) rotate(-20deg);
+    transition: opacity .7s cubic-bezier(0.34,1.7,0.64,1),
+                transform .7s cubic-bezier(0.34,1.7,0.64,1);
+  }
+  .slide.closing.in-view .cheer .line:nth-child(1) em { transition-delay: 1.9s; }
+  .slide.closing.in-view .cheer .line:nth-child(2) em { transition-delay: 2.6s; }
+  .slide.closing.in-view .cheer em { opacity: 1; transform: scale(1) rotate(0); }
+  .slide.closing .cheer-rule {
+    transform: scaleX(0);
+    transition: transform 1.1s cubic-bezier(0.22,1,0.36,1);
+  }
+  .slide.closing.in-view .cheer-rule { transform: scaleX(1); transition-delay: 3.1s; }
+  .slide.closing .cheer-sig {
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 1s cubic-bezier(0.22,1,0.36,1),
+                transform 1s cubic-bezier(0.22,1,0.36,1);
+  }
+  .slide.closing.in-view .cheer-sig { opacity: 1; transform: translateY(0); transition-delay: 3.5s; }
+
+  /* Subtle breath/pulse on the cheer after entrance */
+  @keyframes cheerBreath {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.015); }
+  }
+  .slide.closing.in-view .cheer {
+    animation: cheerBreath 5s ease-in-out infinite 4.2s;
+  }
 </style>
 </head>
 <body>
@@ -1127,7 +1242,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>GRE Verbal · Pattern Book</span></div>
-        <div>01 / 32</div>
+        <div>01 / 34</div>
       </div>
       <div class="cover-grid">
         <div class="cover-left">
@@ -1149,7 +1264,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Overview · The 3 Steps</span></div>
-        <div>02 / 32</div>
+        <div>02 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Reading Strategy · Overview</div>
@@ -1183,7 +1298,7 @@
     <section class="slide devices-overview">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Step 1 · Topic Markers</span></div>
-        <div>03 / 32</div>
+        <div>03 / 34</div>
       </div>
       <div>
         <div class="heading-block">
@@ -1231,7 +1346,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Step 1 · Decision Rules</span></div>
-        <div>04 / 32</div>
+        <div>04 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Step One · 우선순위 규칙</div>
@@ -1265,7 +1380,7 @@
     <section class="slide" id="quiz1">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Practice · Example 1</span></div>
-        <div>05 / 32</div>
+        <div>05 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Practice · Find the Topic Sentence</div>
@@ -1310,7 +1425,7 @@
     <section class="slide paper" id="quiz2">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Practice · Example 2</span></div>
-        <div>06 / 32</div>
+        <div>06 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Practice · Four Candidates</div>
@@ -1353,7 +1468,7 @@
     <section class="slide" id="quiz3">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Practice · Example 3</span></div>
-        <div>07 / 32</div>
+        <div>07 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Practice · Distant Candidates</div>
@@ -1399,7 +1514,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Step 2 · Flow & Function</span></div>
-        <div>08 / 32</div>
+        <div>08 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Step Two · 구조를 읽는다</div>
@@ -1430,7 +1545,7 @@
     <section class="slide fac-overview">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Step 2 · FAC Reference</span></div>
-        <div>09 / 32</div>
+        <div>09 / 34</div>
       </div>
       <div>
         <div class="heading-block">
@@ -1527,7 +1642,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · Before · 논박 대상</span></div>
-        <div>10 / 32</div>
+        <div>10 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
@@ -1558,7 +1673,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · Before · 제목 · 소재</span></div>
-        <div>11 / 32</div>
+        <div>11 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
@@ -1585,7 +1700,7 @@
     <section class="slide dark">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · Core · Fact</span></div>
-        <div>12 / 32</div>
+        <div>12 / 34</div>
       </div>
       <div class="fac-detail core">
         <div class="left">
@@ -1613,7 +1728,7 @@
     <section class="slide dark">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · Core · Assumption</span></div>
-        <div>13 / 32</div>
+        <div>13 / 34</div>
       </div>
       <div class="fac-detail core">
         <div class="left">
@@ -1638,7 +1753,7 @@
     <section class="slide dark">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · Core · Conclusion</span></div>
-        <div>14 / 32</div>
+        <div>14 / 34</div>
       </div>
       <div class="fac-detail core">
         <div class="left">
@@ -1670,7 +1785,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · 용어 정리</span></div>
-        <div>15 / 32</div>
+        <div>15 / 34</div>
       </div>
       <div>
         <div class="eyebrow">FAC · 동사 정리 (Verb Reference)</div>
@@ -1734,7 +1849,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · 검증의 작동</span></div>
-        <div>16 / 32</div>
+        <div>16 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Before · Verification · After</div>
@@ -1805,7 +1920,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · After · Verification</span></div>
-        <div>17 / 32</div>
+        <div>17 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
@@ -1833,7 +1948,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · After · Weakening</span></div>
-        <div>18 / 32</div>
+        <div>18 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
@@ -1858,7 +1973,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · After · Strengthening</span></div>
-        <div>19 / 32</div>
+        <div>19 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
@@ -1887,7 +2002,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>FAC · After · Concession</span></div>
-        <div>20 / 32</div>
+        <div>20 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
@@ -1915,7 +2030,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Step 3 · Problem Recognition</span></div>
-        <div>21 / 32</div>
+        <div>21 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Step Three · 본문보다 질문이 먼저</div>
@@ -1946,7 +2061,7 @@
     <section class="slide types-overview">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Step 3 · 한눈에 보기</span></div>
-        <div>22 / 32</div>
+        <div>22 / 34</div>
       </div>
       <div>
         <div class="heading-block">
@@ -2017,7 +2132,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 주제와 구성</span></div>
-        <div>23 / 32</div>
+        <div>23 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2043,7 +2158,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 추론 1 · Inference</span></div>
-        <div>24 / 32</div>
+        <div>24 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2070,7 +2185,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 추론 2 · Agree / Disagree</span></div>
-        <div>25 / 32</div>
+        <div>25 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2094,7 +2209,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 추론 3 · Compatible</span></div>
-        <div>26 / 32</div>
+        <div>26 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2119,7 +2234,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 유사한 상황</span></div>
-        <div>27 / 32</div>
+        <div>27 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2142,7 +2257,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 구체 내용 파악</span></div>
-        <div>28 / 32</div>
+        <div>28 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2166,7 +2281,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 문장 · 단락의 기능</span></div>
-        <div>29 / 32</div>
+        <div>29 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2190,7 +2305,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 단어 · 어구 언급 목적</span></div>
-        <div>30 / 32</div>
+        <div>30 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2214,7 +2329,7 @@
     <section class="slide paper">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 단어의 의미</span></div>
-        <div>31 / 32</div>
+        <div>31 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2237,7 +2352,7 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Type · 말투와 태도</span></div>
-        <div>32 / 32</div>
+        <div>32 / 34</div>
       </div>
       <div class="ptype-detail">
         <div class="left">
@@ -2254,6 +2369,57 @@
             <span class="term-chip highlight">attitude</span>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 33: RECAP · 다시, 세 단계 -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Recap · 다시, 세 단계</span></div>
+        <div>33 / 34</div>
+      </div>
+      <div>
+        <div class="eyebrow">Recap · 한 번 더 새기기</div>
+        <h2 class="title">결국은 <em>이 셋</em>입니다.</h2>
+        <div class="rule-line"></div>
+        <p class="lead">오늘 배운 모든 것이 이 <b>세 단계</b>로 수렴합니다. 본문을 마주칠 때 이 순서 그대로 작동시키세요.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="stepname">Step One</div>
+            <div class="stepnum">01</div>
+            <h3>주제 파악</h3>
+            <p><b>마침표 뒤</b>에서 다섯 가지 <b>주제 장치</b>를 찾고, 후보가 여러 개라면 우선순위 규칙으로 정답을 정한다.</p>
+          </div>
+          <div class="step">
+            <div class="stepname">Step Two</div>
+            <div class="stepnum">02</div>
+            <h3>흐름 파악</h3>
+            <p><b>마침표 뒤</b>의 주어와 동사로 각 문장의 <b>FAC 기능</b>을 식별. 모든 단어를 읽지 않는다.</p>
+          </div>
+          <div class="step">
+            <div class="stepname">Step Three</div>
+            <div class="stepnum">03</div>
+            <h3>문제 파악</h3>
+            <p><b>질문 용어</b>로 유형과 해법을, <b>본문 단어</b>로 위치를. 본문 읽기 전에 끝낸다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 34: CLOSING · 응원 메시지 -->
+    <section class="slide closing">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Final Word · 오늘 마지막 말</span></div>
+        <div>34 / 34</div>
+      </div>
+      <div class="closing-content">
+        <div class="eyebrow">— 수업의 마지막 한 마디 —</div>
+        <h1 class="cheer">
+          <span class="line">나는 외울 수 있다<em>!</em></span>
+          <span class="line">나는 읽을 수 있다<em>!</em></span>
+        </h1>
+        <div class="cheer-rule"></div>
+        <p class="cheer-sig">매 수업 끝에 다 같이 외치는 말</p>
       </div>
     </section>
 
@@ -2373,7 +2539,14 @@
     });
   }
 
-  slides.forEach(setupSlideAnimations);
+  slides.forEach(slide => {
+    if (slide.classList.contains('closing')) {
+      // Custom CSS animations drive the closing slide; just observe for in-view.
+      revealObserver.observe(slide);
+      return;
+    }
+    setupSlideAnimations(slide);
+  });
 
   // Quiz interactions
   document.querySelectorAll('.sentences').forEach(box => {
