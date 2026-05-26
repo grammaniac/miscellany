@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,7 +7,7 @@
 <title>GRE Reading Comprehension · 3단계 전략</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144;500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
 <style>
   :root {
@@ -23,127 +24,984 @@
     --accent-3: #3F6342;
     --accent-soft: #E9D9C7;
     --highlight: #F6D976;
-    --max-width: 1100px;
   }
 
   * { box-sizing: border-box; }
   html, body {
-    margin: 0; padding: 0;
+    margin: 0; padding: 0; height: 100%;
     background: var(--bg);
     color: var(--ink);
-    font-family: "Pretendard Variable", "Pretendard", "Inter", system-ui, -apple-system, sans-serif;
+  }
+  body {
+    font-family: "Pretendard Variable", "Pretendard", "Inter", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+  html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
-  /* ---------- Apple Style Scroll Layout ---------- */
-  .stage {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
+  /* ---------- Stage / slides (vertical flow) ---------- */
+  .stage { position: relative; width: 100%; }
+  .slides { display: block; width: 100%; }
   .slide {
-    width: 100%;
-    min-height: 85vh;
-    padding: 120px 24px 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 100%; min-height: 100vh;
+    padding: 11vh 6.5vw 11vh;
+    display: flex; flex-direction: column; justify-content: center;
     position: relative;
-    border-bottom: 1px solid var(--rule-soft);
+    overflow: visible;
   }
-  
-  .slide .container {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-  }
-
   .slide.paper { background: var(--paper); }
   .slide.dark { background: #14181F; color: #F4EFE6; }
 
-  /* ---------- Top Header Bar inside Sections ---------- */
+  /* ---------- Top header bar ---------- */
   .pagebar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: absolute;
+    top: 36px; left: 6.5vw; right: 6.5vw;
+    display: flex; align-items: center; justify-content: space-between;
     font-family: "Inter", sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: .22em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    margin-bottom: 40px;
-    border-bottom: 1px solid var(--rule-soft);
-    padding-bottom: 12px;
-    width: 100%;
   }
-  .pagebar .l { display: flex; gap: 14px; align-items: center; }
-  .pagebar .mark { display: inline-block; width: 24px; height: 2px; background: var(--ink); }
-  .slide.dark .pagebar { color: rgba(244,239,230,.7); border-bottom-color: rgba(244,239,230,.15); }
+  .pagebar .l { display: flex; gap: 18px; align-items: center; }
+  .pagebar .mark { display: inline-block; width: 32px; height: 2px; background: var(--ink); }
+  .slide.dark .pagebar { color: rgba(244,239,230,.7); }
   .slide.dark .pagebar .mark { background: rgba(244,239,230,.7); }
 
-  /* ---------- Typography (Apple Scale) ---------- */
+  /* ---------- Type scale (everything bigger) ---------- */
   .eyebrow {
     font-family: "Inter", sans-serif;
     font-weight: 700;
-    font-size: 15px;
-    letter-spacing: .24em;
+    font-size: 16px;
+    letter-spacing: .28em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 16px;
+    margin-bottom: 26px;
   }
-  .slide.dark .eyebrow { color: var(--highlight); }
-
   h1.display {
     font-family: "Fraunces", "Noto Serif KR", serif;
     font-weight: 500;
-    font-size: clamp(48px, 6vw, 92px);
-    line-height: 1.1;
+    font-size: clamp(64px, 7.2vw, 132px);
+    line-height: 1.0;
     letter-spacing: -0.025em;
-    margin: 0 0 28px;
+    margin: 0 0 32px;
   }
-  h1.display em { font-style: italic; font-weight: 400; color: var(--accent); }
-  .slide.dark h1.display em { color: var(--highlight); }
-
+  h1.display em {
+    font-style: italic; font-weight: 400; color: var(--accent);
+  }
   h2.title {
     font-family: "Fraunces", "Noto Serif KR", serif;
     font-weight: 500;
-    font-size: clamp(36px, 4.5vw, 64px);
-    line-height: 1.15;
+    font-size: clamp(48px, 5.4vw, 84px);
+    line-height: 1.05;
     letter-spacing: -0.02em;
-    margin: 0 0 24px;
+    margin: 0 0 26px;
   }
   h2.title em { font-style: italic; font-weight: 400; color: var(--accent); }
-  .slide.dark h2.title em { color: var(--highlight); }
-
   p.lead {
-    font-size: clamp(18px, 1.6vw, 24px);
+    font-size: clamp(22px, 1.9vw, 32px);
     font-weight: 500;
     color: var(--ink-soft);
-    max-width: 850px;
-    line-height: 1.6;
-    margin: 0 0 32px;
+    max-width: 1050px;
+    line-height: 1.5;
+    margin: 0;
     word-break: keep-all;
   }
   p.lead b { color: var(--ink); font-weight: 800; }
-  .slide.dark p.lead { color: rgba(244,239,230,.85); }
-  .slide.dark p.lead b { color: #FFFFFF; }
-
   .rule-line {
     width: 64px; height: 3px; background: var(--ink);
-    margin: 0 0 32px;
+    margin: 0 0 30px;
   }
   .slide.dark .rule-line { background: #F4EFE6; }
+  .slide.dark h1.display em, .slide.dark h2.title em { color: var(--highlight); }
 
-  /* ---------- Apple Dynamic Progress Bar (Fixed) ---------- */
+  /* ---------- Cover ---------- */
+  .cover-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 70px;
+    align-items: center;
+  }
+  .cover-left .meta {
+    margin-top: 44px;
+    max-width: 720px;
+    border-top: 2px solid var(--rule);
+    padding-top: 26px;
+  }
+  .cover-left .meta > div {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--ink-mute); font-weight: 700;
+  }
+  .cover-left .meta b {
+    display: block; color: var(--ink);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 30px; font-weight: 500;
+    letter-spacing: -0.015em; text-transform: none;
+    margin-top: 10px;
+    line-height: 1.2;
+  }
+  .cover-left .meta .pages {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-top: 6px;
+  }
+  .cover-figure {
+    aspect-ratio: 1 / 1.05;
+    border: 2px solid var(--rule);
+    position: relative;
+    background:
+      repeating-linear-gradient(45deg, transparent 0 20px, rgba(20,24,31,.05) 20px 21px);
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  .cover-figure .numerals {
+    font-family: "Fraunces", serif;
+    font-size: clamp(180px, 22vw, 340px);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+  .cover-figure .numerals em {
+    font-style: italic; font-weight: 400; color: var(--accent);
+  }
+  .cover-figure .numerals .step-label {
+    display: block;
+    font-family: "Pretendard Variable", "Noto Serif KR", serif;
+    font-size: clamp(40px, 4.2vw, 64px);
+    font-weight: 700;
+    font-style: normal;
+    color: var(--ink);
+    letter-spacing: .08em;
+    margin-top: 6px;
+  }
+  .cover-figure::after {
+    content: "";
+    position: absolute;
+    width: 70%; height: 70%;
+    border: 2px solid var(--rule);
+    border-radius: 50%;
+    z-index: 1;
+  }
+  .cover-figure::before {
+    content: "STEP · 01 / 02 / 03";
+    position: absolute;
+    bottom: 22px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px; letter-spacing: .3em;
+    color: var(--ink-soft); font-weight: 700;
+  }
+
+  /* ---------- 3-step grid ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 56px;
+    border-top: 2px solid var(--rule);
+    border-bottom: 2px solid var(--rule);
+  }
+  .step { padding: 40px 36px 44px; border-right: 1px solid var(--rule-soft); }
+  .step:last-child { border-right: none; }
+  .step .stepname {
+    font-family: "Inter", sans-serif;
+    font-size: 14px; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--ink-mute); font-weight: 700; margin-bottom: 12px;
+  }
+  .step .stepnum {
+    font-family: "Fraunces", serif;
+    font-size: 92px; font-weight: 300; font-style: italic;
+    color: var(--accent); line-height: 0.95; margin-bottom: 14px;
+  }
+  .step h3 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 42px; font-weight: 500;
+    letter-spacing: -0.015em; margin: 0 0 18px;
+  }
+  .step p {
+    margin: 0; color: var(--ink-soft);
+    font-size: 21px; font-weight: 500; line-height: 1.55;
+    word-break: keep-all;
+  }
+  .step p b { color: var(--ink); font-weight: 800; }
+
+  /* ---------- Topic devices ---------- */
+  .devices {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
+    border-top: 2px solid var(--rule);
+  }
+  .device {
+    padding: 32px 32px 36px;
+    border-right: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+    background: var(--paper);
+  }
+  .device:nth-child(3n) { border-right: none; }
+  .device:nth-last-child(-n+3) { border-bottom: none; }
+  .device .ix {
+    font-family: "Fraunces", serif;
+    font-size: 52px; font-weight: 300; font-style: italic;
+    color: var(--accent); line-height: 1; margin-bottom: 16px;
+  }
+  .device h4 {
+    margin: 0 0 12px;
+    font-size: 26px; font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .device p {
+    margin: 0; font-size: 19px;
+    color: var(--ink-soft); font-weight: 500; line-height: 1.55;
+    word-break: keep-all;
+  }
+  .device code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 17px; font-weight: 700; color: var(--accent-2);
+  }
+  .device.fallback {
+    background: var(--ink); color: #F4EFE6;
+    grid-column: span 3; border: 2px solid var(--rule);
+  }
+  .device.fallback h4 { color: #F4EFE6; }
+  .device.fallback p { color: rgba(244,239,230,.85); font-size: 22px; }
+  .device.fallback .ix { color: var(--highlight); }
+
+  /* ---------- Rules ---------- */
+  .rules {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 32px; margin-top: 40px;
+  }
+  .rule-card {
+    background: var(--paper);
+    border: 2px solid var(--rule);
+    padding: 36px 34px 38px;
+  }
+  .rule-card .case {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .3em; text-transform: uppercase;
+    font-weight: 700; color: var(--accent); margin-bottom: 16px;
+  }
+  .rule-card h4 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 34px; font-weight: 500;
+    letter-spacing: -0.015em; margin: 0 0 22px;
+    line-height: 1.2;
+  }
+  .rule-card .arrow {
+    display: inline-block;
+    font-family: "Fraunces", serif; font-size: 38px; font-style: italic;
+    color: var(--accent); margin: 6px 0 10px;
+  }
+  .rule-card p {
+    margin: 0; color: var(--ink-soft);
+    font-size: 21px; font-weight: 500; line-height: 1.55;
+    word-break: keep-all;
+  }
+  .rule-card p b { color: var(--ink); font-weight: 800; }
+
+  /* ---------- Quiz pages ---------- */
+  .quiz-wrap {
+    display: grid; grid-template-columns: 1.05fr 0.95fr;
+    gap: 44px; margin-top: 30px; align-items: stretch;
+  }
+  .sentences {
+    background: var(--paper); border: 2px solid var(--rule);
+    padding: 32px 38px;
+  }
+  .sentences .legend {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .26em; text-transform: uppercase;
+    color: var(--ink-mute); font-weight: 700;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 2px solid var(--rule-soft);
+  }
+  .sent {
+    display: flex; align-items: baseline; gap: 22px;
+    padding: 14px 18px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: background .25s ease, border-color .25s ease;
+    font-family: "Fraunces", "Noto Serif KR", serif;
+  }
+  .sent:hover { background: #FAF6EE; border-left-color: var(--ink); }
+  .sent .nb {
+    flex: 0 0 30px;
+    font-family: "Inter", sans-serif;
+    font-weight: 800; font-size: 17px;
+    color: var(--ink-mute);
+  }
+  .sent .text {
+    flex: 1; font-size: 24px; font-weight: 400;
+    color: var(--ink); line-height: 1.4; font-style: italic;
+  }
+  .sent .marker {
+    color: var(--accent); font-weight: 700;
+    font-style: italic; margin-right: 6px;
+  }
+  .sent.correct { background: #EFF3EC; border-left-color: var(--accent-3); }
+  .sent.correct .text { color: var(--accent-3); font-weight: 500; }
+  .sent.wrong { background: #FBECE8; border-left-color: var(--accent); }
+  .sent.wrong .text { color: var(--accent); }
+  .sent.reveal { background: #FDF4D9; border-left-color: #B69400; }
+
+  .panel {
+    background: var(--paper); border: 2px solid var(--rule);
+    padding: 32px 36px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .panel .prompt h3 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    margin: 0 0 16px;
+    font-size: 28px; font-weight: 500; letter-spacing: -0.01em;
+  }
+  .panel .prompt p {
+    margin: 0; font-size: 19px;
+    color: var(--ink-soft); font-weight: 500; line-height: 1.6;
+    word-break: keep-all;
+  }
+  .panel .prompt p b { color: var(--ink); font-weight: 800; }
+  .feedback {
+    display: none;
+    border-top: 2px solid var(--rule-soft);
+    padding-top: 20px; margin-top: 22px;
+  }
+  .feedback.show { display: block; animation: fadeUp .35s ease both; }
+  .feedback .badge {
+    display: inline-block; padding: 6px 14px;
+    border: 2px solid var(--rule);
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .22em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 14px;
+  }
+  .feedback .badge.ok { background: var(--accent-3); color: #F4EFE6; border-color: var(--accent-3); }
+  .feedback .badge.no { background: var(--accent); color: #F4EFE6; border-color: var(--accent); }
+  .feedback h4 {
+    font-family: "Fraunces", serif;
+    margin: 0 0 14px;
+    font-size: 28px; font-weight: 500; letter-spacing: -0.01em;
+  }
+  .feedback p {
+    margin: 0 0 10px; font-size: 18px;
+    color: var(--ink-soft); font-weight: 500; line-height: 1.6;
+    word-break: keep-all;
+  }
+  .feedback .verdict {
+    color: var(--accent); font-family: "Fraunces", serif;
+    font-style: italic; font-size: 22px; font-weight: 600;
+    margin-top: 14px;
+  }
+  .feedback .qual {
+    margin-top: 16px; padding: 16px 20px;
+    background: #FDF4D9; border-left: 4px solid #B69400;
+    font-size: 18px; line-height: 1.55;
+    color: var(--ink); font-weight: 500;
+    word-break: keep-all;
+  }
+  .feedback .qual b { font-weight: 800; }
+  .actions { margin-top: 22px; display: flex; gap: 12px; }
+  .btn {
+    border: 2px solid var(--rule);
+    background: transparent; color: var(--ink);
+    padding: 11px 20px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700; font-size: 13px;
+    letter-spacing: .14em; text-transform: uppercase;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .btn:hover { background: var(--ink); color: #F4EFE6; }
+  .btn.primary { background: var(--ink); color: #F4EFE6; }
+  .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Flow / Step 2 ---------- */
+  .flow {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    margin-top: 56px;
+    border-top: 2px solid var(--rule);
+  }
+  .flow-card {
+    padding: 40px 34px 42px;
+    border-right: 1px solid var(--rule-soft);
+    border-bottom: 2px solid var(--rule);
+  }
+  .flow-card:last-child { border-right: none; }
+  .flow-card .tag {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .26em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 18px;
+  }
+  .flow-card h4 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 34px; font-weight: 500;
+    letter-spacing: -0.015em; margin: 0 0 18px;
+  }
+  .flow-card p {
+    margin: 0; font-size: 20px;
+    color: var(--ink-soft); font-weight: 500; line-height: 1.55;
+    word-break: keep-all;
+  }
+  .flow-card p b { color: var(--ink); font-weight: 800; }
+
+  /* ---------- FAC table (center-axis) ---------- */
+  .fac-frame {
+    margin-top: 28px; border: 2px solid var(--rule);
+    background: var(--paper); padding: 32px 36px 36px;
+  }
+  .fac-row-label {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .fac-row-label .lbl {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .3em; text-transform: uppercase;
+    font-weight: 700; color: var(--ink-mute);
+  }
+  .fac-row-label .desc {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic; font-size: 18px;
+    color: var(--ink-soft); font-weight: 400;
+  }
+  .fac-row {
+    display: grid; gap: 16px; margin-bottom: 24px;
+  }
+  .fac-row.top { grid-template-columns: repeat(2, 1fr); max-width: 75%; margin-left: auto; margin-right: auto; }
+  .fac-row.center { grid-template-columns: repeat(3, 1fr); }
+  .fac-row.bottom { grid-template-columns: repeat(4, 1fr); }
+  .fac-row.last { margin-bottom: 0; }
+
+  .fac {
+    padding: 22px 24px 24px;
+    background: var(--bg-alt);
+    border: 1.5px solid var(--rule-soft);
+  }
+  .fac.core {
+    background: #14181F; color: #F4EFE6;
+    border-color: var(--rule);
+    box-shadow: 0 3px 0 var(--rule);
+  }
+  .fac h5 {
+    font-family: "Fraunces", serif;
+    margin: 0 0 6px;
+    font-size: 24px; font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .fac.core h5 { color: var(--highlight); font-style: italic; }
+  .fac .concept {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; color: var(--ink-mute);
+    font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .fac.core .concept { color: rgba(244,239,230,.6); }
+  .fac .markers {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px;
+    color: var(--accent-2); font-weight: 600;
+    line-height: 1.65; word-break: keep-all; margin: 0;
+  }
+  .fac.core .markers { color: #F0E0C0; }
+
+  .fac-divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 10px 0 20px;
+  }
+  .fac-divider .line { flex: 1; height: 1px; background: var(--rule-soft); }
+  .fac-divider .arrow {
+    font-family: "Fraunces", serif; font-style: italic;
+    color: var(--ink-mute); font-size: 17px; letter-spacing: .08em;
+  }
+
+  .memorize-note {
+    margin-top: 24px; padding: 22px 26px;
+    background: var(--accent); color: #F4EFE6;
+    display: flex; align-items: center; gap: 22px;
+    border: 2px solid var(--accent);
+  }
+  .memorize-note .icon {
+    font-family: "Fraunces", serif; font-style: italic;
+    font-size: 38px; font-weight: 400; line-height: 1;
+    border: 2px solid rgba(244,239,230,.5);
+    width: 56px; height: 56px;
+    display: grid; place-items: center; flex: 0 0 56px;
+  }
+  .memorize-note .txt {
+    font-family: "Pretendard Variable", sans-serif;
+    font-size: 19px; line-height: 1.5; font-weight: 600;
+    word-break: keep-all;
+  }
+  .memorize-note .txt b { font-weight: 900; }
+
+  /* ---------- FAC detail page ---------- */
+  .fac-detail {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .fac-detail .left .role {
+    font-family: "Inter", sans-serif;
+    font-size: 14px; letter-spacing: .3em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--accent); margin-bottom: 18px;
+  }
+  .fac-detail .left h2.detail-title {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: clamp(64px, 7.5vw, 132px);
+    font-weight: 500; line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin: 0 0 22px;
+  }
+  .fac-detail .left h2.detail-title em {
+    font-style: italic; color: var(--accent); font-weight: 400;
+  }
+  .fac-detail.core .left h2.detail-title em { color: var(--highlight); }
+  .fac-detail .left .concept-en {
+    font-family: "Fraunces", serif;
+    font-style: italic; font-weight: 400;
+    font-size: 28px; color: var(--ink-soft);
+    margin: 0 0 26px; line-height: 1.3;
+  }
+  .fac-detail .left .concept-kr {
+    font-size: 22px; font-weight: 500;
+    color: var(--ink); line-height: 1.55;
+    margin: 0; word-break: keep-all;
+    max-width: 460px;
+  }
+  .fac-detail .left .concept-kr b { font-weight: 800; }
+  .fac-detail .right {
+    border-left: 2px solid var(--rule);
+    padding-left: 50px;
+  }
+  .fac-detail .right .label {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .28em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--ink-mute); margin-bottom: 20px;
+  }
+  .marker-grid {
+    display: flex; flex-wrap: wrap;
+    gap: 12px;
+  }
+  .marker-chip {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(22px, 1.9vw, 32px);
+    font-weight: 700;
+    color: var(--accent-2);
+    background: var(--paper);
+    border: 2px solid var(--rule);
+    padding: 12px 22px;
+    letter-spacing: -0.01em;
+  }
+  .marker-chip.kr {
+    font-family: "Pretendard Variable", sans-serif;
+    color: var(--ink);
+  }
+  .fac-detail.core .marker-chip {
+    background: #14181F; color: var(--highlight);
+    border-color: #14181F;
+  }
+  .fac-detail .right .note {
+    margin-top: 26px;
+    font-size: 18px; color: var(--ink-soft);
+    line-height: 1.55; font-weight: 500;
+    word-break: keep-all;
+    border-top: 1px solid var(--rule-soft);
+    padding-top: 18px;
+  }
+  .fac-detail .right .note b { color: var(--ink); font-weight: 800; }
+
+  /* ---------- Step 3 overview ---------- */
+  .principles {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    margin-top: 56px;
+    border-top: 2px solid var(--rule);
+  }
+  .principle {
+    padding: 40px 34px 42px;
+    border-right: 1px solid var(--rule-soft);
+    border-bottom: 2px solid var(--rule);
+  }
+  .principle:last-child { border-right: none; }
+  .principle .num {
+    font-family: "Fraunces", serif;
+    font-style: italic; font-size: 26px;
+    color: var(--accent); font-weight: 500; margin-bottom: 18px;
+  }
+  .principle h4 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 30px; font-weight: 500;
+    letter-spacing: -0.015em; margin: 0 0 18px; line-height: 1.22;
+  }
+  .principle p {
+    margin: 0; font-size: 20px;
+    color: var(--ink-soft); font-weight: 500; line-height: 1.6;
+    word-break: keep-all;
+  }
+  .principle p b { color: var(--ink); font-weight: 800; }
+
+  /* ---------- Slide 3 Topic Markers · compact heading + grid ---------- */
+  .slide.devices-overview { padding-top: 10vh; padding-bottom: 9vh; }
+  .slide.devices-overview .heading-block { text-align: center; margin-bottom: 14px; }
+  .slide.devices-overview .heading-block .eyebrow { margin-bottom: 14px; }
+  .slide.devices-overview .heading-block h2.title {
+    font-size: clamp(40px, 4.8vw, 68px);
+    margin: 0 auto 14px;
+  }
+  .slide.devices-overview .heading-block .rule-line { margin: 0 auto 14px; }
+  .slide.devices-overview .heading-block p.lead {
+    font-size: clamp(17px, 1.4vw, 22px);
+    margin: 0 auto; max-width: 980px; line-height: 1.5;
+  }
+  .slide.devices-overview .devices { margin-top: 18px; }
+  .slide.devices-overview .device { padding: 22px 26px 24px; }
+  .slide.devices-overview .device .ix { font-size: 38px; margin-bottom: 10px; }
+  .slide.devices-overview .device h4 { font-size: 22px; margin: 0 0 8px; }
+  .slide.devices-overview .device p { font-size: 17px; line-height: 1.5; }
+  .slide.devices-overview .device code { font-size: 15px; }
+  .slide.devices-overview .device.fallback p { font-size: 19px; }
+  .slide.devices-overview .device.fallback .ix { font-size: 36px; margin-bottom: 6px; }
+  .slide.devices-overview .device.fallback h4 { font-size: 22px; }
+
+  /* ---------- Slide 9 FAC overview · compact heading + table ---------- */
+  .slide.fac-overview { padding-top: 11vh; padding-bottom: 9vh; }
+  .slide.fac-overview .heading-block { text-align: center; margin-bottom: 14px; }
+  .slide.fac-overview .heading-block .eyebrow { margin-bottom: 14px; }
+  .slide.fac-overview .heading-block h2.title {
+    font-size: clamp(40px, 4.6vw, 64px);
+    margin: 0 auto 12px;
+  }
+  .slide.fac-overview .heading-block .rule-line { margin: 0 auto 14px; }
+  .slide.fac-overview .heading-block p.lead {
+    font-size: clamp(16px, 1.35vw, 21px);
+    margin: 0 auto; max-width: 1100px; line-height: 1.5;
+  }
+  .slide.fac-overview .fac-frame { padding: 20px 26px 22px; margin-top: 12px; }
+  .slide.fac-overview .fac-row-label { margin-bottom: 8px; }
+  .slide.fac-overview .fac-row-label .lbl { font-size: 12px; }
+  .slide.fac-overview .fac-row-label .desc { font-size: 14px; }
+  .slide.fac-overview .fac-row { gap: 10px; margin-bottom: 12px; }
+  .slide.fac-overview .fac { padding: 12px 16px 14px; }
+  .slide.fac-overview .fac h5 { font-size: 19px; margin: 0 0 3px; }
+  .slide.fac-overview .fac .concept { font-size: 10.5px; margin: 0 0 7px; letter-spacing: .1em; }
+  .slide.fac-overview .fac .markers { font-size: 13px; line-height: 1.55; }
+  .slide.fac-overview .fac-divider { margin: 2px 0 8px; }
+  .slide.fac-overview .fac-divider .arrow { font-size: 14px; }
+  .slide.fac-overview .memorize-note { margin-top: 12px; padding: 14px 18px; gap: 18px; }
+  .slide.fac-overview .memorize-note .icon { width: 42px; height: 42px; flex: 0 0 42px; font-size: 26px; }
+  .slide.fac-overview .memorize-note .txt { font-size: 14.5px; line-height: 1.45; }
+
+  /* ---------- Slide 15: FAC 용어 정리 (terms reference) ---------- */
+  .terms-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 22px; margin-top: 28px;
+  }
+  .term-col {
+    background: var(--paper); border: 2px solid var(--rule);
+    padding: 26px 28px 28px; position: relative;
+  }
+  .term-col.evidence { border-top: 7px solid var(--accent-3); }
+  .term-col.conclusion { border-top: 7px solid var(--ink); background: var(--bg-alt); }
+  .term-col.assumption { border-top: 7px solid var(--accent); }
+  .term-col .head {
+    font-family: "Inter", sans-serif;
+    font-size: 12px; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--ink-mute); font-weight: 700; margin-bottom: 6px;
+  }
+  .term-col .kr {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 40px; font-weight: 500;
+    letter-spacing: -0.02em; margin: 0 0 4px; color: var(--ink);
+  }
+  .term-col .en {
+    font-family: "Fraunces", serif; font-style: italic;
+    font-size: 20px; color: var(--accent);
+    margin: 0 0 18px; font-weight: 500;
+  }
+  .term-col.conclusion .en { color: var(--ink-soft); }
+  .term-col.evidence .en { color: var(--accent-3); }
+  .term-col .verbs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .term-col .verbs span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px; font-weight: 700;
+    color: var(--accent-2);
+    padding: 6px 12px;
+    border: 1.5px solid var(--rule);
+    background: var(--bg);
+  }
+  .term-col.conclusion .verbs span { background: #FFFFFF; }
+
+  .terms-note {
+    margin-top: 22px; padding: 20px 28px;
+    background: var(--ink); color: #F4EFE6;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px;
+  }
+  .terms-note .item {
+    font-size: 19px; font-weight: 500;
+    line-height: 1.55; word-break: keep-all;
+  }
+  .terms-note .item b { color: var(--highlight); font-weight: 800; }
+  .terms-note .item .eq {
+    font-family: "Fraunces", serif; font-style: italic;
+    font-size: 22px; color: var(--highlight);
+    margin-right: 6px;
+  }
+
+  /* ---------- Slide 16: Verification flow ---------- */
+  .verif-flow {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr 60px 1fr;
+    align-items: stretch;
+    margin-top: 30px;
+  }
+  .verif-stage {
+    background: var(--paper); border: 2px solid var(--rule);
+    padding: 26px 26px 28px;
+  }
+  .verif-stage.before { background: var(--bg-alt); }
+  .verif-stage.middle { background: var(--accent); color: #F4EFE6; border-color: var(--accent); }
+  .verif-stage.after { background: #EFF3EC; border-color: var(--accent-3); }
+  .verif-stage .label {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .26em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 12px;
+  }
+  .verif-stage.middle .label { color: var(--highlight); }
+  .verif-stage.after .label { color: var(--accent-3); }
+  .verif-stage h4 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 32px; font-weight: 500;
+    margin: 0 0 18px; letter-spacing: -0.015em; line-height: 1.08;
+  }
+  .verif-stage .components {
+    display: grid; gap: 5px;
+    margin-bottom: 16px; padding: 12px 14px;
+    background: var(--bg); border: 1.5px solid var(--rule-soft);
+  }
+  .verif-stage.middle .components { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.28); }
+  .verif-stage.after .components { background: #FFFFFF; border-color: var(--accent-3); }
+  .verif-stage .components span {
+    font-family: "Inter", sans-serif;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: .02em; color: var(--ink);
+  }
+  .verif-stage.middle .components span { color: #F4EFE6; }
+  .verif-stage .components span b { color: var(--accent); font-weight: 800; }
+  .verif-stage.middle .components span b { color: var(--highlight); }
+  .verif-stage.after .components span b { color: var(--accent-3); }
+  .verif-stage .summary {
+    font-size: 16px; font-weight: 600;
+    line-height: 1.5; color: var(--ink-soft);
+    margin: 0 0 14px; word-break: keep-all;
+  }
+  .verif-stage.middle .summary { color: rgba(244,239,230,.92); }
+  .verif-stage.after .summary { color: var(--ink-soft); }
+  .verif-stage .keywords { display: flex; flex-wrap: wrap; gap: 6px; }
+  .verif-stage .keywords span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13.5px; font-weight: 700;
+    color: var(--accent-2);
+    padding: 5px 10px;
+    border: 1.5px solid var(--rule);
+    background: var(--paper);
+  }
+  .verif-stage.middle .keywords span {
+    background: rgba(0,0,0,.22); color: var(--highlight);
+    border-color: rgba(255,255,255,.35);
+  }
+  .verif-stage.after .keywords span {
+    background: #FFFFFF; color: var(--accent-3); border-color: var(--accent-3);
+  }
+  .verif-arrow {
+    display: grid; place-items: center;
+    font-family: "Fraunces", serif;
+    font-size: 54px; font-style: italic; color: var(--ink);
+  }
+  .verif-note {
+    margin-top: 22px; padding: 18px 24px;
+    background: var(--ink); color: #F4EFE6;
+    font-size: 17px; font-weight: 600;
+    line-height: 1.55; word-break: keep-all;
+  }
+  .verif-note b { color: var(--highlight); font-weight: 800; }
+  .verif-note code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 15px; font-weight: 700;
+    background: rgba(244,239,230,.15);
+    padding: 2px 8px; color: var(--highlight);
+  }
+
+  /* ---------- Slide 22 (problem types overview) · tight heading + table ---------- */
+  .slide.types-overview { padding-top: 8vh; padding-bottom: 7vh; }
+  .slide.types-overview .heading-block {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .slide.types-overview .heading-block .eyebrow { margin-bottom: 10px; font-size: 13px; }
+  .slide.types-overview .heading-block h2.title {
+    font-size: clamp(34px, 3.8vw, 56px);
+    margin: 0 auto 10px;
+  }
+  .slide.types-overview .heading-block .rule-line {
+    margin: 0 auto 10px;
+    width: 48px; height: 2px;
+  }
+  .slide.types-overview .heading-block p.lead {
+    font-size: clamp(14px, 1.15vw, 17px);
+    margin: 0 auto;
+    max-width: 920px;
+    line-height: 1.45;
+  }
+
+  /* ---------- Problem types table (terms-emphasized layout) ---------- */
+  .ptype-table {
+    margin-top: 10px; border: 2px solid var(--rule);
+    background: var(--paper); overflow: hidden;
+  }
+  .ptype-head, .ptype-row {
+    display: grid;
+    grid-template-columns: 0.55fr 1.85fr 1.15fr;
+    align-items: stretch;
+  }
+  .ptype-head {
+    background: var(--ink); color: #F4EFE6;
+    font-family: "Inter", sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .22em; text-transform: uppercase;
+  }
+  .ptype-head > div {
+    padding: 8px 18px;
+    border-right: 1px solid rgba(244,239,230,.18);
+  }
+  .ptype-head > div:last-child { border-right: none; }
+  .ptype-row { border-top: 1.5px solid var(--rule-soft); }
+  .ptype-row:nth-child(even) { background: var(--bg-alt); }
+  .ptype-row > div {
+    padding: 6px 18px;
+    border-right: 1px solid var(--rule-soft);
+    line-height: 1.35;
+    word-break: keep-all;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .ptype-row > div:last-child { border-right: none; }
+
+  /* LEFT — type name (compact) */
+  .ptype-row .type-name {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 600; font-size: 14px;
+    letter-spacing: -0.01em; color: var(--ink);
+    line-height: 1.15;
+  }
+  .ptype-row .type-name small {
+    display: block; font-family: "Inter", sans-serif;
+    font-size: 8.5px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent);
+    font-weight: 700; margin-top: 2px;
+  }
+
+  /* CENTER — terms (HERO column) */
+  .ptype-row .terms {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 17px;
+    color: var(--accent-2);
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+  }
+
+  /* RIGHT — approach (supporting) */
+  .ptype-row .approach {
+    color: var(--ink-soft); font-weight: 500;
+    font-size: 12.5px; line-height: 1.4;
+  }
+  .ptype-row .approach b { color: var(--ink); font-weight: 800; }
+
+  /* ---------- Problem-type detail page ---------- */
+  .ptype-detail {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .ptype-detail .left .role {
+    font-family: "Inter", sans-serif;
+    font-size: 14px; letter-spacing: .3em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--accent); margin-bottom: 18px;
+  }
+  .ptype-detail .left .kr-name {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: clamp(54px, 6.4vw, 100px);
+    font-weight: 500; line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 14px;
+  }
+  .ptype-detail .left .en-name {
+    font-family: "Fraunces", serif;
+    font-style: italic; font-weight: 400;
+    font-size: clamp(26px, 2.3vw, 38px);
+    color: var(--accent); margin: 0 0 28px;
+    line-height: 1.2;
+  }
+  .ptype-detail .left .approach-label {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .26em;
+    text-transform: uppercase; color: var(--ink-mute);
+    font-weight: 700; margin-bottom: 14px;
+    padding-bottom: 12px; border-bottom: 2px solid var(--rule);
+  }
+  .ptype-detail .left .approach {
+    font-size: 22px; line-height: 1.55;
+    color: var(--ink); font-weight: 500;
+    margin: 0; word-break: keep-all;
+  }
+  .ptype-detail .left .approach b { font-weight: 800; color: var(--ink); }
+  .ptype-detail .left .approach em {
+    font-family: "Fraunces", serif; font-style: italic;
+    font-weight: 500; color: var(--accent);
+  }
+  .ptype-detail .right {
+    border-left: 2px solid var(--rule);
+    padding-left: 50px;
+  }
+  .ptype-detail .right .label {
+    font-family: "Inter", sans-serif;
+    font-size: 13px; letter-spacing: .28em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--ink-mute); margin-bottom: 20px;
+  }
+  .term-chip {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(20px, 1.7vw, 28px);
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--paper);
+    border: 2px solid var(--rule);
+    padding: 12px 20px;
+    display: inline-block;
+    margin: 6px 8px 6px 0;
+    letter-spacing: -0.01em;
+  }
+  .term-chip.highlight {
+    background: var(--ink); color: var(--highlight);
+    border-color: var(--ink);
+  }
+
+  /* ---------- Top progress bar (scroll-driven) ---------- */
   .progress-top {
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 4px;
+    top: 0; left: 0; right: 0;
+    height: 3px;
     background: rgba(20,24,31,.08);
     z-index: 100;
   }
@@ -152,368 +1010,148 @@
     height: 100%;
     background: var(--accent);
     width: 0%;
+    will-change: width;
   }
 
-  /* ---------- Cover ---------- */
-  .cover-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 48px;
-    align-items: center;
-  }
-  @media (max-width: 768px) {
-    .cover-grid { grid-template-columns: 1fr; }
-  }
-  .cover-left .meta {
-    margin-top: 40px;
-    border-top: 2px solid var(--rule);
-    padding-top: 24px;
-  }
-  .cover-left .meta > div {
+  /* ---------- Scroll-down hint on cover ---------- */
+  .scroll-hint {
+    position: absolute;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: var(--ink-soft);
     font-family: "Inter", sans-serif;
-    font-size: 12px; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--ink-mute); font-weight: 700;
+    font-size: 12px; letter-spacing: .3em; text-transform: uppercase;
+    font-weight: 700;
+    z-index: 50;
+    animation: scrollFloat 2.4s ease-in-out infinite;
   }
-  .cover-left .meta b {
-    display: block; color: var(--ink);
-    font-family: "Fraunces", "Noto Serif KR", serif;
-    font-size: 26px; font-weight: 500;
-    margin-top: 8px; line-height: 1.2;
+  .scroll-hint .line {
+    width: 1.5px; height: 36px;
+    background: linear-gradient(to bottom, transparent, var(--ink));
   }
-  .cover-left .meta .pages {
-    display: block; font-family: "Inter", sans-serif;
-    font-size: 15px; font-weight: 600; color: var(--ink-soft);
-    margin-top: 4px;
-  }
-  .cover-figure {
-    aspect-ratio: 1 / 1;
-    border: 2px solid var(--rule);
-    position: relative;
-    background: repeating-linear-gradient(45deg, transparent 0 20px, rgba(20,24,31,.03) 20px 21px);
-    display: grid; place-items: center;
-    overflow: hidden;
-  }
-  .cover-figure .numerals {
-    font-family: "Fraunces", serif;
-    font-size: clamp(140px, 16vw, 240px);
-    font-weight: 300; line-height: 0.9; color: var(--ink);
-    text-align: center; z-index: 2;
-  }
-  .cover-figure .numerals em { font-style: italic; font-weight: 400; color: var(--accent); }
-  .cover-figure .numerals .step-label {
-    display: block; font-family: "Pretendard Variable", serif;
-    font-size: clamp(32px, 3.5vw, 48px); font-weight: 700; font-style: normal;
-    letter-spacing: .08em; margin-top: 4px; color: var(--ink);
-  }
-  .cover-figure::after {
-    content: ""; position: absolute; width: 70%; height: 70%;
-    border: 2px solid var(--rule-soft); border-radius: 50%; z-index: 1;
+  @keyframes scrollFloat {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: .9; }
+    50% { transform: translateX(-50%) translateY(8px); opacity: .5; }
   }
 
-  /* ---------- Grid Elements ---------- */
-  .steps, .devices, .principles {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 40px;
+  /* ---------- Side rail nav (small dots showing scroll position) ---------- */
+  .rail {
+    position: fixed;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 8px;
+    z-index: 60;
   }
-  
-  .step, .device, .principle {
-    background: var(--paper);
-    border: 2px solid var(--rule);
-    padding: 32px 28px;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s ease;
+  .rail .rail-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink);
+    opacity: .25;
+    cursor: pointer;
+    transition: opacity .25s ease, transform .25s ease, background .25s ease;
   }
-  .step:hover, .device:hover, .principle:hover {
-    transform: translateY(-4px);
+  .rail .rail-dot:hover { opacity: .6; transform: scale(1.35); }
+  .rail .rail-dot.active {
+    opacity: 1; background: var(--accent);
+    transform: scale(1.55);
+  }
+  @media (max-width: 900px) { .rail { display: none; } }
+
+  /* ---------- Reveal animations (Apple-style scroll-triggered) ---------- */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(48px);
+    transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--d, 0s);
+    will-change: opacity, transform;
+  }
+  .slide.in-view [data-reveal] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  [data-reveal-scale] {
+    opacity: 0;
+    transform: translateY(48px) scale(0.94);
+    transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--d, 0s);
+    will-change: opacity, transform;
+  }
+  .slide.in-view [data-reveal-scale] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  /* Cover figure gets a more dramatic entrance */
+  .slide .cover-figure[data-reveal-scale] {
+    transform: translateY(60px) scale(0.88);
   }
 
-  .step .stepname {
-    font-family: "Inter", sans-serif;
-    font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--ink-mute); font-weight: 700; margin-bottom: 8px;
+  /* Section separators - subtle */
+  .slide + .slide::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60px; height: 1px;
+    background: var(--rule-soft);
   }
-  .step .stepnum {
-    font-family: "Fraunces", serif;
-    font-size: 64px; font-weight: 300; font-style: italic;
-    color: var(--accent); line-height: 1; margin-bottom: 12px;
-  }
-  .step h3, .device h4, .principle h4 {
-    font-family: "Fraunces", "Noto Serif KR", serif;
-    font-size: 28px; font-weight: 500; margin: 0 0 14px;
-  }
-  .step p, .device p, .principle p {
-    margin: 0; color: var(--ink-soft); font-size: 17px; line-height: 1.6; word-break: keep-all;
-  }
-  .step p b, .device p b, .principle p b { color: var(--ink); font-weight: 800; }
-
-  .device .ix, .principle .num {
-    font-family: "Fraunces", serif; font-size: 36px; font-style: italic;
-    color: var(--accent); line-height: 1; margin-bottom: 12px; font-weight: 300;
-  }
-  .device code {
-    font-family: "JetBrains Mono", monospace; font-size: 15px; font-weight: 700; color: var(--accent-2);
-  }
-
-  .device.fallback {
-    grid-column: 1 / -1; background: var(--ink); color: #F4EFE6;
-  }
-  .device.fallback h4 { color: #F4EFE6; }
-  .device.fallback p { color: rgba(244,239,230,.85); }
-  .device.fallback .ix { color: var(--highlight); }
-
-  /* ---------- Rules Rules Rules ---------- */
-  .rules {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 32px;
-  }
-  .rule-card {
-    background: var(--paper); border: 2px solid var(--rule); padding: 32px 28px;
-  }
-  .rule-card .case {
-    font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
-    font-weight: 700; color: var(--accent); margin-bottom: 12px;
-  }
-  .rule-card h4 {
-    font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; font-weight: 500; margin: 0 0 14px;
-  }
-  .rule-card .arrow {
-    display: inline-block; font-family: "Fraunces", serif; font-size: 28px; font-style: italic;
-    color: var(--accent); margin-bottom: 8px;
-  }
-  .rule-card p { margin: 0; color: var(--ink-soft); font-size: 17px; line-height: 1.6; word-break: keep-all; }
-
-  /* ---------- Quiz Interaction Layout ---------- */
-  .quiz-wrap {
-    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; margin-top: 24px; align-items: start;
-  }
-  @media (max-width: 900px) {
-    .quiz-wrap { grid-template-columns: 1fr; }
-  }
-  .sentences { background: var(--paper); border: 2px solid var(--rule); padding: 24px; }
-  .sentences .legend {
-    font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--ink-mute); font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--rule-soft);
-  }
-  .sent {
-    display: flex; align-items: baseline; gap: 16px; padding: 12px 14px; cursor: pointer;
-    border-left: 4px solid transparent; transition: all .2s ease; font-family: "Fraunces", "Noto Serif KR", serif;
-  }
-  .sent:hover { background: #FAF6EE; border-left-color: var(--ink); }
-  .sent .nb { flex: 0 0 24px; font-family: "Inter", sans-serif; font-weight: 800; font-size: 15px; color: var(--ink-mute); }
-  .sent .text { flex: 1; font-size: 18px; color: var(--ink); line-height: 1.4; font-style: italic; }
-  .sent .marker { color: var(--accent); font-weight: 700; font-style: italic; margin-right: 4px; }
-  
-  .sent.correct { background: #EFF3EC; border-left-color: var(--accent-3); }
-  .sent.correct .text { color: var(--accent-3); font-weight: 500; }
-  .sent.wrong { background: #FBECE8; border-left-color: var(--accent); }
-  .sent.wrong .text { color: var(--accent); }
-  .sent.reveal { background: #FDF4D9; border-left-color: #B69400; }
-
-  .panel { background: var(--paper); border: 2px solid var(--rule); padding: 28px; }
-  .panel .prompt h3 { font-family: "Fraunces", "Noto Serif KR", serif; margin: 0 0 12px; font-size: 22px; font-weight: 500; }
-  .panel .prompt p { margin: 0; font-size: 16px; color: var(--ink-soft); line-height: 1.6; word-break: keep-all; }
-  
-  .feedback { display: none; border-top: 2px solid var(--rule-soft); padding-top: 18px; margin-top: 18px; }
-  .feedback.show { display: block; animation: fadeUp .35s ease both; }
-  .feedback .badge {
-    display: inline-block; padding: 4px 10px; border: 2px solid var(--rule);
-    font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-    font-weight: 700; margin-bottom: 12px;
-  }
-  .feedback .badge.ok { background: var(--accent-3); color: #F4EFE6; border-color: var(--accent-3); }
-  .feedback .badge.no { background: var(--accent); color: #F4EFE6; border-color: var(--accent); }
-  .feedback h4 { font-family: "Fraunces", serif; margin: 0 0 10px; font-size: 22px; font-weight: 500; }
-  .feedback p { margin: 0 0 8px; font-size: 16px; color: var(--ink-soft); line-height: 1.6; }
-  .feedback .verdict { color: var(--accent); font-family: "Fraunces", serif; font-style: italic; font-size: 18px; font-weight: 600; margin-top: 12px; }
-  .feedback .qual { margin-top: 12px; padding: 14px; background: #FDF4D9; border-left: 4px solid #B69400; font-size: 15px; line-height: 1.6; color: var(--ink); }
-
-  .actions { margin-top: 18px; display: flex; gap: 8px; }
-  .btn {
-    border: 2px solid var(--rule); background: transparent; color: var(--ink); padding: 8px 16px;
-    font-family: "Inter", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
-    cursor: pointer; transition: all .2s ease;
-  }
-  .btn:hover { background: var(--ink); color: #F4EFE6; }
-  .btn.primary { background: var(--ink); color: #F4EFE6; }
-  .btn.primary:hover { background: var(--accent); border-color: var(--accent); }
-
-  /* ---------- FAC Frame & Triad Layout ---------- */
-  .fac-frame { margin-top: 24px; border: 2px solid var(--rule); background: var(--paper); padding: 24px; }
-  .fac-row-label { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; gap: 10px; flex-wrap: wrap; }
-  .fac-row-label .lbl { font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--ink-mute); }
-  .fac-row-label .desc { font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 15px; color: var(--ink-soft); }
-  
-  .fac-row { display: grid; gap: 16px; margin-bottom: 20px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-  .fac { padding: 16px; background: var(--bg-alt); border: 1.5px solid var(--rule-soft); }
-  .fac.core { background: #14181F; color: #F4EFE6; border-color: var(--rule); box-shadow: 0 3px 0 var(--rule); }
-  .fac h5 { font-family: "Fraunces", serif; margin: 0 0 6px; font-size: 18px; font-weight: 500; }
-  .fac.core h5 { color: var(--highlight); font-style: italic; }
-  .fac .concept { font-family: "Inter", sans-serif; font-size: 11px; color: var(--ink-mute); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 8px; }
-  .fac.core .concept { color: rgba(244,239,230,.6); }
-  .fac .markers { font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--accent-2); font-weight: 600; line-height: 1.5; margin: 0; word-break: break-all; }
-  .fac.core .markers { color: #F0E0C0; }
-
-  .fac-divider { display: flex; align-items: center; gap: 12px; margin: 8px 0 16px; }
-  .fac-divider .line { flex: 1; height: 1px; background: var(--rule-soft); }
-  .fac-divider .arrow { font-family: "Fraunces", serif; font-style: italic; color: var(--ink-mute); font-size: 14px; }
-
-  .memorize-note { margin-top: 16px; padding: 16px; background: var(--accent); color: #F4EFE6; display: flex; align-items: center; gap: 16px; border: 2px solid var(--accent); }
-  .memorize-note .icon { font-family: "Fraunces", serif; font-style: italic; font-size: 28px; border: 2px solid rgba(244,239,230,.5); width: 44px; height: 44px; display: grid; place-items: center; flex: 0 0 44px; }
-  .memorize-note .txt { font-size: 15px; line-height: 1.5; font-weight: 600; word-break: keep-all; }
-
-  /* ---------- FAC Details Deep Dive ---------- */
-  .fac-detail { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center; }
-  @media (max-width: 768px) {
-    .fac-detail { grid-template-columns: 1fr; }
-  }
-  .fac-detail .left .role { font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--accent); margin-bottom: 12px; }
-  .fac-detail .left h2.detail-title { font-family: "Fraunces", "Noto Serif KR", serif; font-size: clamp(40px, 5vw, 72px); font-weight: 500; line-height: 1.0; margin: 0 0 16px; }
-  .fac-detail .left h2.detail-title em { font-style: italic; color: var(--accent); font-weight: 400; }
-  .fac-detail.core .left h2.detail-title em { color: var(--highlight); }
-  .fac-detail .left .concept-en { font-family: "Fraunces", serif; font-style: italic; font-weight: 400; font-size: 22px; color: var(--ink-soft); margin: 0 0 16px; }
-  .fac-detail .left .concept-kr { font-size: 17px; font-weight: 500; color: var(--ink); line-height: 1.6; margin: 0; word-break: keep-all; }
-  
-  .fac-detail .right { border-left: 2px solid var(--rule); padding-left: 32px; }
-  @media (max-width: 768px) {
-    .fac-detail .right { border-left: none; padding-left: 0; border-top: 2px solid var(--rule); padding-top: 24px; }
-  }
-  .fac-detail .right .label { font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--ink-mute); margin-bottom: 16px; }
-  .marker-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .marker-chip { font-family: "JetBrains Mono", monospace; font-size: clamp(16px, 1.4vw, 22px); font-weight: 700; color: var(--accent-2); background: var(--paper); border: 2px solid var(--rule); padding: 8px 14px; }
-  .marker-chip.kr { font-family: "Pretendard Variable", sans-serif; color: var(--ink); }
-  .fac-detail.core .marker-chip { background: #14181F; color: var(--highlight); border-color: #14181F; }
-  .fac-detail .right .note { margin-top: 18px; font-size: 15px; color: var(--ink-soft); line-height: 1.6; border-top: 1px solid var(--rule-soft); padding-top: 12px; }
-
-  /* ---------- Terms Lexicon Reference ---------- */
-  .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 24px; }
-  .term-col { background: var(--paper); border: 2px solid var(--rule); padding: 20px; position: relative; }
-  .term-col.evidence { border-top: 6px solid var(--accent-3); }
-  .term-col.conclusion { border-top: 6px solid var(--ink); background: var(--bg-alt); }
-  .term-col.assumption { border-top: 6px solid var(--accent); }
-  .term-col .head { font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-mute); font-weight: 700; margin-bottom: 4px; }
-  .term-col .kr { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 32px; font-weight: 500; margin: 0 0 2px; color: var(--ink); }
-  .term-col .en { font-family: "Fraunces", serif; font-style: italic; font-size: 16px; color: var(--accent); margin: 0 0 14px; font-weight: 500; }
-  .term-col.conclusion .en { color: var(--ink-soft); }
-  .term-col.evidence .en { color: var(--accent-3); }
-  .term-col .verbs { display: flex; flex-wrap: wrap; gap: 4px; }
-  .term-col .verbs span { font-family: "JetBrains Mono", monospace; font-size: 14px; font-weight: 700; color: var(--accent-2); padding: 4px 8px; border: 1.5px solid var(--rule); background: var(--bg); }
-
-  .terms-note { margin-top: 16px; padding: 16px; background: var(--ink); color: #F4EFE6; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-  .terms-note .item { font-size: 16px; font-weight: 500; line-height: 1.5; }
-  .terms-note .item b { color: var(--highlight); }
-  .terms-note .item .eq { font-family: "Fraunces", serif; font-style: italic; font-size: 18px; color: var(--highlight); margin-right: 4px; }
-
-  /* ---------- Verification Dynamic Flow ---------- */
-  .verif-flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; align-items: stretch; margin-top: 24px; }
-  .verif-stage { background: var(--paper); border: 2px solid var(--rule); padding: 20px; }
-  .verif-stage.before { background: var(--bg-alt); }
-  .verif-stage.middle { background: var(--accent); color: #F4EFE6; border-color: var(--accent); }
-  .verif-stage.after { background: #EFF3EC; border-color: var(--accent-3); }
-  .verif-stage .label { font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 8px; }
-  .verif-stage.middle .label { color: var(--highlight); }
-  .verif-stage.after .label { color: var(--accent-3); }
-  .verif-stage h4 { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 24px; font-weight: 500; margin: 0 0 12px; line-height: 1.1; }
-  
-  .verif-stage .components { display: grid; gap: 4px; margin-bottom: 12px; padding: 8px 12px; background: var(--bg); border: 1.5px solid var(--rule-soft); }
-  .verif-stage.middle .components { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.28); }
-  .verif-stage.after .components { background: #FFFFFF; border-color: var(--accent-3); }
-  .verif-stage .components span { font-family: "Inter", sans-serif; font-size: 13px; font-weight: 700; color: var(--ink); }
-  .verif-stage.middle .components span { color: #F4EFE6; }
-  .verif-stage .components span b { color: var(--accent); }
-  .verif-stage.middle .components span b { color: var(--highlight); }
-  .verif-stage.after .components span b { color: var(--accent-3); }
-  
-  .verif-stage .summary { font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--ink-soft); margin: 0 0 12px; word-break: keep-all; }
-  .verif-stage.middle .summary { color: rgba(244,239,230,.92); }
-  .verif-stage .keywords { display: flex; flex-wrap: wrap; gap: 4px; }
-  .verif-stage .keywords span { font-family: "JetBrains Mono", monospace; font-size: 12px; font-weight: 700; color: var(--accent-2); padding: 4px 6px; border: 1.5px solid var(--rule); background: var(--paper); }
-  .verif-stage.middle .keywords span { background: rgba(0,0,0,.22); color: var(--highlight); border-color: rgba(255,255,255,.35); }
-  .verif-stage.after .keywords span { background: #FFFFFF; color: var(--accent-3); border-color: var(--accent-3); }
-  
-  .verif-note { margin-top: 16px; padding: 14px 20px; background: var(--ink); color: #F4EFE6; font-size: 15px; font-weight: 600; line-height: 1.5; }
-  .verif-note b { color: var(--highlight); }
-  .verif-note code { font-family: "JetBrains Mono", monospace; font-size: 14px; background: rgba(244,239,230,.15); padding: 2px 6px; color: var(--highlight); }
-
-  /* ---------- Mega Matrix Problem Table ---------- */
-  .ptype-table { margin-top: 16px; border: 2px solid var(--rule); background: var(--paper); overflow-x: auto; }
-  .ptype-head, .ptype-row { display: grid; grid-template-columns: 200px 1fr 1fr; min-width: 750px; align-items: stretch; }
-  .ptype-head { background: var(--ink); color: #F4EFE6; font-family: "Inter", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
-  .ptype-head > div { padding: 12px 16px; border-right: 1px solid rgba(244,239,230,.15); }
-  .ptype-head > div:last-child { border-right: none; }
-  .ptype-row { border-top: 1.5px solid var(--rule-soft); }
-  .ptype-row:nth-child(even) { background: var(--bg-alt); }
-  .ptype-row > div { padding: 12px 16px; border-right: 1px solid var(--rule-soft); display: flex; flex-direction: column; justify-content: center; word-break: keep-all; }
-  .ptype-row > div:last-child { border-right: none; }
-  
-  .ptype-row .type-name { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 15px; color: var(--ink); }
-  .ptype-row .type-name small { display: block; font-family: "Inter", sans-serif; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-top: 4px; }
-  .ptype-row .terms { font-family: "JetBrains Mono", monospace; font-size: 15px; color: var(--accent-2); font-weight: 700; line-height: 1.4; }
-  .ptype-row .approach { color: var(--ink-soft); font-weight: 500; font-size: 14px; line-height: 1.5; }
-  .ptype-row .approach b { color: var(--ink); font-weight: 800; }
-
-  /* ---------- Problem Type Specific Detail Deep Dives ---------- */
-  .ptype-detail { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center; }
-  @media (max-width: 768px) {
-    .ptype-detail { grid-template-columns: 1fr; }
-  }
-  .ptype-detail .left .role { font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--accent); margin-bottom: 12px; }
-  .ptype-detail .left .kr-name { font-family: "Fraunces", "Noto Serif KR", serif; font-size: clamp(36px, 4.5vw, 64px); font-weight: 500; line-height: 1.1; margin: 0 0 8px; }
-  .ptype-detail .left .en-name { font-family: "Fraunces", serif; font-style: italic; font-weight: 400; font-size: 22px; color: var(--accent); margin: 0 0 20px; }
-  .ptype-detail .left .approach-label { font-family: "Inter", sans-serif; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-mute); font-weight: 700; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--rule); }
-  .ptype-detail .left .approach { font-size: 17px; line-height: 1.6; color: var(--ink); font-weight: 500; margin: 0; word-break: keep-all; }
-  .ptype-detail .left .approach b { font-weight: 800; }
-  .ptype-detail .left .approach em { font-family: "Fraunces", serif; font-style: italic; color: var(--accent); }
-  
-  .ptype-detail .right { border-left: 2px solid var(--rule); padding-left: 32px; }
-  @media (max-width: 768px) {
-    .ptype-detail .right { border-left: none; padding-left: 0; border-top: 2px solid var(--rule); padding-top: 20px; }
-  }
-  .ptype-detail .right .label { font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--ink-mute); margin-bottom: 14px; }
-  .term-chip { font-family: "JetBrains Mono", monospace; font-size: 16px; font-weight: 700; color: var(--ink); background: var(--paper); border: 2px solid var(--rule); padding: 8px 14px; display: inline-block; margin: 4px 4px 4px 0; }
-  .term-chip.highlight { background: var(--ink); color: var(--highlight); border-color: var(--ink); }
+  .slide.dark + .slide::before { background: transparent; }
+  .slide + .slide.dark::before { background: transparent; }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .em-serif { font-family: "Fraunces", serif; font-style: italic; font-weight: 400; }
+  .hint {
+    margin-top: 22px;
+    font-size: 14px;
+    color: var(--ink-mute);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 700;
   }
 </style>
 </head>
 <body>
 
-<div class="progress-top"><div class="progress-fill" id="bar-fill"></div></div>
-
 <div class="stage">
+  <div class="slides" id="slides">
 
+    <!-- 1: COVER -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>GRE Verbal · Pattern Book</span></div>
-          <div>01 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>GRE Verbal · Pattern Book</span></div>
+        <div>01 / 32</div>
+      </div>
+      <div class="cover-grid">
+        <div class="cover-left">
+          <div class="eyebrow">Reading Comprehension · 3단계 전략</div>
+          <h1 class="display">바로 읽지 말고,<br><em>준비</em>부터.</h1>
+          <p class="lead">시간 안에 답을 맞히려면, 본문을 읽기 <b>전에</b> 무엇을 어디서 찾을지를 먼저 정해 두어야 합니다. 오늘은 그 <b>3단계 전략</b>—주제 · 흐름 · 문제—을 익힙니다.</p>
+          <div class="meta">
+            <div>Source<b>GRE Verbal Pattern Book</b><span class="pages">p. 75–79, 93, 104–105</span></div>
+          </div>
         </div>
-        <div class="cover-grid">
-          <div class="cover-left">
-            <div class="eyebrow">Reading Comprehension · 3단계 전략</div>
-            <h1 class="display">바로 읽지 말고,<br><em>준비</em>부터.</h1>
-            <p class="lead">시간 안에 답을 맞히려면, 본문을 읽기 <b>전에</b> 무엇을 어디서 찾을지를 먼저 정해 두어야 합니다. 오늘은 그 <b>3단계 전략</b>—주제 · 흐름 · 문제—을 익힙니다.</p>
-            <div class="meta">
-              <div>Source<b>GRE Verbal Pattern Book</b><span class="pages">p. 75–79, 93, 104–105</span></div>
-            </div>
-          </div>
-          <div class="cover-figure">
-            <div class="numerals"><em>3</em><span class="step-label">단계</span></div>
-          </div>
+        <div class="cover-figure">
+          <div class="numerals"><em>3</em><span class="step-label">단계</span></div>
         </div>
       </div>
+      <div class="scroll-hint"><span>SCROLL</span><span class="line"></span></div>
     </section>
 
+    <!-- 2: 3 STEPS OVERVIEW -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Overview · The 3 Steps</span></div>
-          <div>02 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Overview · The 3 Steps</span></div>
+        <div>02 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Reading Strategy · Overview</div>
         <h2 class="title">읽기 전에 거치는 <em>세 단계</em>.</h2>
         <div class="rule-line"></div>
@@ -541,16 +1179,19 @@
       </div>
     </section>
 
-    <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Step 1 · Topic Markers</span></div>
-          <div>03 / 32</div>
+    <!-- 3: TOPIC DEVICES -->
+    <section class="slide devices-overview">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Step 1 · Topic Markers</span></div>
+        <div>03 / 32</div>
+      </div>
+      <div>
+        <div class="heading-block">
+          <div class="eyebrow">Step One · 다섯 가지 주제 장치</div>
+          <h2 class="title">마침표 뒤, <em>이 다섯 가지</em>만 본다.</h2>
+          <div class="rule-line"></div>
+          <p class="lead">아래 신호가 보이는 문장은 <b>주제 후보</b>. 본문 전체가 아니라 이 다섯 신호부터 스캔하세요.</p>
         </div>
-        <div class="eyebrow">Step One · 다섯 가지 주제 장치</div>
-        <h2 class="title">마침표 뒤, <em>이 Classification</em>만 본다.</h2>
-        <div class="rule-line"></div>
-        <p class="lead">아래 신호가 보이는 문장은 <b>주제 후보</b>. 본문 전체가 아니라 이 다섯 신호부터 스캔하세요.</p>
         <div class="devices">
           <div class="device">
             <div class="ix">i.</div>
@@ -559,12 +1200,12 @@
           </div>
           <div class="device">
             <div class="ix">ii.</div>
-            <h4>For example의 앞 문장</h4>
+            <h4>For example의 <em class="em-serif">앞 문장</em></h4>
             <p>예시는 일반화의 결과입니다. 따라서 그 <b>앞 문장</b>이 주제 후보가 됩니다.</p>
           </div>
           <div class="device">
             <div class="ix">iii.</div>
-            <h4>양보절의 주절</h4>
+            <h4>양보절의 <em class="em-serif">주절</em></h4>
             <p><code>Although ~ , [주절]</code> · <code>Since ~ , [주절]</code> · <code>While ~ , [주절]</code></p>
           </div>
           <div class="device">
@@ -586,12 +1227,13 @@
       </div>
     </section>
 
+    <!-- 4: TOPIC RULES -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Step 1 · Decision Rules</span></div>
-          <div>04 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Step 1 · Decision Rules</span></div>
+        <div>04 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Step One · 우선순위 규칙</div>
         <h2 class="title">후보가 여러 개일 때, <em>어떤 것</em>이 진짜?</h2>
         <div class="rule-line"></div>
@@ -599,19 +1241,19 @@
         <div class="rules">
           <div class="rule-card">
             <div class="case">Case A · 연속</div>
-            <h4>장치가 연달아 나오면</h4>
+            <h4>장치가 <em class="em-serif">연달아</em> 나오면</h4>
             <span class="arrow">↓</span>
             <p>그 묶음의 <b>마지막 후보</b>가 전체 주제.</p>
           </div>
           <div class="rule-card">
             <div class="case">Case B · 단절</div>
-            <h4>사이에 일반 문장이 끼면</h4>
+            <h4>사이에 <em class="em-serif">일반 문장</em>이 끼면</h4>
             <span class="arrow">↓</span>
-            <p>일반 문장 <b>바로 앞</b>의 후보가 전체 주제.<br>(뒤의 후보는 주제의 한정일 가능성.)</p>
+            <p>일반 문장 <b>바로 앞</b>의 후보가 전체 주제.<br>(뒤의 후보는 주제의 <em class="em-serif">한정</em>일 가능성.)</p>
           </div>
           <div class="rule-card">
             <div class="case">Case C · 부재</div>
-            <h4>장치가 전혀 없으면</h4>
+            <h4>장치가 <em class="em-serif">전혀</em> 없으면</h4>
             <span class="arrow">↓</span>
             <p>본문 <b>첫 문장</b>. 두 단락 이상이면 <b>둘째 단락의 첫 문장</b>.</p>
           </div>
@@ -619,12 +1261,13 @@
       </div>
     </section>
 
+    <!-- 5: QUIZ 1 -->
     <section class="slide" id="quiz1">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Practice · Example 1</span></div>
-          <div>05 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Practice · Example 1</span></div>
+        <div>05 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Practice · Find the Topic Sentence</div>
         <h2 class="title">이 글의 <em>주제 문장</em>은 몇 번?</h2>
         <div class="quiz-wrap">
@@ -648,11 +1291,11 @@
             </div>
             <div class="feedback" id="fb1">
               <span class="badge ok" id="fb1-badge">Correct</span>
-              <h4>정답은 4번.</h4>
-              <p><b>Although ~ , [주절]</b>의 주절은 3번. <em>→ 후보 ①</em></p>
-              <p><b>For example의 앞 문장</b>은 4번. <em>→ 후보 ②</em></p>
+              <h4>정답은 <em class="em-serif">4번</em>.</h4>
+              <p><b>Although ~ , [주절]</b>의 주절은 3번. <em class="em-serif">→ 후보 ①</em></p>
+              <p><b>For example의 앞 문장</b>은 4번. <em class="em-serif">→ 후보 ②</em></p>
               <p>두 후보가 <b>연달아</b> 등장(3 → 4) → <b>Case A</b> 적용 → 뒤의 후보가 전체 주제.</p>
-              <div class="verdict">∴ 정답 = 4번 문장</div>
+              <p class="verdict">∴ 정답 = 4번 문장</p>
             </div>
             <div class="actions">
               <button class="btn" onclick="reveal(1)">Reveal Answer</button>
@@ -663,12 +1306,13 @@
       </div>
     </section>
 
+    <!-- 6: QUIZ 2 -->
     <section class="slide paper" id="quiz2">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Practice · Example 2</span></div>
-          <div>06 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Practice · Example 2</span></div>
+        <div>06 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Practice · Four Candidates</div>
         <h2 class="title">장치가 <em>네 개</em>. 어떤 것이 주제?</h2>
         <div class="quiz-wrap">
@@ -690,11 +1334,11 @@
             </div>
             <div class="feedback" id="fb2">
               <span class="badge ok" id="fb2-badge">Correct</span>
-              <h4>정답은 3번.</h4>
+              <h4>정답은 <em class="em-serif">3번</em>.</h4>
               <p>2 → 3은 연속된 후보. <b>Case A</b>에 따라 묶음의 주제 후보는 <b>3번</b>.</p>
               <p>그 뒤로 <b>일반 문장 4번</b>이 끼어듭니다. <b>Case B</b> 적용.</p>
-              <p>일반 문장 <b>바로 앞의 후보</b>(=3번)가 전체 주제. 5·6번(However, Therefore)은 주제를 뒤에서 한정·재진술하는 역할.</p>
-              <div class="verdict">∴ 정답 = 3번 문장</div>
+              <p>일반 문장 <b>바로 앞의 후보</b>(=3번)가 전체 주제. 5·6번(However, Therefore)은 주제를 뒤에서 <em class="em-serif">한정·재진술</em>하는 역할.</p>
+              <p class="verdict">∴ 정답 = 3번 문장</p>
             </div>
             <div class="actions">
               <button class="btn" onclick="reveal(2)">Reveal Answer</button>
@@ -705,12 +1349,13 @@
       </div>
     </section>
 
+    <!-- 7: QUIZ 3 -->
     <section class="slide" id="quiz3">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Practice · Example 3</span></div>
-          <div>07 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Practice · Example 3</span></div>
+        <div>07 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Practice · Distant Candidates</div>
         <h2 class="title">멀리 떨어진 두 후보, <em>어느 쪽</em>?</h2>
         <div class="quiz-wrap">
@@ -732,14 +1377,14 @@
             </div>
             <div class="feedback" id="fb3">
               <span class="badge ok" id="fb3-badge">Correct</span>
-              <h4>정답은 3번.</h4>
+              <h4>정답은 <em class="em-serif">3번</em>.</h4>
               <p>후보 3과 6 사이에 <b>일반 문장 4·5</b>가 끼어 있습니다. <b>Case B</b> 적용.</p>
               <p>일반 문장 <b>바로 앞</b>의 후보 = <b>3번</b>이 전체 주제.</p>
               <div class="qual">
                 <b>중요한 추가 인사이트.</b>
-                <b>6번 (Nevertheless ~)</b> 문장은 글 전체의 새 주제가 아니라, 3번에서 제시된 주제에 대한 한정(qualification)일 가능성이 큽니다. "그럼에도 불구하고 ~한 면이 있다"는 식의 제한 · 단서를 다는 역할이지, 글 전체를 대표하는 새 주제가 아닙니다.
+                <b>6번 (Nevertheless ~)</b> 문장은 글 전체의 새 주제가 아니라, 3번에서 제시된 주제에 대한 <em class="em-serif">한정(qualification)</em>일 가능성이 큽니다. "그럼에도 불구하고 ~한 면이 있다"는 식의 <b>제한 · 단서</b>를 다는 역할이지, 글 전체를 대표하는 새 주제가 아닙니다.
               </div>
-              <div class="verdict">∴ 정답 = 3번 문장</div>
+              <p class="verdict">∴ 정답 = 3번 문장</p>
             </div>
             <div class="actions">
               <button class="btn" onclick="reveal(3)">Reveal Answer</button>
@@ -750,54 +1395,56 @@
       </div>
     </section>
 
+    <!-- 8: STEP 2 OVERVIEW -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Step 2 · Flow & Function</span></div>
-          <div>08 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Step 2 · Flow & Function</span></div>
+        <div>08 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Step Two · 구조를 읽는다</div>
         <h2 class="title"><em>주어와 동사</em>만 보면, 구조가 보인다.</h2>
         <div class="rule-line"></div>
         <p class="lead">주제를 잡았다면 이제 각 문장의 <b>역할</b>을 식별합니다. 모든 단어를 읽지 않습니다. 마침표 뒤의 주어 · 동사 · 연결어만으로 충분합니다.</p>
         <div class="flow">
-          <div class="principle">
-            <div class="num">01</div>
+          <div class="flow-card">
+            <div class="tag">Heuristic · 01</div>
             <h4>반복 주어 = 주인공</h4>
             <p>가장 자주 등장하는 주어가 글의 <b>중심 인물 · 핵심 개념</b>. 첫 단락에서 빠르게 식별하세요.</p>
           </div>
-          <div class="principle">
-            <div class="num">02</div>
+          <div class="flow-card">
+            <div class="tag">Heuristic · 02</div>
             <h4>동사가 곧 기능</h4>
-            <p>주어 뒤의 <b>FAC 표시자</b>로 그 문장이 Fact · Assumption · Conclusion 중 무엇인지 판별합니다.</p>
+            <p>주어 뒤의 <b>FAC 표시자</b>로 그 문장이 <em class="em-serif">Fact · Assumption · Conclusion</em> 중 무엇인지 판별합니다.</p>
           </div>
-          <div class="principle">
-            <div class="num">03</div>
+          <div class="flow-card">
+            <div class="tag">Heuristic · 03</div>
             <h4>연결어로 골격</h4>
-            <p>마침표 뒤의 <code>However · Thus · Moreover</code>가 전체 <b>Argument 단계</b>를 보여줍니다.</p>
+            <p>마침표 뒤의 <code style="font-family:'JetBrains Mono';color:var(--accent-2);font-weight:700;">However · Thus · Moreover</code>가 전체 <b>Argument 단계</b>를 보여줍니다.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Step 2 · FAC Reference</span></div>
-          <div>09 / 32</div>
-        </div>
+    <!-- 9: FAC TABLE OVERVIEW -->
+    <section class="slide fac-overview">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Step 2 · FAC Reference</span></div>
+        <div>09 / 32</div>
+      </div>
+      <div>
         <div class="heading-block">
           <div class="eyebrow">FAC · 한눈에 보기</div>
           <h2 class="title">모든 문장은 <em>FAC</em>를 중심으로 움직인다.</h2>
           <div class="rule-line"></div>
-          <p class="lead"><b>FACT · ASSUMPTION · CONCLUSION</b>이 글의 핵심 축.<br>앞에는 논박의 대상이, 뒤에는 그 축을 검증 · 약화 · 강화 · 양보하는 장치들이 따라옵니다.</p>
+          <p class="lead"><b>FACT · ASSUMPTION · CONCLUSION</b>이 글의 핵심 축.<br>앞에는 <em class="em-serif">논박의 대상</em>이, 뒤에는 그 축을 <em class="em-serif">검증 · 약화 · 강화 · 양보</em>하는 장치들이 따라옵니다.</p>
         </div>
         <div class="fac-frame">
           <div class="fac-row-label">
             <span class="lbl">Before FAC · Setting the Stage</span>
             <span class="desc">— 논박할 대상과 글의 소재 —</span>
           </div>
-          <div class="fac-row">
+          <div class="fac-row top">
             <div class="fac">
               <h5>논박 대상</h5>
               <p class="concept">Object of Refutation</p>
@@ -818,7 +1465,7 @@
             <span class="lbl">FAC · The Core</span>
             <span class="desc">— 논리의 중심축 —</span>
           </div>
-          <div class="fac-row">
+          <div class="fac-row center">
             <div class="fac core">
               <h5>F · Fact</h5>
               <p class="concept">Anecdotal Fact</p>
@@ -844,7 +1491,7 @@
             <span class="lbl">After FAC · Operations</span>
             <span class="desc">— 검증 · 약화 · 강화 · 양보 —</span>
           </div>
-          <div class="fac-row">
+          <div class="fac-row bottom last">
             <div class="fac">
               <h5>Verification</h5>
               <p class="concept">검증 · Empirical</p>
@@ -863,173 +1510,169 @@
             <div class="fac">
               <h5>Concession</h5>
               <p class="concept">논박 대상의 장점 인정</p>
-              <p class="markers">Certainly / Of course / True / Granted ~ , but … · do ~ , but … · may indeed … , but …</p>
+              <p class="markers">Certainly / Of course / True / Granted ~ , but … · 강조의 do ~ , but … · may indeed … , but …</p>
             </div>
           </div>
           <div class="memorize-note">
             <div class="icon">!</div>
             <div class="txt">
-              <b>이 동사들과 연결어는 반드시 암기하세요.</b> Reading에서는 문장의 기능을 곧바로 식별하게 해 주고, Writing에서는 논증의 단계를 정확히 표현하게 해 줍니다. 암기 없이는 둘 다 흔들립니다.
+              <b>이 동사들과 연결어는 반드시 암기하세요.</b>  Reading에서는 <em class="em-serif">문장의 기능</em>을 곧바로 식별하게 해 주고, Writing에서는 <em class="em-serif">논증의 단계</em>를 정확히 표현하게 해 줍니다. 암기 없이는 둘 다 흔들립니다.
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 10: FAC DETAIL — 논박 대상 -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · Before · 논박 대상</span></div>
-          <div>10 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Before · 논박 대상</span></div>
+        <div>10 / 32</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">Before FAC · 01</div>
+          <h2 class="detail-title">논박<br><em>대상</em></h2>
+          <p class="concept-en">Object of Refutation</p>
+          <p class="concept-kr">필자가 <b>논박 · 수정 · 제한</b>의 대상으로 제시하는 일반론. 보통 글의 도입부에서 "흔히/통상" 받아들여진 견해로 등장합니다.</p>
         </div>
-        <div class="fac-detail">
-          <div class="left">
-            <div class="role">Before FAC · 01</div>
-            <h2 class="detail-title">논박<br><em>대상</em></h2>
-            <p class="concept-en">Object of Refutation</p>
-            <p class="concept-kr">필자가 <b>논박 · 수정 · 제한</b>의 대상으로 제시하는 일반론. 보통 글의 도입부에서 "흔히/통상" 받아들여진 견해로 등장합니다.</p>
+        <div class="right">
+          <div class="label">Key Markers · 핵심 표시자</div>
+          <div class="marker-grid">
+            <span class="marker-chip">some</span>
+            <span class="marker-chip">most</span>
+            <span class="marker-chip">many</span>
+            <span class="marker-chip">commonly</span>
+            <span class="marker-chip">conventional</span>
+            <span class="marker-chip">traditional</span>
+            <span class="marker-chip">long</span>
+            <span class="marker-chip">established</span>
+            <span class="marker-chip">accepted</span>
           </div>
-          <div class="right">
-            <div class="label">Key Markers · 핵심 표시자</div>
-            <div class="marker-grid">
-              <span class="marker-chip">some</span>
-              <span class="marker-chip">most</span>
-              <span class="marker-chip">many</span>
-              <span class="marker-chip">commonly</span>
-              <span class="marker-chip">conventional</span>
-              <span class="marker-chip">traditional</span>
-              <span class="marker-chip">long</span>
-              <span class="marker-chip">established</span>
-              <span class="marker-chip">accepted</span>
-            </div>
-            <p class="note">이 표시자가 보이면 그 문장은 <b>주제가 아니라 주제의 적</b>입니다. 뒤에 반드시 <em>But · However</em> 같은 반전이 따라옵니다.</p>
-          </div>
+          <p class="note">이 표시자가 보이면 그 문장은 <b>주제가 아니라 주제의 적</b>입니다. 뒤에 반드시 <em class="em-serif">But · However</em> 같은 반전이 따라옵니다.</p>
         </div>
       </div>
     </section>
 
+    <!-- 11: FAC DETAIL — 제목 · 소재 -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · Before · 제목 · 소재</span></div>
-          <div>11 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Before · 제목 · 소재</span></div>
+        <div>11 / 32</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">Before FAC · 02</div>
+          <h2 class="detail-title">제목<br><em>· 소재</em></h2>
+          <p class="concept-en">Subject of the Passage</p>
+          <p class="concept-kr">글 전체가 다룰 <b>소재 · 문제 의식</b>을 처음 던지는 문장. 의문문이거나 "어렵다 · 까다롭다"는 어휘를 동반합니다.</p>
         </div>
-        <div class="fac-detail">
-          <div class="left">
-            <div class="role">Before FAC · 02</div>
-            <h2 class="detail-title">제목<br><em>· 소재</em></h2>
-            <p class="concept-en">Subject of the Passage</p>
-            <p class="concept-kr">글 전체가 다룰 <b>소재 · 문제 의식</b>을 처음 던지는 문장. 의문문이거나 "어렵다 · 까다롭다"는 어휘를 동반합니다.</p>
+        <div class="right">
+          <div class="label">Key Markers · 핵심 표시자</div>
+          <div class="marker-grid">
+            <span class="marker-chip kr">의문문</span>
+            <span class="marker-chip">difficult</span>
+            <span class="marker-chip">perplexing</span>
+            <span class="marker-chip">vexed</span>
+            <span class="marker-chip">not easy</span>
           </div>
-          <div class="right">
-            <div class="label">Key Markers · 핵심 표시자</div>
-            <div class="marker-grid">
-              <span class="marker-chip kr">의문문</span>
-              <span class="marker-chip">difficult</span>
-              <span class="marker-chip">perplexing</span>
-              <span class="marker-chip">vexed</span>
-              <span class="marker-chip">not easy</span>
-            </div>
-            <p class="note">의문문은 곧 글의 <b>제목</b>입니다. 그 답을 찾는 과정이 본문의 흐름이며, 답에 해당하는 문장이 보통 <em>Conclusion</em>입니다.</p>
-          </div>
+          <p class="note">의문문은 곧 글의 <b>제목</b>입니다. 그 답을 찾는 과정이 본문의 흐름이며, 답에 해당하는 문장이 보통 <em class="em-serif">Conclusion</em>입니다.</p>
         </div>
       </div>
     </section>
 
+    <!-- 12: FAC DETAIL — FACT -->
     <section class="slide dark">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · Core · Fact</span></div>
-          <div>12 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Core · Fact</span></div>
+        <div>12 / 32</div>
+      </div>
+      <div class="fac-detail core">
+        <div class="left">
+          <div class="role" style="color:var(--highlight);">FAC Core · F</div>
+          <h2 class="detail-title">F<br><em>Fact</em></h2>
+          <p class="concept-en" style="color:rgba(244,239,230,.7);">Anecdotal Fact / Observation</p>
+          <p class="concept-kr" style="color:#F4EFE6;">관찰된 <b>일화적 사실 · 자료</b>. "이미 확인된 것"으로 제시되는 단일 사례입니다. 일반화는 아닙니다.</p>
         </div>
-        <div class="fac-detail core">
-          <div class="left">
-            <div class="role" style="color:var(--highlight);">FAC Core · F</div>
-            <h2 class="detail-title">F<br><em>Fact</em></h2>
-            <p class="concept-en" style="color:rgba(244,239,230,.7);">Anecdotal Fact / Observation</p>
-            <p class="concept-kr" style="color:#F4EFE6;">관찰된 <b>일화적 사실 · 자료</b>. "이미 확인된 것"으로 제시되는 단일 사례입니다. 일반화는 아닙니다.</p>
+        <div class="right" style="border-color:#F4EFE6;">
+          <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">find</span>
+            <span class="marker-chip">discover</span>
+            <span class="marker-chip">note</span>
+            <span class="marker-chip">know</span>
+            <span class="marker-chip">report</span>
+            <span class="marker-chip">evidence</span>
           </div>
-          <div class="right" style="border-color:#F4EFE6;">
-            <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
-            <div class="marker-grid">
-              <span class="marker-chip">find</span>
-              <span class="marker-chip">discover</span>
-              <span class="marker-chip">note</span>
-              <span class="marker-chip">know</span>
-              <span class="marker-chip">report</span>
-              <span class="marker-chip">evidence</span>
-            </div>
-            <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">전달동사 — that 절을 목적어로 가집니다. <em class="em-serif" style="color:var(--highlight);">"X reports that ~"</em> 형태에서 that 이하가 곧 Fact의 내용.</p>
-          </div>
+          <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">전달동사 — that 절을 목적어로 가집니다. <em class="em-serif" style="color:var(--highlight);">"X reports that ~"</em> 형태에서 that 이하가 곧 Fact의 내용.</p>
         </div>
       </div>
     </section>
 
+    <!-- 13: FAC DETAIL — ASSUMPTION -->
     <section class="slide dark">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · Core · Assumption</span></div>
-          <div>13 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Core · Assumption</span></div>
+        <div>13 / 32</div>
+      </div>
+      <div class="fac-detail core">
+        <div class="left">
+          <div class="role" style="color:var(--highlight);">FAC Core · A</div>
+          <h2 class="detail-title">A<br><em>Assumption</em></h2>
+          <p class="concept-en" style="color:rgba(244,239,230,.7);">General Principle · Premise</p>
+          <p class="concept-kr" style="color:#F4EFE6;">논증의 <b>전제 · 일반 원리</b>. 증명 없이 받아들이고 그 위에서 결론을 끌어내는 토대입니다.</p>
         </div>
-        <div class="fac-detail core">
-          <div class="left">
-            <div class="role" style="color:var(--highlight);">FAC Core · A</div>
-            <h2 class="detail-title">A<br><em>Assumption</em></h2>
-            <p class="concept-en" style="color:rgba(244,239,230,.7);">General Principle · Premise</p>
-            <p class="concept-kr" style="color:#F4EFE6;">논증의 <b>전제 · 일반 원리</b>. 증명 없이 받아들이고 그 위에서 결론을 끌어내는 토대입니다.</p>
+        <div class="right" style="border-color:#F4EFE6;">
+          <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">assume</span>
+            <span class="marker-chip">presume</span>
+            <span class="marker-chip">premise</span>
           </div>
-          <div class="right" style="border-color:#F4EFE6;">
-            <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
-            <div class="marker-grid">
-              <span class="marker-chip">assume</span>
-              <span class="marker-chip">presume</span>
-              <span class="marker-chip">premise</span>
-            </div>
-            <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">Assumption은 공격의 표적입니다. <em class="em-serif" style="color:var(--highlight);">Weakening</em> 문제에서 무엇을 부정해야 하는지의 1순위가 바로 이 전제.</p>
-          </div>
+          <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">Assumption은 공격의 표적입니다. <em class="em-serif" style="color:var(--highlight);">Weakening</em> 문제에서 무엇을 부정해야 하는지의 1순위가 바로 이 전제.</p>
         </div>
       </div>
     </section>
 
+    <!-- 14: FAC DETAIL — CONCLUSION -->
     <section class="slide dark">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · Core · Conclusion</span></div>
-          <div>14 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Core · Conclusion</span></div>
+        <div>14 / 32</div>
+      </div>
+      <div class="fac-detail core">
+        <div class="left">
+          <div class="role" style="color:var(--highlight);">FAC Core · C</div>
+          <h2 class="detail-title">C<br><em>Conclusion</em></h2>
+          <p class="concept-en" style="color:rgba(244,239,230,.7);">Hypothesis · Judgment · Claim</p>
+          <p class="concept-kr" style="color:#F4EFE6;">논증의 <b>중심 주장</b>. 결론 · 가설 · 판단을 포괄합니다. 보통 글의 <em class="em-serif" style="color:var(--highlight);">주제</em>이기도 합니다.</p>
         </div>
-        <div class="fac-detail core">
-          <div class="left">
-            <div class="role" style="color:var(--highlight);">FAC Core · C</div>
-            <h2 class="detail-title">C<br><em>Conclusion</em></h2>
-            <p class="concept-en" style="color:rgba(244,239,230,.7);">Hypothesis · Judgment · Claim</p>
-            <p class="concept-kr" style="color:#F4EFE6;">논증의 <b>중심 주장</b>. 결론 · 가설 · 판단을 포괄합니다. 보통 글의 주제이기도 합니다.</p>
+        <div class="right" style="border-color:#F4EFE6;">
+          <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">conclude</span>
+            <span class="marker-chip">suggest</span>
+            <span class="marker-chip">indicate</span>
+            <span class="marker-chip">intimate</span>
+            <span class="marker-chip">hypothesize</span>
+            <span class="marker-chip">speculate</span>
+            <span class="marker-chip">postulate</span>
+            <span class="marker-chip">conjecture</span>
+            <span class="marker-chip">argue</span>
+            <span class="marker-chip">posit</span>
           </div>
-          <div class="right" style="border-color:#F4EFE6;">
-            <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
-            <div class="marker-grid">
-              <span class="marker-chip">conclude</span>
-              <span class="marker-chip">suggest</span>
-              <span class="marker-chip">indicate</span>
-              <span class="marker-chip">intimate</span>
-              <span class="marker-chip">hypothesize</span>
-              <span class="marker-chip">speculate</span>
-              <span class="marker-chip">postulate</span>
-              <span class="marker-chip">conjecture</span>
-              <span class="marker-chip">argue</span>
-              <span class="marker-chip">posit</span>
-            </div>
-            <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">이 동사들이 보이는 문장이 곧 <b>저자의 주장</b>. RC의 <em>primary purpose · main idea</em> 문제는 거의 이 문장으로 수렴합니다.</p>
-          </div>
+          <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">이 동사들이 보이는 문장이 곧 <b>저자의 주장</b>. RC의 <em class="em-serif" style="color:var(--highlight);">primary purpose · main idea</em> 문제는 거의 이 문장으로 수렴합니다.</p>
         </div>
       </div>
     </section>
 
+    <!-- 15: FAC 용어 정리 (p.93 table 1) -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · 용어 정리</span></div>
-          <div>15 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · 용어 정리</span></div>
+        <div>15 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">FAC · 동사 정리 (Verb Reference)</div>
         <h2 class="title">근거 · 가설 · 전제를 <em>받치는 동사</em>들.</h2>
         <div class="rule-line"></div>
@@ -1040,7 +1683,13 @@
             <div class="kr">근거</div>
             <div class="en">support by fact</div>
             <div class="verbs">
-              <span>since</span><span>find</span><span>discover</span><span>report</span><span>know</span><span>observe</span><span>note</span>
+              <span>since</span>
+              <span>find</span>
+              <span>discover</span>
+              <span>report</span>
+              <span>know</span>
+              <span>observe</span>
+              <span>note</span>
             </div>
           </div>
           <div class="term-col conclusion">
@@ -1048,7 +1697,15 @@
             <div class="kr">가설</div>
             <div class="en">claim · judgment</div>
             <div class="verbs">
-              <span>suggests</span><span>indicates</span><span>implies</span><span>intimates</span><span>mean</span><span>speculates</span><span>conjectures</span><span>hypothesizes</span><span>generalizes</span>
+              <span>suggests</span>
+              <span>indicates</span>
+              <span>implies</span>
+              <span>intimates</span>
+              <span>mean (사람 주어)</span>
+              <span>speculates</span>
+              <span>conjectures</span>
+              <span>hypothesizes</span>
+              <span>generalizes</span>
             </div>
           </div>
           <div class="term-col assumption">
@@ -1056,7 +1713,13 @@
             <div class="kr">전제</div>
             <div class="en">basis of the claim</div>
             <div class="verbs">
-              <span>is based on</span><span>is predicated on</span><span>is premised on</span><span>depends on</span><span>relies on</span><span>requires</span><span>the notion that</span>
+              <span>is based on</span>
+              <span>is predicated on</span>
+              <span>is premised on</span>
+              <span>depends on</span>
+              <span>relies on</span>
+              <span>requires</span>
+              <span>the notion that</span>
             </div>
           </div>
         </div>
@@ -1067,12 +1730,13 @@
       </div>
     </section>
 
+    <!-- 16: 검증 전 → 검증 → 검증 후 (p.93 table 2) -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · 검증의 작동</span></div>
-          <div>16 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · 검증의 작동</span></div>
+        <div>16 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Before · Verification · After</div>
         <h2 class="title">검증이 <em>비약</em>을 해결한다.</h2>
         <div class="rule-line"></div>
@@ -1080,30 +1744,55 @@
         <div class="verif-flow">
           <div class="verif-stage before">
             <div class="label">Before · 검증 전</div>
-            <h4>비약이 있는 결론</h4>
+            <h4>비약이 있는<br>결론</h4>
             <div class="components">
-              <span>F · <b>사실</b></span><span>A · <b>생각</b></span><span>C · <b>생각</b></span>
+              <span>F · <b>사실</b></span>
+              <span>A · <b>생각</b></span>
+              <span>C · <b>생각</b></span>
             </div>
             <p class="summary">전제가 검증되지 않아 결론에 <b>비약</b>이 남은 단계.</p>
-            <div class="keywords"><span>hypothesis</span><span>thesis</span><span>speculation</span><span>argument</span></div>
+            <div class="keywords">
+              <span>hypothesis</span>
+              <span>thesis</span>
+              <span>speculation</span>
+              <span>conjecture</span>
+              <span>generalization</span>
+              <span>argument</span>
+            </div>
           </div>
+          <div class="verif-arrow">→</div>
           <div class="verif-stage middle">
             <div class="label">Verification · 검증</div>
-            <h4>A가 참인지 확인</h4>
+            <h4>A가 참인지<br>확인한다</h4>
             <div class="components">
-              <span>전제 확인</span><span>비약 해결</span><span>반복 실험</span>
+              <span>전제 확인</span>
+              <span>비약의 해결</span>
+              <span>반복 실험 (replication)</span>
             </div>
-            <p class="summary">경험주의적 연구로 검증. 전제가 하나라도 틀리면 가설 전체가 기각.</p>
-            <div class="keywords"><span>reveal</span><span>show</span><span>demonstrate</span><span>establish</span></div>
+            <p class="summary">경험주의적 연구로 전제를 검증. 전제가 <em class="em-serif">하나라도</em> 틀리면 가설 전체가 틀린 것.</p>
+            <div class="keywords">
+              <span>reveal</span>
+              <span>show</span>
+              <span>demonstrate</span>
+              <span>establish</span>
+              <span>corroborate</span>
+              <span>confirm</span>
+            </div>
           </div>
+          <div class="verif-arrow">→</div>
           <div class="verif-stage after">
             <div class="label">After · 검증 후</div>
-            <h4>비약이 해결된 결론</h4>
+            <h4>비약이 해결된<br>결론</h4>
             <div class="components">
-              <span>F · <b>사실</b></span><span>A · <b>사실</b></span><span>C · <b>생각</b></span>
+              <span>F · <b>사실</b></span>
+              <span>A · <b>사실</b></span>
+              <span>C · <b>생각</b></span>
             </div>
-            <p class="summary">전제(A)도 사실(F)이 됩니다. 결론은 여전히 생각이지만 비약은 사라집니다.</p>
-            <div class="keywords"><span>inference</span><span>surmise</span></div>
+            <p class="summary">전제(A)도 사실(F)이 됩니다. 결론(C)은 여전히 생각이지만 더는 비약이 아닙니다.</p>
+            <div class="keywords">
+              <span>inference</span>
+              <span>surmise</span>
+            </div>
           </div>
         </div>
         <div class="verif-note">
@@ -1112,156 +1801,154 @@
       </div>
     </section>
 
+    <!-- 17: FAC DETAIL — VERIFICATION -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · After · Verification</span></div>
-          <div>17 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · After · Verification</span></div>
+        <div>17 / 32</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">After FAC · 01</div>
+          <h2 class="detail-title"><em>Verification</em><br>검증</h2>
+          <p class="concept-en">Empirical Fact / Observation</p>
+          <p class="concept-kr">FAC를 <b>경험적으로 입증</b>하는 행위. "실제로 보여졌다 · 드러났다"의 의미를 갖는 동사들입니다.</p>
         </div>
-        <div class="fac-detail">
-          <div class="left">
-            <div class="role">After FAC · 01</div>
-            <h2 class="detail-title"><em>Verification</em><br>검증</h2>
-            <p class="concept-en">Empirical Fact / Observation</p>
-            <p class="concept-kr">FAC를 <b>경험적으로 입증</b>하는 행위. "실제로 보여졌다 · 드러났다"의 의미를 갖는 동사들입니다.</p>
+        <div class="right">
+          <div class="label">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">reveal</span>
+            <span class="marker-chip">show</span>
+            <span class="marker-chip">demonstrate</span>
+            <span class="marker-chip">find</span>
+            <span class="marker-chip">discover</span>
+            <span class="marker-chip">establish</span>
           </div>
-          <div class="right">
-            <div class="label">Key Verbs · 핵심 동사</div>
-            <div class="marker-grid">
-              <span class="marker-chip">reveal</span>
-              <span class="marker-chip">show</span>
-              <span class="marker-chip">demonstrate</span>
-              <span class="marker-chip">find</span>
-              <span class="marker-chip">discover</span>
-              <span class="marker-chip">establish</span>
-            </div>
-            <p class="note"><em>find / discover</em>는 Fact 동사이기도 합니다. <b>맥락</b>으로 구별하세요. 단순 관찰이면 Fact, 가설을 입증하는 결과면 Verification.</p>
-          </div>
+          <p class="note"><em class="em-serif">find / discover</em>는 Fact 동사이기도 합니다. <b>맥락</b>으로 구별하세요. 단순 관찰이면 Fact, 가설을 입증하는 결과면 Verification.</p>
         </div>
       </div>
     </section>
 
+    <!-- 16: FAC DETAIL — WEAKENING -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · After · Weakening</span></div>
-          <div>18 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · After · Weakening</span></div>
+        <div>18 / 32</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">After FAC · 02</div>
+          <h2 class="detail-title"><em>Weakening</em><br>약화</h2>
+          <p class="concept-en">Negation of an Assumption</p>
+          <p class="concept-kr">기존 <b>Assumption을 부정</b>하는 동사들. 논증의 토대를 흔드는 문장에 등장합니다.</p>
         </div>
-        <div class="fac-detail">
-          <div class="left">
-            <div class="role">After FAC · 02</div>
-            <h2 class="detail-title"><em>Weakening</em><br>약화</h2>
-            <p class="concept-en">Negation of an Assumption</p>
-            <p class="concept-kr">기존 <b>Assumption을 부정</b>하는 동사들. 논증의 토대를 흔드는 문장에 등장합니다.</p>
+        <div class="right">
+          <div class="label">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">point out</span>
+            <span class="marker-chip">undermine</span>
+            <span class="marker-chip">overturn</span>
           </div>
-          <div class="right">
-            <div class="label">Key Verbs · 핵심 동사</div>
-            <div class="marker-grid">
-              <span class="marker-chip">point out</span>
-              <span class="marker-chip">undermine</span>
-              <span class="marker-chip">overturn</span>
-            </div>
-            <p class="note">Weakening 문제는 <b>가장 약화하는</b> 선지를 고르는 것이 핵심. 보기에 있는 사실이 본문의 전제(Assumption)를 부정하는지로 판단합니다.</p>
-          </div>
+          <p class="note">Weakening 문제는 <b>가장 약화하는</b> 선지를 고르는 것이 핵심. 보기에 있는 사실이 본문의 <em class="em-serif">전제(Assumption)</em>를 부정하는지로 판단합니다.</p>
         </div>
       </div>
     </section>
 
+    <!-- 17: FAC DETAIL — STRENGTHENING -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · After · Strengthening</span></div>
-          <div>19 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · After · Strengthening</span></div>
+        <div>19 / 32</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">After FAC · 03</div>
+          <h2 class="detail-title"><em>Strengthen-<br>ing</em><br>강화</h2>
+          <p class="concept-en">Specification · Intensification</p>
+          <p class="concept-kr">Assumption이나 Conclusion을 <b>구체화 · 심화</b>하여 뒷받침합니다. 예시 · 강조어 모두 포함됩니다.</p>
         </div>
-        <div class="fac-detail">
-          <div class="left">
-            <div class="role">After FAC · 03</div>
-            <h2 class="detail-title"><em>Strengthen-<br>ing</em><br>강화</h2>
-            <p class="concept-en">Specification · Intensification</p>
-            <p class="concept-kr">Assumption이나 Conclusion을 <b>구체화 · 심화</b>하여 뒷받침합니다. 예시 · 강조어 모두 포함됩니다.</p>
+        <div class="right">
+          <div class="label">Key Markers · 핵심 표시자</div>
+          <div class="marker-grid">
+            <span class="marker-chip">for example</span>
+            <span class="marker-chip">for instance</span>
+            <span class="marker-chip">illustrate</span>
+            <span class="marker-chip">indeed</span>
+            <span class="marker-chip">even</span>
+            <span class="marker-chip">only</span>
+            <span class="marker-chip">moreover</span>
           </div>
-          <div class="right">
-            <div class="label">Key Markers · 핵심 표시자</div>
-            <div class="marker-grid">
-              <span class="marker-chip">for example</span>
-              <span class="marker-chip">for instance</span>
-              <span class="marker-chip">illustrate</span>
-              <span class="marker-chip">indeed</span>
-              <span class="marker-chip">even</span>
-              <span class="marker-chip">only</span>
-              <span class="marker-chip">moreover</span>
-            </div>
-            <p class="note">기억하세요: <em>For example</em>의 앞 문장이 곧 <b>주제 후보</b>입니다. 예시는 항상 주제를 뒤따라 옵니다.</p>
-          </div>
+          <p class="note">기억하세요: <em class="em-serif">For example</em>의 앞 문장이 곧 <b>주제 후보</b>입니다. 예시는 항상 주제를 뒤따라 옵니다.</p>
         </div>
       </div>
     </section>
 
+    <!-- 18: FAC DETAIL — CONCESSION -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>FAC · After · Concession</span></div>
-          <div>20 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · After · Concession</span></div>
+        <div>20 / 32</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">After FAC · 04</div>
+          <h2 class="detail-title"><em>Concession</em><br>양보</h2>
+          <p class="concept-en">Acknowledging Merit, Then Refuting</p>
+          <p class="concept-kr">"물론 ~ 하지만, 그러나 …" 구조. 논박 대상의 <b>장점을 먼저 인정</b>한 뒤 본 주장을 펼치는 세련된 수사 기법입니다.</p>
         </div>
-        <div class="fac-detail">
-          <div class="left">
-            <div class="role">After FAC · 04</div>
-            <h2 class="detail-title"><em>Concession</em><br>양보</h2>
-            <p class="concept-en">Acknowledging Merit, Then Refuting</p>
-            <p class="concept-kr">"물론 ~ 하지만, 그러나 …" 구조. 논박 대상의 <b>장점을 먼저 인정</b>한 뒤 본 주장을 펼치는 세련된 수사 기법입니다.</p>
+        <div class="right">
+          <div class="label">Key Patterns · 핵심 패턴</div>
+          <div class="marker-grid">
+            <span class="marker-chip">Certainly ~ , but …</span>
+            <span class="marker-chip">Of course ~ , but …</span>
+            <span class="marker-chip">True ~ , but …</span>
+            <span class="marker-chip">Granted ~ , but …</span>
+            <span class="marker-chip">강조의 do + 동사 ~ , but …</span>
+            <span class="marker-chip">may indeed … , but …</span>
           </div>
-          <div class="right">
-            <div class="label">Key Patterns · 핵심 패턴</div>
-            <div class="marker-grid">
-              <span class="marker-chip">Certainly ~ , but …</span>
-              <span class="marker-chip">Of course ~ , but …</span>
-              <span class="marker-chip">True ~ , but …</span>
-              <span class="marker-chip">Granted ~ , but …</span>
-              <span class="marker-chip">do + 동사 ~ , but …</span>
-              <span class="marker-chip">may indeed … , but …</span>
-            </div>
-            <p class="note">but 뒤가 <b>저자의 진짜 주장</b>입니다. 양보 부분을 저자의 입장으로 착각하지 마세요. <em>Writing</em>에서도 이 구조 하나로 정교한 논증이 가능합니다.</p>
-          </div>
+          <p class="note">but 뒤가 <b>저자의 진짜 주장</b>입니다. 양보 부분을 저자의 입장으로 착각하지 마세요. <em class="em-serif">Writing</em>에서도 이 구조 하나로 정교한 논증이 가능합니다.</p>
         </div>
       </div>
     </section>
 
+    <!-- 19: STEP 3 OVERVIEW -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Step 3 · Problem Recognition</span></div>
-          <div>21 / 32</div>
-        </div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Step 3 · Problem Recognition</span></div>
+        <div>21 / 32</div>
+      </div>
+      <div>
         <div class="eyebrow">Step Three · 본문보다 질문이 먼저</div>
         <h2 class="title">본문보다 <em>질문</em>을 먼저 읽는다.</h2>
         <div class="rule-line"></div>
-        <p class="lead">시험은 <b>본문을 읽는 시간</b>이 아니라 <b>문제를 푸는 시간</b>입니다. 어떤 단어에 대해 어떤 유형이 나왔인지 알고 들어가면, 본문에서 무엇에 집중해야 할지 즉시 결정됩니다.</p>
+        <p class="lead">시험은 <b>본문을 읽는 시간</b>이 아니라 <b>문제를 푸는 시간</b>입니다. 어떤 단어에 대해 어떤 유형이 나왔는지 알고 들어가면, 본문에서 무엇에 집중해야 할지 즉시 결정됩니다.</p>
         <div class="principles">
           <div class="principle">
             <div class="num">i.</div>
-            <h4>질문 용어로 유형 파악</h4>
+            <h4>질문 용어로 <em class="em-serif">유형</em>을 본다</h4>
             <p><b>infer · primary purpose · function · according to</b> 같은 용어가 각각 다른 <b>유형</b>과 <b>해법</b>을 지정합니다.</p>
           </div>
           <div class="principle">
             <div class="num">ii.</div>
-            <h4>본문 단어로 위치 파악</h4>
+            <h4>본문 단어로 <em class="em-serif">위치</em>를 본다</h4>
             <p>질문 안에 인용된 <b>본문 단어 · 어구 · 문장</b>이 답의 위치를 알려 줍니다. 본문 전체를 뒤지지 않습니다.</p>
           </div>
           <div class="principle">
             <div class="num">iii.</div>
-            <h4>본문 분석 선행</h4>
+            <h4>본문을 읽기 <em class="em-serif">전에</em> 끝낸다</h4>
             <p>어떤 부분에 주의해서 읽어야 하는지 결정된 뒤에 본문을 정독합니다. 정독은 <b>방향이 정해진 읽기</b>여야 합니다.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Step 3 · 한눈에 보기</span></div>
-          <div>22 / 32</div>
-        </div>
+    <!-- 20: PROBLEM TYPES TABLE -->
+    <section class="slide types-overview">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Step 3 · 한눈에 보기</span></div>
+        <div>22 / 32</div>
+      </div>
+      <div>
         <div class="heading-block">
           <div class="eyebrow">Step Three · 10가지 문제 유형</div>
           <h2 class="title">질문 용어가 곧 <em>해법</em>이다.</h2>
@@ -1275,325 +1962,420 @@
           <div class="ptype-row">
             <div class="type-name">주제와 구성<small>Main Idea · Organization</small></div>
             <div class="terms">main idea · primary purpose · primarily concerned · organization</div>
-            <div class="approach"><b>주제 문장 중심</b>으로 요약. 단락별 기능 정리.</div>
+            <div class="approach"><b>주제 문장 중심</b>으로 글 전체를 요약. 단락별 기능까지 한 줄로 정리.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">추론 1<small>Inference</small></div>
             <div class="terms">infer · suggest · imply · ~ support which …?</div>
-            <div class="approach">본문 정보 바탕으로 <b>질문의 키워드를 주어로</b> 재구성.</div>
+            <div class="approach">비약 없이 본문 정보를 바탕으로, <b>질문의 본문 단어를 주어로</b> 문장을 재구성.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">추론 2<small>Agree · Disagree</small></div>
             <div class="terms">agree · disagree</div>
-            <div class="approach"><b>누가 누구에게 / 무엇에</b> 동의하는지 정확히 확인.</div>
+            <div class="approach"><b>누가 누구에게 / 누가 무엇에</b> 동의하는지 정확히 확인.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">추론 3<small>Compatible</small></div>
             <div class="terms">most probably · contradictory except · compatible</div>
-            <div class="approach">본문과 <b>모순 유무</b>를 판단. 미언급은 모순이 아님.</div>
+            <div class="approach">본문과 <b>모순인지 아닌지</b>를 판단. <em class="em-serif">언급되지 않은</em> 내용은 모순이 아닐 수 있다.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">유사한 상황<small>Similar To</small></div>
             <div class="terms">most similar to</div>
-            <div class="approach">본문의 <b>상황 · 원리</b>와 추상적 구조가 일치하는 사례 매칭.</div>
+            <div class="approach">본문에 언급된 <b>상황 · 원리</b>와 가장 비슷한 경우를 선택.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">구체 내용 파악<small>According To</small></div>
             <div class="terms">According to the passage / author</div>
-            <div class="approach">질문에 언급된 <b>본문 단어가 등장한 바로 그 자리</b> 타겟팅.</div>
+            <div class="approach">질문에 언급된 <b>본문 단어가 등장한 그 자리</b>에 답이 있다.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">문장 · 단락의 기능<small>Function · Relationship</small></div>
             <div class="terms">function · relationship</div>
-            <div class="approach">문장 간의 관계 해석. <b>FAC 타겟 분석</b> 활용.</div>
+            <div class="approach">해당 문장의 <b>해석 · 요약 · 다른 문장과의 관계</b>를 묻는 문제.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">단어 · 어구 언급 목적<small>In Order To</small></div>
             <div class="terms">mention ~ in order to · mention ~ primarily to</div>
-            <div class="approach">해당 문장 또는 <b>앞 문장의 핵심 키워드</b> 백업 여부 검증.</div>
+            <div class="approach">해당 문장 또는 <b>앞 문장의 keyword</b>를 support하는지 판단.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">단어의 의미<small>Meaning · Means</small></div>
             <div class="terms">closest in meaning</div>
-            <div class="approach">사전적 의미 중 <b>문맥 속에서 발현된 비유적/실질적 의미</b> 도출.</div>
+            <div class="approach">사전적 의미 중 <b>본문에 발현된 의미</b>. 비유적 의미를 묻기도 함.</div>
           </div>
           <div class="ptype-row">
             <div class="type-name">말투와 태도<small>Tone · Attitude</small></div>
             <div class="terms">tone · attitude</div>
-            <div class="approach">특정 사항에 사용된 <b>형용사 · 부사</b>의 뉘앙스 파악.</div>
+            <div class="approach">특정 사항에 사용된 <b>형용사 · 부사</b>를 보면 저자의 태도가 드러난다.</div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 21: TYPE DETAIL — MAIN IDEA -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 주제와 구성</span></div>
-          <div>23 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 주제와 구성</span></div>
+        <div>23 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 01 / 10</div>
+          <h2 class="kr-name">주제와<br>구성</h2>
+          <p class="en-name">Main Idea · Organization</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach"><b>주제 문장 중심</b>으로 글 전체를 요약합니다. 단락별 기능을 한 줄씩 정리해 두면, "글의 <em>구성</em>"을 묻는 문제도 그대로 풀립니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 01 / 10</div>
-            <h2 class="kr-name">주제와<br>구성</h2>
-            <p class="en-name">Main Idea · Organization</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach"><b>주제 문장 중심</b>으로 글 전체를 요약합니다. 단락별 기능을 한 줄씩 정리해 두면, "글의 구성"을 묻는 문제도 그대로 풀립니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">main idea</span>
-              <span class="term-chip">primary purpose</span>
-              <span class="term-chip">primarily concerned</span>
-              <span class="term-chip">the organization of the passage</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">main idea</span>
+            <span class="term-chip">primary purpose</span>
+            <span class="term-chip">primarily concerned</span>
+            <span class="term-chip">the organization of the passage</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 22: TYPE DETAIL — INFERENCE -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 추론 1 · Inference</span></div>
-          <div>24 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 추론 1 · Inference</span></div>
+        <div>24 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 02 / 10</div>
+          <h2 class="kr-name">추론 1</h2>
+          <p class="en-name">Inference</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">비약 없이 본문의 정보만으로 추론합니다. <b>질문의 본문 단어를 주어로</b> 삼아 새 문장을 재구성하면 정답이 보입니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 02 / 10</div>
-            <h2 class="kr-name">추론 1</h2>
-            <p class="en-name">Inference</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">비약 없이 본문의 정보만으로 추론합니다. <b>질문의 본문 단어를 주어로</b> 삼아 새 문장을 재구성하면 정답이 보입니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">infer</span>
-              <span class="term-chip highlight">suggest</span>
-              <span class="term-chip highlight">imply</span>
-              <span class="term-chip">~ support which …?</span>
-              <span class="term-chip">Which is supported?</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">infer</span>
+            <span class="term-chip highlight">suggest</span>
+            <span class="term-chip highlight">imply</span>
+            <span class="term-chip">~ support which …?</span>
+            <span class="term-chip">Which is supported?</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 23: TYPE DETAIL — AGREE/DISAGREE -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 추론 2 · Agree / Disagree</span></div>
-          <div>25 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 추론 2 · Agree / Disagree</span></div>
+        <div>25 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 03 / 10</div>
+          <h2 class="kr-name">추론 2</h2>
+          <p class="en-name">Agree · Disagree</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach"><b>누가 누구에게</b> 동의하는지, 또 <b>누가 무엇에</b> 동의하는지를 정확히 확인합니다. 본문에 등장하는 인물 · 그룹별 입장을 표로 정리해 두면 빠릅니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 03 / 10</div>
-            <h2 class="kr-name">추론 2</h2>
-            <p class="en-name">Agree · Disagree</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach"><b>누가 누구에게</b> 동의하는지, 또 <b>누가 무엇에</b> 동의하는지를 정확히 확인합니다. 본문에 등장하는 인물 · 그룹별 입장을 표로 정리해 두면 빠릅니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">agree</span>
-              <span class="term-chip highlight">disagree</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">agree</span>
+            <span class="term-chip highlight">disagree</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 24: TYPE DETAIL — COMPATIBLE -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 추론 3 · Compatible</span></div>
-          <div>26 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 추론 3 · Compatible</span></div>
+        <div>26 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 04 / 10</div>
+          <h2 class="kr-name">추론 3</h2>
+          <p class="en-name">Compatible · Contradictory</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">본문과 <b>모순인지 아닌지</b>를 판단합니다. 주의: <em class="em-serif">언급되지 않은</em> 내용은 본문과 모순이 아닐 수 있습니다. "없는 것"을 "거짓"으로 착각하지 마세요.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 04 / 10</div>
-            <h2 class="kr-name">추론 3</h2>
-            <p class="en-name">Compatible · Contradictory</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">본문과 <b>모순인지 아닌지</b>를 판단합니다. 주의: <em>언급되지 않은</em> 내용은 본문과 모순이 아닐 수 있습니다. "없는 것"을 "거짓"으로 착각하지 마세요.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">most probably</span>
-              <span class="term-chip">contradictory except</span>
-              <span class="term-chip">compatible</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">most probably</span>
+            <span class="term-chip">contradictory except</span>
+            <span class="term-chip">compatible</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 25: TYPE DETAIL — SIMILAR TO -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 유사한 상황</span></div>
-          <div>27 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 유사한 상황</span></div>
+        <div>27 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 05 / 10</div>
+          <h2 class="kr-name">유사한<br>상황</h2>
+          <p class="en-name">Similar To</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">본문에 언급된 <b>상황 · 원리</b>를 한 문장으로 추상화한 뒤, 보기에서 동일한 구조의 사례를 고릅니다. 표면적 유사가 아니라 <em class="em-serif">구조의 일치</em>가 정답 기준입니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 05 / 10</div>
-            <h2 class="kr-name">유사한<br>상황</h2>
-            <p class="en-name">Similar To</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">본문에 언급된 <b>상황 · 원리</b>를 한 문장으로 추상화한 뒤, 보기에서 동일한 구조의 사례를 고릅니다. 표면적 유사가 아니라 <em>구조의 일치</em>가 정답 기준입니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">most similar to</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">most similar to</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 26: TYPE DETAIL — ACCORDING TO -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 구체 내용 파악</span></div>
-          <div>28 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 구체 내용 파악</span></div>
+        <div>28 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 06 / 10</div>
+          <h2 class="kr-name">구체 내용<br>파악</h2>
+          <p class="en-name">According To</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">질문에 언급된 <b>본문 단어가 등장한 바로 그 자리</b>에 답이 있습니다. 본문을 처음부터 뒤지지 말고, 단어를 단서로 위치를 먼저 잡으세요.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 06 / 10</div>
-            <h2 class="kr-name">구체 내용<br>파악</h2>
-            <p class="en-name">According To</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">질문에 언급된 <b>본문 단어가 등장한 바로 그 자리</b>에 답이 있습니다. 본문을 처음부터 뒤지지 말고, 단어를 단서로 위치를 먼저 잡으세요.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">According to the passage</span>
-              <span class="term-chip highlight">According to the author</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">According to the passage</span>
+            <span class="term-chip highlight">According to the author</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 27: TYPE DETAIL — FUNCTION -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 문장 · 단락의 기능</span></div>
-          <div>29 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 문장 · 단락의 기능</span></div>
+        <div>29 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 07 / 10</div>
+          <h2 class="kr-name">문장 · 단락의<br>기능</h2>
+          <p class="en-name">Function · Relationship</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">해당 문장의 <b>해석 · 요약 · 다른 문장과의 관계</b>를 묻습니다. <em class="em-serif">FAC 표시자</em>로 그 문장이 Fact · Assumption · Conclusion 중 무엇인지를 먼저 판정하면 답이 한 줄로 정리됩니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 07 / 10</div>
-            <h2 class="kr-name">문장 · 단락의<br>기능</h2>
-            <p class="en-name">Function · Relationship</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">해당 문장의 <b>해석 · 요약 · 다른 문장과의 관계</b>를 묻습니다. <em>FAC 표시자</em>로 그 문장이 Fact · Assumption · Conclusion 중 무엇인지를 먼저 판정하면 답이 한 줄로 정리됩니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">function</span>
-              <span class="term-chip highlight">relationship</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">function</span>
+            <span class="term-chip highlight">relationship</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 28: TYPE DETAIL — IN ORDER TO -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 단어 · 어구 언급 목적</span></div>
-          <div>30 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 단어 · 어구 언급 목적</span></div>
+        <div>30 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 08 / 10</div>
+          <h2 class="kr-name">언급 목적</h2>
+          <p class="en-name">In Order To</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">질문의 본문 단어 · 어구가 등장한 문장을 해석한 뒤, 그것이 <b>그 문장 또는 앞 문장의 keyword</b>를 support하는지를 판단합니다. 거의 모든 정답은 "X를 뒷받침하기 위해"로 환원됩니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 08 / 10</div>
-            <h2 class="kr-name">언급 목적</h2>
-            <p class="en-name">In Order To</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">질문의 본문 단어 · 어구가 등장한 문장을 해석한 뒤, 그것이 <b>그 문장 또는 앞 문장의 keyword</b>를 support하는지를 판단합니다. 거의 모든 정답은 "X를 뒷받침하기 위해"로 환원됩니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">mention ~ in order to</span>
-              <span class="term-chip highlight">mention ~ primarily to</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">mention ~ in order to</span>
+            <span class="term-chip highlight">mention ~ primarily to</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 29: TYPE DETAIL — MEANING -->
     <section class="slide paper">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 단어의 의미</span></div>
-          <div>31 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 단어의 의미</span></div>
+        <div>31 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 09 / 10</div>
+          <h2 class="kr-name">단어의<br>의미</h2>
+          <p class="en-name">Meaning · Means</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">해당 단어의 사전적 의미 중 <b>본문에 발현된 의미</b>를 고릅니다. <em class="em-serif">비유적 의미</em>를 묻는 경우도 잦으니, 문자 그대로의 뜻만 떠올려서는 안 됩니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 09 / 10</div>
-            <h2 class="kr-name">단어의<br>의미</h2>
-            <p class="en-name">Meaning · Means</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">해당 단어의 사전적 의미 중 <b>본문에 발현된 의미</b>를 고릅니다. <em>비유적 의미</em>를 묻는 경우도 잦으니, 문자 그대로의 뜻만 떠올려서는 안 됩니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">closest in meaning</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">closest in meaning</span>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- 30: TYPE DETAIL — TONE -->
     <section class="slide">
-      <div class="container">
-        <div class="pagebar">
-          <div class="l"><span class="mark"></span><span>Type · 말투와 태도</span></div>
-          <div>32 / 32</div>
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 말투와 태도</span></div>
+        <div>32 / 32</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 10 / 10</div>
+          <h2 class="kr-name">말투와<br>태도</h2>
+          <p class="en-name">Tone · Attitude</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">특정 사항에 사용된 <b>형용사 · 부사</b>를 보면 저자의 태도가 드러납니다. 긍정·부정·중립의 단어 결을 한 번에 식별할 수 있어야 합니다.</p>
         </div>
-        <div class="ptype-detail">
-          <div class="left">
-            <div class="role">Type · 10 / 10</div>
-            <h2 class="kr-name">말투와<br>태도</h2>
-            <p class="en-name">Tone · Attitude</p>
-            <div class="approach-label">해법 · Approach</div>
-            <p class="approach">특정 사항에 사용된 <b>형용사 · 부사</b>를 보면 저자의 태도가 드러납니다. 긍정·부정·중립의 단어 결을 한 번에 식별할 수 있어야 합니다.</p>
-          </div>
-          <div class="right">
-            <div class="label">Question Terms · 질문 용어</div>
-            <div>
-              <span class="term-chip highlight">tone</span>
-              <span class="term-chip highlight">attitude</span>
-            </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">tone</span>
+            <span class="term-chip highlight">attitude</span>
           </div>
         </div>
       </div>
     </section>
 
+  </div>
+
+  <!-- NAV · top scroll-progress + side rail -->
+  <div class="progress-top"><div class="progress-fill" id="bar-fill"></div></div>
+  <div class="rail" id="rail"></div>
 </div>
 
 <script>
+  const slides = document.querySelectorAll('.slide');
+  const TOTAL = slides.length;
   const barFill = document.getElementById('bar-fill');
+  const rail = document.getElementById('rail');
 
-  // Apple Realtime Scroll Progress Update logic
-  window.addEventListener('scroll', () => {
+  // Build side rail dots
+  slides.forEach((slide, idx) => {
+    const dot = document.createElement('div');
+    dot.className = 'rail-dot';
+    dot.title = `Section ${idx + 1}`;
+    dot.addEventListener('click', () => {
+      slide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    rail.appendChild(dot);
+  });
+  const railDots = rail.querySelectorAll('.rail-dot');
+
+  // Update progress bar + active rail dot on scroll
+  function updateScrollUI() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    barFill.style.width = pct + '%';
+
+    // Find the slide closest to the top of the viewport
+    let activeIdx = 0;
+    const viewportCenter = scrollTop + window.innerHeight * 0.35;
+    slides.forEach((s, i) => {
+      if (s.offsetTop <= viewportCenter) activeIdx = i;
+    });
+    railDots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+  }
+  window.addEventListener('scroll', updateScrollUI, { passive: true });
+  window.addEventListener('resize', updateScrollUI);
+  updateScrollUI();
+
+  // Keyboard navigation — Page Up/Down to jump between sections
+  document.addEventListener('keydown', (e) => {
     const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrolled = (scrollTop / docHeight) * 100;
-    barFill.style.width = scrolled + '%';
+    let target = -1;
+    if (e.key === 'PageDown' || e.key === 'ArrowDown') {
+      for (let i = 0; i < slides.length; i++) {
+        if (slides[i].offsetTop > scrollTop + 50) { target = i; break; }
+      }
+    } else if (e.key === 'PageUp' || e.key === 'ArrowUp') {
+      for (let i = slides.length - 1; i >= 0; i--) {
+        if (slides[i].offsetTop < scrollTop - 50) { target = i; break; }
+      }
+    } else if (e.key === 'Home') target = 0;
+    else if (e.key === 'End') target = slides.length - 1;
+
+    if (target >= 0) {
+      e.preventDefault();
+      slides[target].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   });
 
-  // Quiz interactive controller logic
+  // Apply reveal animations to slide content + observe for in-view
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+
+  // Items to NEVER apply data-reveal directly to — animate their children instead
+  const TRANSPARENT_CONTAINERS = new Set(['heading-block', 'cover-left']);
+
+  function setupSlideAnimations(slide) {
+    revealObserver.observe(slide);
+
+    const wrapper = Array.from(slide.children).find(c => !c.classList.contains('pagebar'));
+    if (!wrapper) return;
+
+    // Build a flat list of items to reveal, in document order
+    const items = [];
+    function collect(container) {
+      Array.from(container.children).forEach(child => {
+        const cls = child.classList;
+        const isTransparent = [...cls].some(c => TRANSPARENT_CONTAINERS.has(c));
+        if (isTransparent) {
+          collect(child); // flatten its children into the same stagger sequence
+        } else {
+          items.push(child);
+        }
+      });
+    }
+    collect(wrapper);
+
+    items.forEach((el, i) => {
+      const attr = el.classList.contains('cover-figure') ? 'data-reveal-scale' : 'data-reveal';
+      el.setAttribute(attr, '');
+      el.style.setProperty('--d', (i * 0.1) + 's');
+    });
+
+    // Inner stagger for grid items (within already-animating parent)
+    const gridSelectors = ['.devices', '.rules', '.steps', '.flow', '.principles', '.terms-grid', '.verif-flow', '.fac-row.top', '.fac-row.center', '.fac-row.bottom', '.marker-grid', '.flow-cards'];
+    gridSelectors.forEach(sel => {
+      slide.querySelectorAll(sel).forEach(grid => {
+        Array.from(grid.children).forEach((child, i) => {
+          if (!child.hasAttribute('data-reveal') && !child.hasAttribute('data-reveal-scale')) {
+            child.setAttribute('data-reveal', '');
+            child.style.setProperty('--d', (0.25 + i * 0.07) + 's');
+          }
+        });
+      });
+    });
+  }
+
+  slides.forEach(setupSlideAnimations);
+
+  // Quiz interactions
   document.querySelectorAll('.sentences').forEach(box => {
     const quizId = box.dataset.quiz;
     const answer = parseInt(box.dataset.answer, 10);
@@ -1640,6 +2422,8 @@
     box.querySelectorAll('.sent').forEach(x => x.classList.remove('correct','wrong','reveal'));
     document.getElementById('fb' + quizId).classList.remove('show');
   }
+
+  go(0);
 </script>
 </body>
 </html>
