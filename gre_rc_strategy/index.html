@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GRE TCSE · 3단계 풀이법 + 18 Triggers</title>
+<title>GRE Reading Comprehension · 3단계 전략</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Serif+KR:wght@500;700;900&display=swap" rel="stylesheet">
@@ -1230,309 +1231,6 @@
   .slide.closing.in-view .cheer {
     animation: cheerBreath 5s ease-in-out infinite 4.2s;
   }
-
-  /* ---------- Trigger detail · rules list ---------- */
-  .fac-detail .right .rules-list {
-    margin: 26px 0 0;
-    padding: 18px 0 0;
-    border-top: 1px solid var(--rule-soft);
-    list-style: none;
-  }
-  .fac-detail .right .rules-list li {
-    font-size: 17px;
-    color: var(--ink-soft);
-    font-weight: 500;
-    line-height: 1.55;
-    margin-bottom: 12px;
-    padding-left: 22px;
-    position: relative;
-    word-break: keep-all;
-  }
-  .fac-detail .right .rules-list li:last-child { margin-bottom: 0; }
-  .fac-detail .right .rules-list li::before {
-    content: "·";
-    position: absolute; left: 4px; top: -4px;
-    color: var(--accent);
-    font-weight: 900; font-size: 26px;
-    line-height: 1;
-  }
-  .fac-detail .right .rules-list li b { color: var(--ink); font-weight: 800; }
-  .fac-detail .right .rules-list li code {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 14px; color: var(--accent-2);
-    font-weight: 700;
-    background: rgba(31, 58, 95, 0.06);
-    padding: 1px 7px; border-radius: 3px;
-  }
-
-  /* ---------- 5 Zones diagram (Step 1 detail) ---------- */
-  .zones-diagram {
-    margin-top: 36px;
-    border: 2px solid var(--rule);
-    background: var(--paper);
-    padding: 32px 30px;
-  }
-  .zones-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-  }
-  .zone-cell {
-    padding: 22px 18px 24px;
-    text-align: center;
-    border: 1.5px solid var(--rule-soft);
-    background: var(--bg-alt);
-    position: relative;
-  }
-  .zone-cell.zone-1 { background: #E0ECFF; border-color: var(--accent-2); }
-  .zone-cell.zone-2 { background: #FFE0E5; border-color: var(--accent); }
-  .zone-cell.zone-5 { background: var(--ink); color: #F4EFE6; border-color: var(--ink); }
-  .zone-cell .num {
-    font-family: "Fraunces", serif;
-    font-style: italic;
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-  .zone-cell.zone-5 .num { color: var(--highlight); }
-  .zone-cell .name {
-    font-family: "Pretendard Variable", sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
-  }
-  .zone-cell .role {
-    font-family: "Inter", sans-serif;
-    font-size: 11.5px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    font-weight: 700;
-    line-height: 1.5;
-  }
-  .zone-cell.zone-5 .role { color: rgba(244,239,230,.7); }
-  .zones-note {
-    margin-top: 22px; padding: 20px 24px;
-    background: var(--ink); color: #F4EFE6;
-    font-size: 18px; font-weight: 600;
-    line-height: 1.55; word-break: keep-all;
-    text-align: left;
-  }
-  .zones-note b { color: var(--highlight); font-weight: 800; }
-  .zones-note em {
-    font-family: "Fraunces", serif;
-    font-style: italic; color: var(--highlight);
-    font-weight: 500;
-  }
-
-  /* ---------- Special pattern callout (within trigger detail right column) ---------- */
-  .fac-detail .right .special-pattern {
-    margin-top: 22px;
-    padding: 20px 24px 22px;
-    background: var(--ink);
-    color: #F4EFE6;
-  }
-  .fac-detail .right .special-pattern .sp-label {
-    font-family: "Inter", sans-serif;
-    font-size: 11px;
-    letter-spacing: .28em;
-    text-transform: uppercase;
-    color: var(--highlight);
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-  .fac-detail .right .special-pattern .sp-title {
-    font-family: "Fraunces", "Noto Serif KR", serif;
-    font-style: italic;
-    font-size: 22px;
-    font-weight: 500;
-    color: #F4EFE6;
-    margin: 0 0 10px;
-    letter-spacing: -0.01em;
-  }
-  .fac-detail .right .special-pattern p {
-    margin: 0;
-    font-size: 15px;
-    color: rgba(244,239,230,.85);
-    line-height: 1.55;
-    font-weight: 500;
-    word-break: keep-all;
-  }
-  .fac-detail .right .special-pattern p b {
-    color: #F4EFE6;
-    font-weight: 800;
-  }
-  .fac-detail .right .special-pattern .sp-formulas {
-    display: grid;
-    gap: 8px;
-    margin-top: 14px;
-  }
-  .fac-detail .right .special-pattern .sp-formulas .formula {
-    padding: 11px 16px;
-    background: rgba(244,239,230,.08);
-    border-left: 3px solid var(--highlight);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 15px;
-    font-weight: 700;
-  }
-  .fac-detail .right .special-pattern .sp-formulas .formula .lhs { color: var(--highlight); }
-  .fac-detail .right .special-pattern .sp-formulas .formula .arrow {
-    color: rgba(244,239,230,.5);
-    font-family: "Fraunces", serif;
-    font-style: italic;
-    font-size: 18px;
-    font-weight: 500;
-  }
-  .fac-detail .right .special-pattern .sp-formulas .formula .rhs {
-    color: #F4EFE6;
-    font-weight: 800;
-  }
-
-  /* ---------- Zone 2 ↔ Zone 5 connectors (Step 1 detail) ---------- */
-  .connectors-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 28px;
-  }
-  .connector-card {
-    background: var(--paper);
-    border: 2px solid var(--rule);
-    padding: 36px 30px;
-    text-align: center;
-    position: relative;
-  }
-  .connector-card .conn-symbol {
-    font-family: "Fraunces", serif;
-    font-size: clamp(72px, 8vw, 120px);
-    font-weight: 500;
-    font-style: italic;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 18px;
-    letter-spacing: -0.02em;
-  }
-  .connector-card .conn-name {
-    font-family: "Pretendard Variable", "Noto Serif KR", sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    margin-bottom: 6px;
-    color: var(--ink);
-  }
-  .connector-card .conn-en {
-    font-family: "Fraunces", serif;
-    font-style: italic;
-    font-size: 18px;
-    color: var(--ink-mute);
-    margin-bottom: 18px;
-  }
-  .connector-card p {
-    font-size: 16px;
-    color: var(--ink-soft);
-    font-weight: 500;
-    line-height: 1.55;
-    margin: 0;
-    word-break: keep-all;
-  }
-  .connector-card p b { color: var(--ink); font-weight: 800; }
-  .connector-card p code {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 13.5px; color: var(--accent-2);
-    font-weight: 700;
-    background: rgba(31, 58, 95, 0.06);
-    padding: 1px 6px; border-radius: 3px;
-  }
-  .zone-flow {
-    display: flex; align-items: center; justify-content: center;
-    gap: 18px; margin-top: 22px; flex-wrap: wrap;
-  }
-  .zone-flow .z-tag {
-    font-family: "Inter", sans-serif;
-    font-size: 13px; letter-spacing: .24em;
-    text-transform: uppercase; font-weight: 700;
-    padding: 8px 16px;
-    border: 1.5px solid var(--rule);
-    background: var(--bg-alt);
-  }
-  .zone-flow .z-tag.z2 { background: #FFE0E5; border-color: var(--accent); color: var(--accent); }
-  .zone-flow .z-tag.z5 { background: var(--ink); border-color: var(--ink); color: var(--highlight); }
-  .zone-flow .arrow {
-    font-family: "Fraunces", serif;
-    font-style: italic; font-size: 28px;
-    color: var(--ink-mute);
-  }
-
-  /* ---------- Step 2 detail · trigger word pairs ---------- */
-  .tw-pairs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-top: 32px;
-  }
-  .tw-pair {
-    background: var(--paper);
-    border: 2px solid var(--rule);
-    padding: 30px 32px 32px;
-  }
-  .tw-pair .label {
-    font-family: "Inter", sans-serif;
-    font-size: 12px; letter-spacing: .28em;
-    text-transform: uppercase; color: var(--accent);
-    font-weight: 700; margin-bottom: 14px;
-  }
-  .tw-pair h4 {
-    font-family: "Fraunces", "Noto Serif KR", serif;
-    font-size: 32px; font-weight: 500;
-    letter-spacing: -0.015em;
-    margin: 0 0 18px; line-height: 1.15;
-  }
-  .tw-pair h4 em { font-style: italic; color: var(--accent); font-weight: 400; }
-  .tw-pair p {
-    margin: 0; font-size: 18px;
-    color: var(--ink-soft); font-weight: 500;
-    line-height: 1.55; word-break: keep-all;
-  }
-  .tw-pair p b { color: var(--ink); font-weight: 800; }
-
-  /* ---------- Step 3 detail · concept tiles ---------- */
-  .concept-tiles {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-top: 32px;
-  }
-  .concept-tile {
-    padding: 30px 32px;
-    border: 2px solid var(--rule);
-  }
-  .concept-tile.bad { background: #FBECE8; }
-  .concept-tile.good { background: #EFF3EC; border-color: var(--accent-3); }
-  .concept-tile .label {
-    font-family: "Inter", sans-serif;
-    font-size: 12px; letter-spacing: .28em;
-    text-transform: uppercase; font-weight: 700;
-    margin-bottom: 14px;
-  }
-  .concept-tile.bad .label { color: var(--accent); }
-  .concept-tile.good .label { color: var(--accent-3); }
-  .concept-tile h4 {
-    font-family: "Fraunces", "Noto Serif KR", serif;
-    font-size: 26px; font-weight: 500;
-    letter-spacing: -0.015em; margin: 0 0 14px;
-    line-height: 1.2;
-  }
-  .concept-tile p {
-    margin: 0; font-size: 18px;
-    color: var(--ink-soft); font-weight: 500;
-    line-height: 1.55; word-break: keep-all;
-  }
-  .concept-tile p b { color: var(--ink); font-weight: 800; }
 </style>
 </head>
 <body>
@@ -1544,821 +1242,1181 @@
     <section class="slide">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>GRE Verbal · Pattern Book</span></div>
-        <div>01 / 26</div>
+        <div>01 / 34</div>
       </div>
       <div class="cover-grid">
         <div class="cover-left">
-          <div class="eyebrow">Text Completion & Sentence Equivalence</div>
-          <h1 class="display">단어가 아닌,<br><em>문장</em>을 작문하라.</h1>
-          <p class="lead">동의어 · 반의어를 어림짐작하지 말고, <b>논문에 쓸 수 있는 문장</b>으로 완성하세요. 오늘은 그 풀이법 <b>3단계</b>와 <b>18개의 Trigger</b>를 익힙니다.</p>
+          <div class="eyebrow">Reading Comprehension · 3단계 전략</div>
+          <h1 class="display">바로 읽지 말고,<br><em>준비</em>부터.</h1>
+          <p class="lead">시간 안에 답을 맞히려면, 본문을 읽기 <b>전에</b> 무엇을 어디서 찾을지를 먼저 정해 두어야 합니다. 오늘은 그 <b>3단계 전략</b>—주제 · 흐름 · 문제—을 익힙니다.</p>
           <div class="meta">
-            <div>Source<b>GRE Verbal Pattern Book</b><span class="pages">p. 25–69 · Chapter II</span></div>
+            <div>Source<b>GRE Verbal Pattern Book</b><span class="pages">p. 75–79, 93, 104–105</span></div>
           </div>
         </div>
         <div class="cover-figure">
-          <div class="numerals"><em>18</em><span class="step-label">Triggers</span></div>
+          <div class="numerals"><em>3</em><span class="step-label">단계</span></div>
         </div>
       </div>
       <div class="scroll-hint"><span>SCROLL</span><span class="line"></span></div>
     </section>
 
-    <!-- 2: 3-STEP OVERVIEW -->
+    <!-- 2: 3 STEPS OVERVIEW -->
     <section class="slide paper">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>TCSE Strategy · Overview</span></div>
-        <div>02 / 26</div>
+        <div class="l"><span class="mark"></span><span>Overview · The 3 Steps</span></div>
+        <div>02 / 34</div>
       </div>
       <div>
-        <div class="eyebrow">TCSE 풀이법 · 3단계</div>
-        <h2 class="title">단어가 아니라 <em>문장</em>을 완성한다.</h2>
+        <div class="eyebrow">Reading Strategy · Overview</div>
+        <h2 class="title">읽기 전에 거치는 <em>세 단계</em>.</h2>
         <div class="rule-line"></div>
-        <p class="lead">앞뒤 어감만 보고 동의어 · 반의어를 고르지 마세요. 모든 문제에 기본적으로 적용되는 <b>3단계</b>를 거쳐 <b>논리적으로 완성되는 문장</b>을 만들어야 합니다.</p>
+        <p class="lead">본문 전체를 처음부터 정독하면 시간 안에 풀 수 없습니다. <b>어디</b>를 보고, <b>무엇</b>을 찾을지 미리 정해 두는 것이 핵심입니다.</p>
         <div class="steps">
           <div class="step">
             <div class="stepname">Step One</div>
             <div class="stepnum">01</div>
-            <h3>5 Zones</h3>
-            <p><b>Zone 5</b>는 <b>Zone 2</b>에 대한 노골적 설명. 이어지는 문장은 앞 문장을 <b>support</b>하고, 힌트와 빈칸은 <b>keyword</b>(동사 · 목적어 · 보어)에 있다.</p>
+            <h3>주제 파악</h3>
+            <p><b>마침표 뒤</b>에서 다섯 가지 <b>주제 장치</b>를 찾는다. 후보가 여러 개라면 우선순위 규칙으로 정답을 정한다.</p>
           </div>
           <div class="step">
             <div class="stepname">Step Two</div>
             <div class="stepnum">02</div>
-            <h3>Trigger Words</h3>
-            <p>문장의 트리거가 <b>순접</b>인지 <b>역접</b>인지, 빈칸의 답이 <b>동의어</b>인지 <b>반의어</b>인지를 결정한다.</p>
+            <h3>흐름 파악</h3>
+            <p><b>마침표 뒤</b>의 주어와 동사로 각 문장의 <b>FAC 기능</b>을 식별한다. 모든 단어를 읽지 않는다.</p>
           </div>
           <div class="step">
             <div class="stepname">Step Three</div>
             <div class="stepnum">03</div>
-            <h3>해석과 상식</h3>
-            <p><b>논문에 등장할 수 있는 문장</b>으로 완성. 단어 매칭이 아니라 의미가 통하는 한 문장을 작문한다.</p>
+            <h3>문제 파악</h3>
+            <p><b>질문 용어</b>로 유형과 해법을, <b>본문 단어</b>로 위치를 잡는다. 본문을 읽기 전에 끝낸다.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 3: STEP 1 DETAIL · 5 ZONES -->
-    <section class="slide">
+    <!-- 3: TOPIC DEVICES -->
+    <section class="slide devices-overview">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Step 1 · 5 Zones</span></div>
-        <div>03 / 26</div>
+        <div class="l"><span class="mark"></span><span>Step 1 · Topic Markers</span></div>
+        <div>03 / 34</div>
       </div>
       <div>
         <div class="heading-block">
-          <div class="eyebrow">Step One · 문장의 5 Zones</div>
-          <h2 class="title">문장은 <em>다섯 자리</em>로 나뉜다.</h2>
+          <div class="eyebrow">Step One · 다섯 가지 주제 장치</div>
+          <h2 class="title">마침표 뒤, <em>이 다섯 가지</em>만 본다.</h2>
           <div class="rule-line"></div>
-          <p class="lead">힌트와 빈칸은 결국 <b>keyword</b>(동사 · 목적어 · 보어)에 있고, <b>Zone 5</b>는 <b>Zone 2</b>에 대한 노골적 설명입니다.</p>
+          <p class="lead">아래 신호가 보이는 문장은 <b>주제 후보</b>. 본문 전체가 아니라 이 다섯 신호부터 스캔하세요.</p>
         </div>
-        <div class="zones-diagram">
-          <div class="zones-row">
-            <div class="zone-cell"><div class="num">Zone 3</div><div class="name">수식</div><div class="role">주어 앞<br>형용사 · ~ing · p.p.</div></div>
-            <div class="zone-cell zone-1"><div class="num">Zone 1</div><div class="name">주어</div><div class="role">Subject</div></div>
-            <div class="zone-cell"><div class="num">Zone 4</div><div class="name">수식</div><div class="role">주어와 동사 사이<br>형용사 · ~ing · p.p.</div></div>
-            <div class="zone-cell zone-2"><div class="num">Zone 2</div><div class="name">동사</div><div class="role">Verb + 목적어 · 보어<br>= keyword</div></div>
-            <div class="zone-cell zone-5"><div class="num">Zone 5</div><div class="name">설명</div><div class="role">Zone 2의<br>노골적 설명</div></div>
+        <div class="devices">
+          <div class="device">
+            <div class="ix">i.</div>
+            <h4>역접 · 인과 연결어</h4>
+            <p><code>However</code> · <code>But</code> · <code>그러나</code> · <code>Thus</code> · <code>Therefore</code> · <code>그러므로</code></p>
           </div>
-          <div class="zones-note">
-            ① 이어지는 문장은 앞 문장을 <b>support</b>합니다. &nbsp;·&nbsp;
-            ② 힌트와 빈칸은 <em>keyword</em>(동사 · 목적어 · 보어)에 있습니다. &nbsp;·&nbsp;
-            ③ <em>Zone 5</em>는 <em>Zone 2</em>에 대한 <b>노골적 설명</b> — 두 자리는 늘 같은 의미로 연결됩니다.
+          <div class="device">
+            <div class="ix">ii.</div>
+            <h4>For example의 <em class="em-serif">앞 문장</em></h4>
+            <p>예시는 일반화의 결과입니다. 따라서 그 <b>앞 문장</b>이 주제 후보가 됩니다.</p>
+          </div>
+          <div class="device">
+            <div class="ix">iii.</div>
+            <h4>양보절의 <em class="em-serif">주절</em></h4>
+            <p><code>Although ~ , [주절]</code> · <code>Since ~ , [주절]</code> · <code>While ~ , [주절]</code></p>
+          </div>
+          <div class="device">
+            <div class="ix">iv.</div>
+            <h4>의문문</h4>
+            <p>의문문은 글의 <b>제목</b>입니다. 그에 대한 답이 곧 주제.</p>
+          </div>
+          <div class="device">
+            <div class="ix">v.</div>
+            <h4>More / Less 도치</h4>
+            <p><code>More + 형용사 + is + 주어</code> 형태의 강조 도치.</p>
+          </div>
+          <div class="device fallback">
+            <div class="ix">∅</div>
+            <h4>아무 장치도 없을 때</h4>
+            <p>본문 <b>첫 문장</b>이 주제. 두 단락 이상이면 <b>둘째 단락의 첫 문장</b>.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 4: ZONE 2 ↔ ZONE 5 연결자 (3가지) -->
+    <!-- 4: TOPIC RULES -->
     <section class="slide paper">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Step 1 · Zone 2 ↔ Zone 5</span></div>
-        <div>04 / 26</div>
+        <div class="l"><span class="mark"></span><span>Step 1 · Decision Rules</span></div>
+        <div>04 / 34</div>
       </div>
       <div>
-        <div class="heading-block">
-          <div class="eyebrow">Step One · 노골적 연결자</div>
-          <h2 class="title">Zone 2와 Zone 5를 잇는 <em>세 가지 신호</em>.</h2>
-          <div class="rule-line"></div>
-          <p class="lead">Zone 5는 Zone 2에 대한 <b>노골적 설명</b>. 그 사이에는 거의 항상 다음 <b>세 가지 연결자</b> 중 하나가 자리합니다. 이 신호를 보는 순간, Zone 5가 Zone 2와 <em class="em-serif">같은 의미</em>로 정렬된다는 걸 알 수 있습니다.</p>
-          <div class="zone-flow">
-            <span class="z-tag z2">Zone 2 · keyword</span>
-            <span class="arrow">→</span>
-            <span class="z-tag">: &nbsp;/&nbsp; ; &nbsp;/&nbsp; , ~ing</span>
-            <span class="arrow">→</span>
-            <span class="z-tag z5">Zone 5 · 노골적 설명</span>
+        <div class="eyebrow">Step One · 우선순위 규칙</div>
+        <h2 class="title">후보가 여러 개일 때, <em>어떤 것</em>이 진짜?</h2>
+        <div class="rule-line"></div>
+        <p class="lead">주제 장치가 둘 이상이면 정답을 가르는 규칙은 <b>두 가지</b>. 장치가 전혀 없는 경우까지 합쳐 세 케이스입니다.</p>
+        <div class="rules">
+          <div class="rule-card">
+            <div class="case">Case A · 연속</div>
+            <h4>장치가 <em class="em-serif">연달아</em> 나오면</h4>
+            <span class="arrow">↓</span>
+            <p>그 묶음의 <b>마지막 후보</b>가 전체 주제.</p>
           </div>
-        </div>
-        <div class="connectors-grid">
-          <div class="connector-card">
-            <div class="conn-symbol">:</div>
-            <div class="conn-name">콜론</div>
-            <div class="conn-en">Colon</div>
-            <p>바로 앞 어구를 <b>노골적으로 설명</b>. 절 · 구 · 단어 모두 가능하며, 괄호 · 대시(—)로 바꿔 쓸 수 있습니다.</p>
+          <div class="rule-card">
+            <div class="case">Case B · 단절</div>
+            <h4>사이에 <em class="em-serif">일반 문장</em>이 끼면</h4>
+            <span class="arrow">↓</span>
+            <p>일반 문장 <b>바로 앞</b>의 후보가 전체 주제.<br>(뒤의 후보는 주제의 <em class="em-serif">한정</em>일 가능성.)</p>
           </div>
-          <div class="connector-card">
-            <div class="conn-symbol">;</div>
-            <div class="conn-name">세미콜론</div>
-            <div class="conn-en">Semicolon</div>
-            <p>앞 문장 전체를 부연 설명. 뒤에는 반드시 <b>완전한 절</b>이 와야 하고, <code>however · therefore</code> 같은 연결부사가 자주 끼어듭니다.</p>
-          </div>
-          <div class="connector-card">
-            <div class="conn-symbol">, ~ing</div>
-            <div class="conn-name">분사구문 · 동격</div>
-            <div class="conn-en">Participial / Apposition</div>
-            <p><code>, ~ing</code> · <code>, p.p.</code> · <code>, 형용사</code> · <code>, 명사구</code>(동격) 모두 같은 역할. Zone 2의 의미를 그대로 이어받아 설명합니다.</p>
+          <div class="rule-card">
+            <div class="case">Case C · 부재</div>
+            <h4>장치가 <em class="em-serif">전혀</em> 없으면</h4>
+            <span class="arrow">↓</span>
+            <p>본문 <b>첫 문장</b>. 두 단락 이상이면 <b>둘째 단락의 첫 문장</b>.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5: STEP 2 DETAIL · TRIGGER WORDS -->
-    <section class="slide paper">
+    <!-- 5: QUIZ 1 -->
+    <section class="slide" id="quiz1">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Step 2 · Trigger Words</span></div>
-        <div>05 / 26</div>
+        <div class="l"><span class="mark"></span><span>Practice · Example 1</span></div>
+        <div>05 / 34</div>
       </div>
       <div>
-        <div class="heading-block">
-          <div class="eyebrow">Step Two · 두 가지 축</div>
-          <h2 class="title">트리거가 <em>방향</em>을 정한다.</h2>
-          <div class="rule-line"></div>
-          <p class="lead">모든 트리거는 결국 <b>두 축</b>으로 환원됩니다. 트리거를 보는 순간 빈칸의 <b>방향</b>이 결정됩니다.</p>
-        </div>
-        <div class="tw-pairs">
-          <div class="tw-pair">
-            <div class="label">Axis · 01</div>
-            <h4><em>순접</em> &nbsp;vs&nbsp; <em>역접</em></h4>
-            <p>트리거가 같은 방향을 가리키는지(<b>and · since · because · similarly</b>), 반대 방향을 가리키는지(<b>but · although · yet · despite</b>)를 먼저 판정.</p>
+        <div class="eyebrow">Practice · Find the Topic Sentence</div>
+        <h2 class="title">이 글의 <em>주제 문장</em>은 몇 번?</h2>
+        <div class="quiz-wrap">
+          <div class="sentences" data-quiz="1" data-answer="4">
+            <div class="legend">Example 1 · 문장을 클릭해 답을 고르세요</div>
+            <div class="sent" data-n="1"><div class="nb">1</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="2"><div class="nb">2</div><div class="text"><span class="marker">Although</span> ————————————,</div></div>
+            <div class="sent" data-n="3"><div class="nb">3</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="4"><div class="nb">4</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="5"><div class="nb">5</div><div class="text"><span class="marker">For example,</span> ————————————.</div></div>
+            <div class="sent" data-n="6"><div class="nb">6</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="7"><div class="nb">7</div><div class="text">———————————————————.</div></div>
           </div>
-          <div class="tw-pair">
-            <div class="label">Axis · 02</div>
-            <h4><em>동의어</em> &nbsp;vs&nbsp; <em>반의어</em></h4>
-            <p>순접이면 양쪽이 <b>동의어</b>로 정렬되고, 역접이면 양쪽이 <b>반의어</b>로 정렬됩니다. 빈칸의 정답은 이 두 축의 교차점에서 결정됩니다.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5: STEP 3 DETAIL · 해석과 상식 -->
-    <section class="slide">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Step 3 · 해석과 상식</span></div>
-        <div>06 / 26</div>
-      </div>
-      <div>
-        <div class="heading-block">
-          <div class="eyebrow">Step Three · 작문하듯이</div>
-          <h2 class="title">완성된 문장이 <em>논문 같은가</em>?</h2>
-          <div class="rule-line"></div>
-          <p class="lead">빈칸을 채운 뒤, 그 문장이 <b>실제로 학술 글에 쓰일 법한 한 문장</b>으로 완성되는지를 마지막에 점검합니다.</p>
-        </div>
-        <div class="concept-tiles">
-          <div class="concept-tile bad">
-            <div class="label">Avoid · 이렇게 풀지 마세요</div>
-            <h4>단어 매칭만으로 고르기</h4>
-            <p>빈칸 앞뒤의 어감만 보고 사전적 동의어 · 반의어를 끼워 맞추기. <b>문장 전체의 논리</b>를 무시한 채 어휘 카드 매칭으로 접근하면 함정 선지에 걸립니다.</p>
-          </div>
-          <div class="concept-tile good">
-            <div class="label">Do · 이렇게 푸세요</div>
-            <h4>한 문장으로 작문하기</h4>
-            <p>5 Zones로 구조를 잡고, 트리거로 방향을 정한 뒤, 빈칸을 메워 <b>의미가 통하는 한 문장</b>으로 완성. 논문에 그대로 쓸 수 있는 자연스러움이 기준입니다.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6: TRIGGER 01 · 비슷한 말 유도 -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 01 / 18</span></div>
-        <div>07 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 01 / 18</div>
-          <h2 class="detail-title">비슷한 말을<br><em>유도하는 것들</em></h2>
-          <p class="concept-en">Similar · Parallel Triggers</p>
-          <p class="concept-kr">앞뒤 내용을 <b>같은 방향</b>으로 흐르게 만드는 트리거. 좌우로 비슷한 단어와 의미가 오게끔 문장을 작문합니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">and</span>
-            <span class="marker-chip">like</span>
-            <span class="marker-chip">just as ~ , (so)</span>
-            <span class="marker-chip">in much the same way</span>
-            <span class="marker-chip">similarly</span>
-            <span class="marker-chip">correspondingly</span>
-            <span class="marker-chip">equally</span>
-            <span class="marker-chip">and other</span>
-          </div>
-          <ul class="rules-list">
-            <li><b>A and B</b> — 형태 일치 · 의미 유사 · <b>B가 더 중요</b></li>
-            <li><b>Just as …, so ~</b> — 양쪽 동사가 같거나 유사해야 한다</li>
-            <li><code>while · although · but</code> 뒤에도 <b>equally · similarly</b>가 오면 동의어</li>
-            <li><b>A, B and other C</b> — C는 A · B를 포괄하는 <b>상위어</b></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7: TRIGGER 02 · 인과관계 -->
-    <section class="slide">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 02 / 18</span></div>
-        <div>08 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 02 / 18</div>
-          <h2 class="detail-title">인과<br><em>관계</em></h2>
-          <p class="concept-en">Cause & Effect</p>
-          <p class="concept-kr">결과와 근거를 자연스럽게 잇는 트리거. 양쪽 내용이 <b>같은 방향</b>이 되도록 단어를 선택합니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">since</span>
-            <span class="marker-chip">because</span>
-            <span class="marker-chip">, for</span>
-            <span class="marker-chip">after all</span>
-            <span class="marker-chip">in that ~</span>
-            <span class="marker-chip">given</span>
-            <span class="marker-chip">as long as</span>
-            <span class="marker-chip">so … that …</span>
-            <span class="marker-chip">if (when) … , then …</span>
-          </div>
-          <ul class="rules-list">
-            <li><code>, for</code> = '왜냐하면' (접속사): <code>S+V, for S+V.</code></li>
-            <li><b>after all</b> = '왜냐하면'의 <b>부사</b> — Zone 3 · 4 · 5 모두 가능</li>
-            <li><b>Given</b> = Considering · Accepting (~를 고려해 본다면)</li>
-            <li><b>Given의 4가지</b>: Considering / be given(받다) / 형용사(정해진) / 명사(이미 정해진 것)</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8: TRIGGER 03 · 분사구문 -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 03 / 18</span></div>
-        <div>09 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 03 / 18</div>
-          <h2 class="detail-title">분사<br><em>구문</em></h2>
-          <p class="concept-en">Participial Phrases</p>
-          <p class="concept-kr"><code>~ing · p.p.</code> 형태의 분사구문은 옆에서 <b>동시 상황</b>을 만듭니다. 주절과 비슷한 방향으로 흐르도록 단어를 배치합니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">~ing</span>
-            <span class="marker-chip">p.p.</span>
-          </div>
-          <ul class="rules-list">
-            <li>Zone 3 · 4 · 5의 분사구문은 <b>Zone 1(주어)</b>을 수식</li>
-            <li>Zone 5의 분사구문은 Zone 2의 <b>목적어 · 보어</b>도 수식 가능</li>
-            <li>Zone 5의 분사구문은 <b>문장 전체</b>를 요약할 수도 있음</li>
-            <li>Zone 5는 Zone 2에 대한 <b>노골적 설명</b>: "그리고 / 그래서 / ~하면서"로 해석</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 9: TRIGGER 04 · 동격 -->
-    <section class="slide">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 04 / 18</span></div>
-        <div>10 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 04 / 18</div>
-          <h2 class="detail-title"><em>동격</em></h2>
-          <p class="concept-en">Apposition</p>
-          <p class="concept-kr">콤마 사이에 위치한 <b>명사구</b>. 분사구문과 똑같이 양쪽이 <b>같은 내용</b>이 되도록 단어를 배열합니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Pattern · 핵심 패턴</div>
-          <div class="marker-grid">
-            <span class="marker-chip">, 명사구 ,</span>
-            <span class="marker-chip">— 명사구 —</span>
-            <span class="marker-chip">( 명사구 )</span>
-          </div>
-          <ul class="rules-list">
-            <li>Zone 3 · 4 · 5의 동격은 <b>Zone 1의 명사</b>와 일치</li>
-            <li>Zone 5의 동격은 Zone 2의 <b>목적어 · 보어</b>도 수식 가능</li>
-            <li>Zone 5의 동격은 <b>문장 전체</b>를 요약할 수 있음</li>
-            <li>Zone 5는 Zone 2에 대한 <b>노골적 설명</b></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 10: TRIGGER 05 · 콜론과 세미콜론 -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 05 / 18</span></div>
-        <div>11 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 05 / 18</div>
-          <h2 class="detail-title">콜론 ·<br><em>세미콜론</em></h2>
-          <p class="concept-en">Colon & Semicolon</p>
-          <p class="concept-kr"><code>:</code>과 <code>;</code>은 앞 문장에 대한 <b>부연 설명</b>. Zone 2와 Zone 5 사이에 자리합니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">:</span>
-            <span class="marker-chip">;</span>
-          </div>
-          <ul class="rules-list">
-            <li><b>:</b> 는 <b>바로 앞</b>만 설명 · 절 · 구 · 단어 모두 가능 · 괄호 · 대시로 대체 가능</li>
-            <li><b>;</b> 는 <b>앞 전체</b>를 설명 · 뒤에 반드시 <b>완전한 절</b></li>
-            <li><b>;</b> 뒤에 <code>however · therefore · after all · nevertheless</code> 같은 연결부사 가능 (Zone 3 · 4 · 5 모두 가능)</li>
-            <li>복잡한 열거에서는 comma 대신 <code>;</code> 사용 (RC에서 자주 등장)</li>
-          </ul>
-          <div class="special-pattern">
-            <div class="sp-label">Special Pattern</div>
-            <div class="sp-title">오해 콜론 문제</div>
-            <p>콜론(<code style="font-family:'JetBrains Mono';color:var(--highlight);font-weight:700;">:</code>)은 <b>바로 앞에 주제</b>가 있고, <b>바로 앞만 설명</b>합니다. "오해 / 통념"이 어디에 놓이는지에 따라 콜론 뒤의 의미가 정반대로 결정됩니다.</p>
-            <div class="sp-formulas">
-              <div class="formula">
-                <span class="lhs">A&nbsp;is&nbsp;오해 :</span>
-                <span class="arrow">→</span>
-                <span class="rhs">not A</span>
-              </div>
-              <div class="formula">
-                <span class="lhs">오해&nbsp;is&nbsp;A :</span>
-                <span class="arrow">→</span>
-                <span class="rhs">A</span>
-              </div>
+          <div class="panel">
+            <div class="prompt">
+              <h3>먼저 차분히 고르세요</h3>
+              <p>주제 장치 두 개가 보입니다.<br><br>
+              <b>② Although</b>의 <b>주절</b> → 후보 ①<br>
+              <b>⑤ For example의 앞 문장</b> → 후보 ②<br><br>
+              둘 중 무엇이 정답일까요?</p>
+            </div>
+            <div class="feedback" id="fb1">
+              <span class="badge ok" id="fb1-badge">Correct</span>
+              <h4>정답은 <em class="em-serif">4번</em>.</h4>
+              <p><b>Although ~ , [주절]</b>의 주절은 3번. <em class="em-serif">→ 후보 ①</em></p>
+              <p><b>For example의 앞 문장</b>은 4번. <em class="em-serif">→ 후보 ②</em></p>
+              <p>두 후보가 <b>연달아</b> 등장(3 → 4) → <b>Case A</b> 적용 → 뒤의 후보가 전체 주제.</p>
+              <p class="verdict">∴ 정답 = 4번 문장</p>
+            </div>
+            <div class="actions">
+              <button class="btn" onclick="reveal(1)">Reveal Answer</button>
+              <button class="btn primary" onclick="resetQuiz(1)">Reset</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 11: TRIGGER 06 · 반복 표현 -->
-    <section class="slide">
+    <!-- 6: QUIZ 2 -->
+    <section class="slide paper" id="quiz2">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 06 / 18</span></div>
-        <div>12 / 26</div>
+        <div class="l"><span class="mark"></span><span>Practice · Example 2</span></div>
+        <div>06 / 34</div>
       </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 06 / 18</div>
-          <h2 class="detail-title">반복 ·<br><em>지칭</em></h2>
-          <p class="concept-en">Reference & Repetition</p>
-          <p class="concept-kr">앞에 나온 단어를 <b>받아오는 지시 형용사</b>들. 그 지시어가 가리키는 단어의 <b>synonym</b>을 찾으면 빈칸이 풀립니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">this</span>
-            <span class="marker-chip">these</span>
-            <span class="marker-chip">that</span>
-            <span class="marker-chip">those</span>
-            <span class="marker-chip">such</span>
-            <span class="marker-chip">the same</span>
-            <span class="marker-chip kr">소유격 (his · their · its)</span>
+      <div>
+        <div class="eyebrow">Practice · Four Candidates</div>
+        <h2 class="title">장치가 <em>네 개</em>. 어떤 것이 주제?</h2>
+        <div class="quiz-wrap">
+          <div class="sentences" data-quiz="2" data-answer="3">
+            <div class="legend">Example 2 · 문장을 클릭해 답을 고르세요</div>
+            <div class="sent" data-n="1"><div class="nb">1</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="2"><div class="nb">2</div><div class="text"><span class="marker">But</span> —————————————————.</div></div>
+            <div class="sent" data-n="3"><div class="nb">3</div><div class="text"><span class="marker">Thus</span> ————————————————.</div></div>
+            <div class="sent" data-n="4"><div class="nb">4</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="5"><div class="nb">5</div><div class="text"><span class="marker">However</span> ———————————————.</div></div>
+            <div class="sent" data-n="6"><div class="nb">6</div><div class="text"><span class="marker">Therefore</span> —————————————.</div></div>
+            <div class="sent" data-n="7"><div class="nb">7</div><div class="text">———————————————————.</div></div>
           </div>
-          <ul class="rules-list">
-            <li>지시 형용사가 <b>가리키는 단어</b>를 먼저 찾는다</li>
-            <li>그 단어의 <b>synonym</b>이 곧 정답 단어</li>
-            <li><code>such a + [빈칸] + 명사</code> 구조라면, 앞 문장의 <b>키워드</b>가 정답의 단서</li>
-          </ul>
+          <div class="panel">
+            <div class="prompt">
+              <h3>패턴을 보세요</h3>
+              <p>주제 후보 네 개: <b>2 (But)</b>, <b>3 (Thus)</b>, <b>5 (However)</b>, <b>6 (Therefore)</b>.<br><br>
+              그런데 <b>4번이 일반 문장</b>으로 끼어 있습니다. 어떤 규칙을 적용해야 할까요?</p>
+            </div>
+            <div class="feedback" id="fb2">
+              <span class="badge ok" id="fb2-badge">Correct</span>
+              <h4>정답은 <em class="em-serif">3번</em>.</h4>
+              <p>2 → 3은 연속된 후보. <b>Case A</b>에 따라 묶음의 주제 후보는 <b>3번</b>.</p>
+              <p>그 뒤로 <b>일반 문장 4번</b>이 끼어듭니다. <b>Case B</b> 적용.</p>
+              <p>일반 문장 <b>바로 앞의 후보</b>(=3번)가 전체 주제. 5·6번(However, Therefore)은 주제를 뒤에서 <em class="em-serif">한정·재진술</em>하는 역할.</p>
+              <p class="verdict">∴ 정답 = 3번 문장</p>
+            </div>
+            <div class="actions">
+              <button class="btn" onclick="reveal(2)">Reveal Answer</button>
+              <button class="btn primary" onclick="resetQuiz(2)">Reset</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 12: TRIGGER 07 · 지속 표현 -->
+    <!-- 7: QUIZ 3 -->
+    <section class="slide" id="quiz3">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Practice · Example 3</span></div>
+        <div>07 / 34</div>
+      </div>
+      <div>
+        <div class="eyebrow">Practice · Distant Candidates</div>
+        <h2 class="title">멀리 떨어진 두 후보, <em>어느 쪽</em>?</h2>
+        <div class="quiz-wrap">
+          <div class="sentences" data-quiz="3" data-answer="3">
+            <div class="legend">Example 3 · 문장을 클릭해 답을 고르세요</div>
+            <div class="sent" data-n="1"><div class="nb">1</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="2"><div class="nb">2</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="3"><div class="nb">3</div><div class="text"><span class="marker">However</span> ———————————————.</div></div>
+            <div class="sent" data-n="4"><div class="nb">4</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="5"><div class="nb">5</div><div class="text">———————————————————.</div></div>
+            <div class="sent" data-n="6"><div class="nb">6</div><div class="text"><span class="marker">Nevertheless</span> ————————————.</div></div>
+            <div class="sent" data-n="7"><div class="nb">7</div><div class="text">———————————————————.</div></div>
+          </div>
+          <div class="panel">
+            <div class="prompt">
+              <h3>거리부터 보세요</h3>
+              <p>후보 두 개: <b>3 (However)</b>, <b>6 (Nevertheless)</b>.<br><br>
+              사이에 <b>4·5번의 일반 문장</b>이 끼어 있습니다. 앞일까요, 뒤일까요?</p>
+            </div>
+            <div class="feedback" id="fb3">
+              <span class="badge ok" id="fb3-badge">Correct</span>
+              <h4>정답은 <em class="em-serif">3번</em>.</h4>
+              <p>후보 3과 6 사이에 <b>일반 문장 4·5</b>가 끼어 있습니다. <b>Case B</b> 적용.</p>
+              <p>일반 문장 <b>바로 앞</b>의 후보 = <b>3번</b>이 전체 주제.</p>
+              <div class="qual">
+                <b>중요한 추가 인사이트.</b>
+                <b>6번 (Nevertheless ~)</b> 문장은 글 전체의 새 주제가 아니라, 3번에서 제시된 주제에 대한 <em class="em-serif">한정(qualification)</em>일 가능성이 큽니다. "그럼에도 불구하고 ~한 면이 있다"는 식의 <b>제한 · 단서</b>를 다는 역할이지, 글 전체를 대표하는 새 주제가 아닙니다.
+              </div>
+              <p class="verdict">∴ 정답 = 3번 문장</p>
+            </div>
+            <div class="actions">
+              <button class="btn" onclick="reveal(3)">Reveal Answer</button>
+              <button class="btn primary" onclick="resetQuiz(3)">Reset</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8: STEP 2 OVERVIEW -->
     <section class="slide paper">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 07 / 18</span></div>
-        <div>13 / 26</div>
+        <div class="l"><span class="mark"></span><span>Step 2 · Flow & Function</span></div>
+        <div>08 / 34</div>
       </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 07 / 18</div>
-          <h2 class="detail-title">지속<br><em>표현</em></h2>
-          <p class="concept-en">Continuation</p>
-          <p class="concept-kr">앞 상황이 <b>계속 이어진다</b>는 의미. 전후 관계가 비슷한 방향으로 흐릅니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">continue</span>
-            <span class="marker-chip">remain</span>
-            <span class="marker-chip">still</span>
+      <div>
+        <div class="eyebrow">Step Two · 구조를 읽는다</div>
+        <h2 class="title"><em>주어와 동사</em>만 보면, 구조가 보인다.</h2>
+        <div class="rule-line"></div>
+        <p class="lead">주제를 잡았다면 이제 각 문장의 <b>역할</b>을 식별합니다. 모든 단어를 읽지 않습니다. 마침표 뒤의 주어 · 동사 · 연결어만으로 충분합니다.</p>
+        <div class="flow">
+          <div class="flow-card">
+            <div class="tag">Heuristic · 01</div>
+            <h4>반복 주어 = 주인공</h4>
+            <p>가장 자주 등장하는 주어가 글의 <b>중심 인물 · 핵심 개념</b>. 첫 단락에서 빠르게 식별하세요.</p>
           </div>
-          <ul class="rules-list">
-            <li><b>remain</b> "여전히 ~하다 / 이다" + <b>보어</b> (명사 · 형용사 · ~ing · p.p.)</li>
-            <li>주격보어를 갖는 동사군: <code>remain · appear · seem · prove · turn out</code></li>
-            <li><b>still</b>은 '여전히' 외에 <b>'그러나'</b> 의미도 있음을 주의!</li>
-          </ul>
+          <div class="flow-card">
+            <div class="tag">Heuristic · 02</div>
+            <h4>동사가 곧 기능</h4>
+            <p>주어 뒤의 <b>FAC 표시자</b>로 그 문장이 <em class="em-serif">Fact · Assumption · Conclusion</em> 중 무엇인지 판별합니다.</p>
+          </div>
+          <div class="flow-card">
+            <div class="tag">Heuristic · 03</div>
+            <h4>연결어로 골격</h4>
+            <p>마침표 뒤의 <code style="font-family:'JetBrains Mono';color:var(--accent-2);font-weight:700;">However · Thus · Moreover</code>가 전체 <b>Argument 단계</b>를 보여줍니다.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 13: TRIGGER 08 · 주의할 동사들 -->
-    <section class="slide">
+    <!-- 9: FAC TABLE OVERVIEW -->
+    <section class="slide fac-overview">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 08 / 18</span></div>
-        <div>14 / 26</div>
+        <div class="l"><span class="mark"></span><span>Step 2 · FAC Reference</span></div>
+        <div>09 / 34</div>
+      </div>
+      <div>
+        <div class="heading-block">
+          <div class="eyebrow">FAC · 한눈에 보기</div>
+          <h2 class="title">모든 문장은 <em>FAC</em>를 중심으로 움직인다.</h2>
+          <div class="rule-line"></div>
+          <p class="lead"><b>FACT · ASSUMPTION · CONCLUSION</b>이 글의 핵심 축.<br>앞에는 <em class="em-serif">논박의 대상</em>이, 뒤에는 그 축을 <em class="em-serif">검증 · 약화 · 강화 · 양보</em>하는 장치들이 따라옵니다.</p>
+        </div>
+        <div class="fac-frame">
+          <div class="fac-row-label">
+            <span class="lbl">Before FAC · Setting the Stage</span>
+            <span class="desc">— 논박할 대상과 글의 소재 —</span>
+          </div>
+          <div class="fac-row top">
+            <div class="fac">
+              <h5>논박 대상</h5>
+              <p class="concept">Object of Refutation</p>
+              <p class="markers">some · most · many · commonly · conventional · traditional · long · established · accepted</p>
+            </div>
+            <div class="fac">
+              <h5>제목 · 소재</h5>
+              <p class="concept">Subject of the Passage</p>
+              <p class="markers">의문문 · difficult · perplexing · vexed · not easy</p>
+            </div>
+          </div>
+          <div class="fac-divider">
+            <span class="line"></span>
+            <span class="arrow">— ↓ The core triad ↓ —</span>
+            <span class="line"></span>
+          </div>
+          <div class="fac-row-label">
+            <span class="lbl">FAC · The Core</span>
+            <span class="desc">— 논리의 중심축 —</span>
+          </div>
+          <div class="fac-row center">
+            <div class="fac core">
+              <h5>F · Fact</h5>
+              <p class="concept">Anecdotal Fact</p>
+              <p class="markers">find · discover · note · know · report · evidence</p>
+            </div>
+            <div class="fac core">
+              <h5>A · Assumption</h5>
+              <p class="concept">General Principle</p>
+              <p class="markers">assume · presume · premise</p>
+            </div>
+            <div class="fac core">
+              <h5>C · Conclusion</h5>
+              <p class="concept">Hypothesis · Judgment</p>
+              <p class="markers">conclude · suggest · indicate · intimate · hypothesize · speculate · postulate · conjecture · argue · posit</p>
+            </div>
+          </div>
+          <div class="fac-divider">
+            <span class="line"></span>
+            <span class="arrow">— ↓ Operations on FAC ↓ —</span>
+            <span class="line"></span>
+          </div>
+          <div class="fac-row-label">
+            <span class="lbl">After FAC · Operations</span>
+            <span class="desc">— 검증 · 약화 · 강화 · 양보 —</span>
+          </div>
+          <div class="fac-row bottom last">
+            <div class="fac">
+              <h5>Verification</h5>
+              <p class="concept">검증 · Empirical</p>
+              <p class="markers">reveal · show · demonstrate · find · discover · establish</p>
+            </div>
+            <div class="fac">
+              <h5>Weakening</h5>
+              <p class="concept">Assumption 부정</p>
+              <p class="markers">point out · undermine · overturn</p>
+            </div>
+            <div class="fac">
+              <h5>Strengthening</h5>
+              <p class="concept">FAC 심화</p>
+              <p class="markers">for example · for instance · illustrate · indeed · even · only · moreover</p>
+            </div>
+            <div class="fac">
+              <h5>Concession</h5>
+              <p class="concept">논박 대상의 장점 인정</p>
+              <p class="markers">Certainly / Of course / True / Granted ~ , but … · 강조의 do ~ , but … · may indeed … , but …</p>
+            </div>
+          </div>
+          <div class="memorize-note">
+            <div class="icon">!</div>
+            <div class="txt">
+              <b>이 동사들과 연결어는 반드시 암기하세요.</b>  Reading에서는 <em class="em-serif">문장의 기능</em>을 곧바로 식별하게 해 주고, Writing에서는 <em class="em-serif">논증의 단계</em>를 정확히 표현하게 해 줍니다. 암기 없이는 둘 다 흔들립니다.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10: FAC DETAIL — 논박 대상 -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Before · 논박 대상</span></div>
+        <div>10 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
-          <div class="role">Trigger · 08 / 18</div>
-          <h2 class="detail-title">주의할<br><em>동사들</em></h2>
-          <p class="concept-en">Janus Verbs · 양면 동사</p>
-          <p class="concept-kr">긍정과 부정의 의미가 <b>공존</b>하는 동사들. 문맥에 따라 정반대로 작동하므로 양쪽 해석을 모두 확인합니다.</p>
+          <div class="role">Before FAC · 01</div>
+          <h2 class="detail-title">논박<br><em>대상</em></h2>
+          <p class="concept-en">Object of Refutation</p>
+          <p class="concept-kr">필자가 <b>논박 · 수정 · 제한</b>의 대상으로 제시하는 일반론. 보통 글의 도입부에서 "흔히/통상" 받아들여진 견해로 등장합니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Key Markers · 핵심 표시자</div>
+          <div class="marker-grid">
+            <span class="marker-chip">some</span>
+            <span class="marker-chip">most</span>
+            <span class="marker-chip">many</span>
+            <span class="marker-chip">commonly</span>
+            <span class="marker-chip">conventional</span>
+            <span class="marker-chip">traditional</span>
+            <span class="marker-chip">long</span>
+            <span class="marker-chip">established</span>
+            <span class="marker-chip">accepted</span>
+          </div>
+          <p class="note">이 표시자가 보이면 그 문장은 <b>주제가 아니라 주제의 적</b>입니다. 뒤에 반드시 <em class="em-serif">But · However</em> 같은 반전이 따라옵니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11: FAC DETAIL — 제목 · 소재 -->
+    <section class="slide">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Before · 제목 · 소재</span></div>
+        <div>11 / 34</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">Before FAC · 02</div>
+          <h2 class="detail-title">제목<br><em>· 소재</em></h2>
+          <p class="concept-en">Subject of the Passage</p>
+          <p class="concept-kr">글 전체가 다룰 <b>소재 · 문제 의식</b>을 처음 던지는 문장. 의문문이거나 "어렵다 · 까다롭다"는 어휘를 동반합니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Key Markers · 핵심 표시자</div>
+          <div class="marker-grid">
+            <span class="marker-chip kr">의문문</span>
+            <span class="marker-chip">difficult</span>
+            <span class="marker-chip">perplexing</span>
+            <span class="marker-chip">vexed</span>
+            <span class="marker-chip">not easy</span>
+          </div>
+          <p class="note">의문문은 곧 글의 <b>제목</b>입니다. 그 답을 찾는 과정이 본문의 흐름이며, 답에 해당하는 문장이 보통 <em class="em-serif">Conclusion</em>입니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12: FAC DETAIL — FACT -->
+    <section class="slide dark">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Core · Fact</span></div>
+        <div>12 / 34</div>
+      </div>
+      <div class="fac-detail core">
+        <div class="left">
+          <div class="role" style="color:var(--highlight);">FAC Core · F</div>
+          <h2 class="detail-title">F<br><em>Fact</em></h2>
+          <p class="concept-en" style="color:rgba(244,239,230,.7);">Anecdotal Fact / Observation</p>
+          <p class="concept-kr" style="color:#F4EFE6;">관찰된 <b>일화적 사실 · 자료</b>. "이미 확인된 것"으로 제시되는 단일 사례입니다. 일반화는 아닙니다.</p>
+        </div>
+        <div class="right" style="border-color:#F4EFE6;">
+          <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">find</span>
+            <span class="marker-chip">discover</span>
+            <span class="marker-chip">note</span>
+            <span class="marker-chip">know</span>
+            <span class="marker-chip">report</span>
+            <span class="marker-chip">evidence</span>
+          </div>
+          <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">전달동사 — that 절을 목적어로 가집니다. <em class="em-serif" style="color:var(--highlight);">"X reports that ~"</em> 형태에서 that 이하가 곧 Fact의 내용.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13: FAC DETAIL — ASSUMPTION -->
+    <section class="slide dark">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Core · Assumption</span></div>
+        <div>13 / 34</div>
+      </div>
+      <div class="fac-detail core">
+        <div class="left">
+          <div class="role" style="color:var(--highlight);">FAC Core · A</div>
+          <h2 class="detail-title">A<br><em>Assumption</em></h2>
+          <p class="concept-en" style="color:rgba(244,239,230,.7);">General Principle · Premise</p>
+          <p class="concept-kr" style="color:#F4EFE6;">논증의 <b>전제 · 일반 원리</b>. 증명 없이 받아들이고 그 위에서 결론을 끌어내는 토대입니다.</p>
+        </div>
+        <div class="right" style="border-color:#F4EFE6;">
+          <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">assume</span>
+            <span class="marker-chip">presume</span>
+            <span class="marker-chip">premise</span>
+          </div>
+          <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">Assumption은 공격의 표적입니다. <em class="em-serif" style="color:var(--highlight);">Weakening</em> 문제에서 무엇을 부정해야 하는지의 1순위가 바로 이 전제.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14: FAC DETAIL — CONCLUSION -->
+    <section class="slide dark">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · Core · Conclusion</span></div>
+        <div>14 / 34</div>
+      </div>
+      <div class="fac-detail core">
+        <div class="left">
+          <div class="role" style="color:var(--highlight);">FAC Core · C</div>
+          <h2 class="detail-title">C<br><em>Conclusion</em></h2>
+          <p class="concept-en" style="color:rgba(244,239,230,.7);">Hypothesis · Judgment · Claim</p>
+          <p class="concept-kr" style="color:#F4EFE6;">논증의 <b>중심 주장</b>. 결론 · 가설 · 판단을 포괄합니다. 보통 글의 <em class="em-serif" style="color:var(--highlight);">주제</em>이기도 합니다.</p>
+        </div>
+        <div class="right" style="border-color:#F4EFE6;">
+          <div class="label" style="color:rgba(244,239,230,.6);">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">conclude</span>
+            <span class="marker-chip">suggest</span>
+            <span class="marker-chip">indicate</span>
+            <span class="marker-chip">intimate</span>
+            <span class="marker-chip">hypothesize</span>
+            <span class="marker-chip">speculate</span>
+            <span class="marker-chip">postulate</span>
+            <span class="marker-chip">conjecture</span>
+            <span class="marker-chip">argue</span>
+            <span class="marker-chip">posit</span>
+          </div>
+          <p class="note" style="color:rgba(244,239,230,.8); border-color: rgba(244,239,230,.3);">이 동사들이 보이는 문장이 곧 <b>저자의 주장</b>. RC의 <em class="em-serif" style="color:var(--highlight);">primary purpose · main idea</em> 문제는 거의 이 문장으로 수렴합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15: FAC 용어 정리 (p.93 table 1) -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · 용어 정리</span></div>
+        <div>15 / 34</div>
+      </div>
+      <div>
+        <div class="eyebrow">FAC · 동사 정리 (Verb Reference)</div>
+        <h2 class="title">근거 · 가설 · 전제를 <em>받치는 동사</em>들.</h2>
+        <div class="rule-line"></div>
+        <p class="lead">어떤 동사가 어떤 기능을 표시하는지를 외워야 정확한 식별이 가능합니다. <b>근거(F)</b>는 가설을 받치는 <b>사실</b>, <b>전제(A)</b>는 가설을 받치는 <b>생각</b>입니다.</p>
+        <div class="terms-grid">
+          <div class="term-col evidence">
+            <div class="head">F · Evidence</div>
+            <div class="kr">근거</div>
+            <div class="en">support by fact</div>
+            <div class="verbs">
+              <span>since</span>
+              <span>find</span>
+              <span>discover</span>
+              <span>report</span>
+              <span>know</span>
+              <span>observe</span>
+              <span>note</span>
+            </div>
+          </div>
+          <div class="term-col conclusion">
+            <div class="head">C · Hypothesis</div>
+            <div class="kr">가설</div>
+            <div class="en">claim · judgment</div>
+            <div class="verbs">
+              <span>suggests</span>
+              <span>indicates</span>
+              <span>implies</span>
+              <span>intimates</span>
+              <span>mean (사람 주어)</span>
+              <span>speculates</span>
+              <span>conjectures</span>
+              <span>hypothesizes</span>
+              <span>generalizes</span>
+            </div>
+          </div>
+          <div class="term-col assumption">
+            <div class="head">A · Premise</div>
+            <div class="kr">전제</div>
+            <div class="en">basis of the claim</div>
+            <div class="verbs">
+              <span>is based on</span>
+              <span>is predicated on</span>
+              <span>is premised on</span>
+              <span>depends on</span>
+              <span>relies on</span>
+              <span>requires</span>
+              <span>the notion that</span>
+            </div>
+          </div>
+        </div>
+        <div class="terms-note">
+          <div class="item"><span class="eq">근거 =</span> 가설(<b>C</b>)을 support하는 <b>사실(F)</b></div>
+          <div class="item"><span class="eq">전제 =</span> 가설(<b>C</b>)을 support하는 <b>생각(notion)</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16: 검증 전 → 검증 → 검증 후 (p.93 table 2) -->
+    <section class="slide">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · 검증의 작동</span></div>
+        <div>16 / 34</div>
+      </div>
+      <div>
+        <div class="eyebrow">Before · Verification · After</div>
+        <h2 class="title">검증이 <em>비약</em>을 해결한다.</h2>
+        <div class="rule-line"></div>
+        <p class="lead">검증(Verification)은 <b>전제(A)가 사실인지 확인</b>하는 과정입니다. 검증 전과 후, 같은 글의 <b>F · A · C</b>가 어떻게 다른 지위를 갖는지 보세요.</p>
+        <div class="verif-flow">
+          <div class="verif-stage before">
+            <div class="label">Before · 검증 전</div>
+            <h4>비약이 있는<br>결론</h4>
+            <div class="components">
+              <span>F · <b>사실</b></span>
+              <span>A · <b>생각</b></span>
+              <span>C · <b>생각</b></span>
+            </div>
+            <p class="summary">전제가 검증되지 않아 결론에 <b>비약</b>이 남은 단계.</p>
+            <div class="keywords">
+              <span>hypothesis</span>
+              <span>thesis</span>
+              <span>speculation</span>
+              <span>conjecture</span>
+              <span>generalization</span>
+              <span>argument</span>
+            </div>
+          </div>
+          <div class="verif-arrow">→</div>
+          <div class="verif-stage middle">
+            <div class="label">Verification · 검증</div>
+            <h4>A가 참인지<br>확인한다</h4>
+            <div class="components">
+              <span>전제 확인</span>
+              <span>비약의 해결</span>
+              <span>반복 실험 (replication)</span>
+            </div>
+            <p class="summary">경험주의적 연구로 전제를 검증. 전제가 <em class="em-serif">하나라도</em> 틀리면 가설 전체가 틀린 것.</p>
+            <div class="keywords">
+              <span>reveal</span>
+              <span>show</span>
+              <span>demonstrate</span>
+              <span>establish</span>
+              <span>corroborate</span>
+              <span>confirm</span>
+            </div>
+          </div>
+          <div class="verif-arrow">→</div>
+          <div class="verif-stage after">
+            <div class="label">After · 검증 후</div>
+            <h4>비약이 해결된<br>결론</h4>
+            <div class="components">
+              <span>F · <b>사실</b></span>
+              <span>A · <b>사실</b></span>
+              <span>C · <b>생각</b></span>
+            </div>
+            <p class="summary">전제(A)도 사실(F)이 됩니다. 결론(C)은 여전히 생각이지만 더는 비약이 아닙니다.</p>
+            <div class="keywords">
+              <span>inference</span>
+              <span>surmise</span>
+            </div>
+          </div>
+        </div>
+        <div class="verif-note">
+          검증으로 확인된 사실은 다시 <b>다른 가설의 근거</b>로 쓰일 수 있습니다. <code>find · discover · show</code>가 <code>suggest</code>보다 <b>앞</b>에 나오면, 그 사실은 다음 가설의 근거로 사용된 것입니다.
+        </div>
+      </div>
+    </section>
+
+    <!-- 17: FAC DETAIL — VERIFICATION -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · After · Verification</span></div>
+        <div>17 / 34</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">After FAC · 01</div>
+          <h2 class="detail-title"><em>Verification</em><br>검증</h2>
+          <p class="concept-en">Empirical Fact / Observation</p>
+          <p class="concept-kr">FAC를 <b>경험적으로 입증</b>하는 행위. "실제로 보여졌다 · 드러났다"의 의미를 갖는 동사들입니다.</p>
         </div>
         <div class="right">
           <div class="label">Key Verbs · 핵심 동사</div>
           <div class="marker-grid">
-            <span class="marker-chip">compromise</span>
-            <span class="marker-chip">fabricate</span>
-            <span class="marker-chip">manipulate</span>
-            <span class="marker-chip">betray</span>
+            <span class="marker-chip">reveal</span>
+            <span class="marker-chip">show</span>
+            <span class="marker-chip">demonstrate</span>
+            <span class="marker-chip">find</span>
+            <span class="marker-chip">discover</span>
+            <span class="marker-chip">establish</span>
           </div>
-          <ul class="rules-list">
-            <li><b>compromise</b> — 타협 / <b>약화시키다</b> (undermine · weaken)</li>
-            <li><b>fabricate</b> — 제조하다 / <b>날조하다</b> (concoct · contrive)</li>
-            <li><b>manipulate</b> — 기계 조작 / 진실 조작 / <b>몰래 조종</b></li>
-            <li><b>betray</b> — 배신하다 / <b>은연중에 드러내다</b> (evince · show) — "행동 · 말 betrays 본심"</li>
-          </ul>
+          <p class="note"><em class="em-serif">find / discover</em>는 Fact 동사이기도 합니다. <b>맥락</b>으로 구별하세요. 단순 관찰이면 Fact, 가설을 입증하는 결과면 Verification.</p>
         </div>
       </div>
     </section>
 
-    <!-- 14: TRIGGER 09 · not only A but also B -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 09 / 18</span></div>
-        <div>15 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 09 / 18</div>
-          <h2 class="detail-title">not only<br><em>but also</em></h2>
-          <p class="concept-en">Not Only ... But Also</p>
-          <p class="concept-kr">"A 뿐만 아니라 B 도 역시" — 단순한 첨가가 아니라, <b>B에 더 의외 · 강한 내용</b>이 오는 구조.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Patterns · 핵심 패턴</div>
-          <div class="marker-grid">
-            <span class="marker-chip">not only A but also B</span>
-            <span class="marker-chip">B as well as A</span>
-          </div>
-          <ul class="rules-list">
-            <li><b>A</b> — 뻔한 말 · 당연한 말</li>
-            <li><b>B</b> — <b>의외의 말 · 강한 말 · 반대말</b></li>
-            <li>A와 B가 단순 동의어 관계면 <b>오답</b></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 15: TRIGGER 10 · 대조와 역접 -->
+    <!-- 16: FAC DETAIL — WEAKENING -->
     <section class="slide">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 10 / 18</span></div>
-        <div>16 / 26</div>
+        <div class="l"><span class="mark"></span><span>FAC · After · Weakening</span></div>
+        <div>18 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
-          <div class="role">Trigger · 10 / 18</div>
-          <h2 class="detail-title">대조와<br><em>역접</em></h2>
-          <p class="concept-en">Contrast & Concession</p>
-          <p class="concept-kr">역접 연결어 양쪽에는 기본적으로 <b>반대말</b>이 옵니다. 반대말이 배치되는 자리는 양쪽 각각의 <b>키워드</b> 자리.</p>
+          <div class="role">After FAC · 02</div>
+          <h2 class="detail-title"><em>Weakening</em><br>약화</h2>
+          <p class="concept-en">Negation of an Assumption</p>
+          <p class="concept-kr">기존 <b>Assumption을 부정</b>하는 동사들. 논증의 토대를 흔드는 문장에 등장합니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Key Verbs · 핵심 동사</div>
+          <div class="marker-grid">
+            <span class="marker-chip">point out</span>
+            <span class="marker-chip">undermine</span>
+            <span class="marker-chip">overturn</span>
+          </div>
+          <p class="note">Weakening 문제는 <b>가장 약화하는</b> 선지를 고르는 것이 핵심. 보기에 있는 사실이 본문의 <em class="em-serif">전제(Assumption)</em>를 부정하는지로 판단합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17: FAC DETAIL — STRENGTHENING -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>FAC · After · Strengthening</span></div>
+        <div>19 / 34</div>
+      </div>
+      <div class="fac-detail">
+        <div class="left">
+          <div class="role">After FAC · 03</div>
+          <h2 class="detail-title"><em>Strengthen-<br>ing</em><br>강화</h2>
+          <p class="concept-en">Specification · Intensification</p>
+          <p class="concept-kr">Assumption이나 Conclusion을 <b>구체화 · 심화</b>하여 뒷받침합니다. 예시 · 강조어 모두 포함됩니다.</p>
         </div>
         <div class="right">
           <div class="label">Key Markers · 핵심 표시자</div>
           <div class="marker-grid">
-            <span class="marker-chip">but</span>
-            <span class="marker-chip">yet</span>
-            <span class="marker-chip">although</span>
-            <span class="marker-chip">though</span>
-            <span class="marker-chip">albeit</span>
-            <span class="marker-chip">even though</span>
-            <span class="marker-chip">while</span>
-            <span class="marker-chip">whereas</span>
-            <span class="marker-chip">nevertheless</span>
-            <span class="marker-chip">nonetheless</span>
-            <span class="marker-chip">notwithstanding</span>
-            <span class="marker-chip">, though ,</span>
-          </div>
-          <ul class="rules-list">
-            <li><b>Although not A, B</b> → A &gt; B &nbsp;·&nbsp; <b>Although A, not B</b> → A &lt; B</li>
-            <li><b>A, albeit B</b> — albeit 바로 앞 <b>A가 주제</b></li>
-            <li><code>if ~ at all</code>, <code>if not ~</code>, <code>if ~</code>의 if도 <b>'비록'</b> 의미</li>
-            <li><b>, though ,</b> 콤마 사이의 though = '그러나'</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 16: TRIGGER 11 · 역접의 전치사들 -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 11 / 18</span></div>
-        <div>17 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 11 / 18</div>
-          <h2 class="detail-title">역접의<br><em>전치사들</em></h2>
-          <p class="concept-en">Concession Prepositions</p>
-          <p class="concept-kr">양쪽에 <b>반대말</b>을 배치하는 전치사들. <code>rather than</code> 구조는 RC <b>inference</b> 문제에도 자주 활용됩니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">for all</span>
-            <span class="marker-chip">in spite of</span>
-            <span class="marker-chip">despite</span>
-            <span class="marker-chip">instead of</span>
-            <span class="marker-chip">notwithstanding</span>
-            <span class="marker-chip">rather than</span>
-          </div>
-          <ul class="rules-list">
-            <li><b>A rather than B</b> — A · B는 <b>반대말 + 형태 일치</b></li>
-            <li>Rather than이 Zone 3(주절 주어 앞)에 있으면 뒤에 <b>동사원형 / ~ing</b>가 와야 한다</li>
-            <li><b>Notwithstanding</b>은 <b>목적어 뒤</b>에 오는 형태 또는 <code>notwithstanding that</code> 절 구조</li>
-            <li>rather than 구조는 RC <b>infer 문제</b>에 자주 활용</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 17: TRIGGER 12 · 반대말 없는 역접 -->
-    <section class="slide">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 12 / 18</span></div>
-        <div>18 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 12 / 18</div>
-          <h2 class="detail-title">반대말이<br>오지 않는 <em>역접</em></h2>
-          <p class="concept-en">Concession without Antonym</p>
-          <p class="concept-kr">역접 뒤에 반드시 <b>반대말만</b> 오는 건 아닙니다. 더 <b>강한 말</b>이 올 수도 있어 정반대로 해석하지 않도록 주의.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Connectors · "not A" 강조</div>
-          <div class="marker-grid">
-            <span class="marker-chip">on the contrary</span>
-            <span class="marker-chip">instead</span>
-            <span class="marker-chip">rather</span>
+            <span class="marker-chip">for example</span>
+            <span class="marker-chip">for instance</span>
+            <span class="marker-chip">illustrate</span>
             <span class="marker-chip">indeed</span>
-            <span class="marker-chip">in fact</span>
-          </div>
-          <ul class="rules-list">
-            <li>역접 뒤에 <b>더 강한 말</b>이 올 수 있음</li>
-            <li><b>not A → A의 반대말로 강조</b> 구조 (위 부사들이 연결고리)</li>
-            <li>"애매하지 않다 (not A), 오히려 (rather) 명백하다 (A의 반대말)"</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 18: TRIGGER 13 · 주의할 역접의 부사들 -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 13 / 18</span></div>
-        <div>19 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 13 / 18</div>
-          <h2 class="detail-title">주의할<br>역접의 <em>부사들</em></h2>
-          <p class="concept-en">Subtle Adverbs of Contrast</p>
-          <p class="concept-kr">양쪽에 <b>반대말</b>을 배치하는 부사들. 의미 그룹별로 묶어 외우면 시험에서 빠르게 잡힙니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">By Meaning Group · 의미 그룹별</div>
-          <ul class="rules-list">
-            <li><b>그러나</b> — <code>still · though · however</code></li>
-            <li><b>역설 · 모순</b> — <code>paradoxically · ironically</code></li>
-            <li><b>놀람 · 당황</b> — <code>surprisingly · puzzlingly · curiously</code></li>
-            <li><b>겉으로 보기에는</b> — <code>seemingly · ostensibly · apparently</code></li>
-            <li><b>(사실 아닌데) 주장으로는</b> — <code>purportedly · professedly</code></li>
-            <li><b>(사실 아닌데) 그들 생각으로는</b> — <code>supposedly</code></li>
-            <li><b>부정어</b> — <code>less than · far from · rarely · scarcely · hardly</code></li>
-            <li><b>동시에</b> — <code>at the same time</code></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 19: TRIGGER 14 · otherwise -->
-    <section class="slide">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 14 / 18</span></div>
-        <div>20 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 14 / 18</div>
-          <h2 class="detail-title"><em>otherwise</em></h2>
-          <p class="concept-en">Otherwise · 3가지 의미</p>
-          <p class="concept-kr">구조와 해석 모두 까다로운 단어. <b>세 가지 의미</b>가 모두 출제되므로 위치별로 잡아야 합니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Three Meanings · 세 가지 쓰임</div>
-          <ul class="rules-list">
-            <li><b>그렇지 않으면</b> (normally) — 가장 흔한 의미.<br>
-              구조 예: <code>A an otherwise B 명사</code> — A하지 않았다면 B일 명사 → 결국 <b>A 때문에 B가 아닌</b> 명사</li>
-            <li><b>다른 방법으로</b> (differently) — 반대말 <code>likewise</code></li>
-            <li><b>그것 말고</b> · <b>그것을 제외하면</b> (besides that · aside from it)</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 20: TRIGGER 15 · 비교의 대상 -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 15 / 18</span></div>
-        <div>21 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 15 / 18</div>
-          <h2 class="detail-title">비교의<br><em>대상</em></h2>
-          <p class="concept-en">Targets of Comparison</p>
-          <p class="concept-kr">비교 대상은 <b>형태 일치 + 종류 일치 + 논리는 역접</b>. RC <b>inference 문제</b>로도 출제됩니다.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Patterns · 핵심 패턴</div>
-          <div class="marker-grid">
-            <span class="marker-chip">more A than B</span>
-            <span class="marker-chip">less A than B</span>
-            <span class="marker-chip">not A but B</span>
-            <span class="marker-chip">B rather than A</span>
-            <span class="marker-chip">not so much A as B</span>
-            <span class="marker-chip">relative(ly)</span>
-            <span class="marker-chip">different</span>
-            <span class="marker-chip">oscillate between</span>
-            <span class="marker-chip">shift from A to B</span>
-            <span class="marker-chip">prefer A to B</span>
-            <span class="marker-chip">distinguish A from B</span>
-            <span class="marker-chip">replace A with B</span>
-            <span class="marker-chip">substitute B for A</span>
-            <span class="marker-chip">B be substituted for A</span>
-          </div>
-          <ul class="rules-list">
-            <li>비교 대상은 <b>반대말</b>: A is more B than C → A · C는 반대말</li>
-            <li><b>No other A is more B than C</b> → C가 가장 B한 A</li>
-            <li><code>than C</code>, <code>as C</code>가 <b>생략</b>됐다면 앞에서 찾아 비교</li>
-            <li><code>B be substituted for A</code> = <code>replace</code> · <b>대체하다</b> (B가 A를 대체하다)</li>
-            <li>oscillate · shift · prefer · distinguish · replace · substitute는 <b>두 대상</b>을 분리·연결하는 비교 표현</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 21: TRIGGER 16 · even / only 강조 -->
-    <section class="slide">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 16 / 18</span></div>
-        <div>22 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 16 / 18</div>
-          <h2 class="detail-title"><em>even</em> ·<br><em>only</em> 강조</h2>
-          <p class="concept-en">Emphasis with Antonym</p>
-          <p class="concept-kr"><b>even</b>과 <b>only</b>는 반대말을 이용해 강조하는 경우가 있어, 정반대로 해석하지 않도록 주의.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
             <span class="marker-chip">even</span>
             <span class="marker-chip">only</span>
+            <span class="marker-chip">moreover</span>
           </div>
-          <ul class="rules-list">
-            <li><b>even</b> — 일반 강조 vs <b>반대말로 강조</b> (예: "심지어 [먹지 못하는] 흙도 먹겠다")</li>
-            <li><b>only A → B</b> = <code>not A → not B</code> ("A일 때에만 B")</li>
-            <li>only는 <b>infer</b> 가능: "그래도 멋진 구석이 하나는 있다"</li>
-            <li>only가 있는 도치 구조: <br><code>Only A 조동사 + S + 본동사 (B)</code> · <code>It is only A that S + V (B)</code></li>
-          </ul>
+          <p class="note">기억하세요: <em class="em-serif">For example</em>의 앞 문장이 곧 <b>주제 후보</b>입니다. 예시는 항상 주제를 뒤따라 옵니다.</p>
         </div>
       </div>
     </section>
 
-    <!-- 22: TRIGGER 17 · 시간 표현 (전환점) -->
-    <section class="slide paper">
-      <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 17 / 18</span></div>
-        <div>23 / 26</div>
-      </div>
-      <div class="fac-detail">
-        <div class="left">
-          <div class="role">Trigger · 17 / 18</div>
-          <h2 class="detail-title">시간 표현<br><em>(전환점)</em></h2>
-          <p class="concept-en">Turning-Point Time Markers</p>
-          <p class="concept-kr">시간 부사는 <b>"과거에는 X, 지금은 아니다"</b> 같은 전환점을 만듭니다. TCSE에서는 <b>역접의 trigger</b>로 작동.</p>
-        </div>
-        <div class="right">
-          <div class="label">Key Markers · 핵심 표시자</div>
-          <div class="marker-grid">
-            <span class="marker-chip">initially</span>
-            <span class="marker-chip">originally</span>
-            <span class="marker-chip">once</span>
-            <span class="marker-chip">formerly</span>
-            <span class="marker-chip">earlier</span>
-            <span class="marker-chip">historically</span>
-            <span class="marker-chip">recently</span>
-            <span class="marker-chip">now</span>
-            <span class="marker-chip">presently</span>
-            <span class="marker-chip">at present</span>
-            <span class="marker-chip">before</span>
-            <span class="marker-chip">after</span>
-            <span class="marker-chip">until</span>
-          </div>
-          <ul class="rules-list">
-            <li><b>과거 ↔ 현재</b>, <b>과거 ↔ 미래</b> 등의 전환점 표현</li>
-            <li>TCSE에서는 <b>역접</b>의 trigger words 역할</li>
-            <li>RC에서는 <b>inference 문제</b> 또는 fact 문제의 소재</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 23: TRIGGER 18 · 빈칸들 사이의 관계 -->
+    <!-- 18: FAC DETAIL — CONCESSION -->
     <section class="slide">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Trigger · 18 / 18</span></div>
-        <div>24 / 26</div>
+        <div class="l"><span class="mark"></span><span>FAC · After · Concession</span></div>
+        <div>20 / 34</div>
       </div>
       <div class="fac-detail">
         <div class="left">
-          <div class="role">Trigger · 18 / 18</div>
-          <h2 class="detail-title">빈칸들 사이의<br><em>관계</em></h2>
-          <p class="concept-en">Inter-Blank Inference</p>
-          <p class="concept-kr">2 ~ 3개 빈칸 문제에서 빈칸의 의미가 단독으로 모호할 때, <b>빈칸들 간의 관계</b>를 따져 정답을 추론합니다.</p>
+          <div class="role">After FAC · 04</div>
+          <h2 class="detail-title"><em>Concession</em><br>양보</h2>
+          <p class="concept-en">Acknowledging Merit, Then Refuting</p>
+          <p class="concept-kr">"물론 ~ 하지만, 그러나 …" 구조. 논박 대상의 <b>장점을 먼저 인정</b>한 뒤 본 주장을 펼치는 세련된 수사 기법입니다.</p>
         </div>
         <div class="right">
-          <div class="label">How to Approach · 접근 방법</div>
-          <ul class="rules-list">
-            <li>빈칸 A와 빈칸 B가 <b>인과 · 역접 · 동격</b> 중 어떤 관계로 묶이는지 먼저 확인</li>
-            <li>한쪽 빈칸의 후보가 좁혀지면 <b>다른 빈칸도 자동으로 결정</b></li>
-            <li>모든 빈칸을 채운 뒤 <b>한 문장으로 자연스럽게 읽히는지</b>로 최종 검증</li>
-            <li>구조적 단서(분사구문 · 콜론 · 세미콜론)와 결합해서 판단</li>
-          </ul>
+          <div class="label">Key Patterns · 핵심 패턴</div>
+          <div class="marker-grid">
+            <span class="marker-chip">Certainly ~ , but …</span>
+            <span class="marker-chip">Of course ~ , but …</span>
+            <span class="marker-chip">True ~ , but …</span>
+            <span class="marker-chip">Granted ~ , but …</span>
+            <span class="marker-chip">강조의 do + 동사 ~ , but …</span>
+            <span class="marker-chip">may indeed … , but …</span>
+          </div>
+          <p class="note">but 뒤가 <b>저자의 진짜 주장</b>입니다. 양보 부분을 저자의 입장으로 착각하지 마세요. <em class="em-serif">Writing</em>에서도 이 구조 하나로 정교한 논증이 가능합니다.</p>
         </div>
       </div>
     </section>
 
-    <!-- 24: RECAP · 다시, 3단계 -->
+    <!-- 19: STEP 3 OVERVIEW -->
     <section class="slide paper">
       <div class="pagebar">
-        <div class="l"><span class="mark"></span><span>Recap · 다시, 3단계</span></div>
-        <div>25 / 26</div>
+        <div class="l"><span class="mark"></span><span>Step 3 · Problem Recognition</span></div>
+        <div>21 / 34</div>
+      </div>
+      <div>
+        <div class="eyebrow">Step Three · 본문보다 질문이 먼저</div>
+        <h2 class="title">본문보다 <em>질문</em>을 먼저 읽는다.</h2>
+        <div class="rule-line"></div>
+        <p class="lead">시험은 <b>본문을 읽는 시간</b>이 아니라 <b>문제를 푸는 시간</b>입니다. 어떤 단어에 대해 어떤 유형이 나왔는지 알고 들어가면, 본문에서 무엇에 집중해야 할지 즉시 결정됩니다.</p>
+        <div class="principles">
+          <div class="principle">
+            <div class="num">i.</div>
+            <h4>질문 용어로 <em class="em-serif">유형</em>을 본다</h4>
+            <p><b>infer · primary purpose · function · according to</b> 같은 용어가 각각 다른 <b>유형</b>과 <b>해법</b>을 지정합니다.</p>
+          </div>
+          <div class="principle">
+            <div class="num">ii.</div>
+            <h4>본문 단어로 <em class="em-serif">위치</em>를 본다</h4>
+            <p>질문 안에 인용된 <b>본문 단어 · 어구 · 문장</b>이 답의 위치를 알려 줍니다. 본문 전체를 뒤지지 않습니다.</p>
+          </div>
+          <div class="principle">
+            <div class="num">iii.</div>
+            <h4>본문을 읽기 <em class="em-serif">전에</em> 끝낸다</h4>
+            <p>어떤 부분에 주의해서 읽어야 하는지 결정된 뒤에 본문을 정독합니다. 정독은 <b>방향이 정해진 읽기</b>여야 합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20: PROBLEM TYPES TABLE -->
+    <section class="slide types-overview">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Step 3 · 한눈에 보기</span></div>
+        <div>22 / 34</div>
+      </div>
+      <div>
+        <div class="heading-block">
+          <div class="eyebrow">Step Three · 10가지 문제 유형</div>
+          <h2 class="title">질문 용어가 곧 <em>해법</em>이다.</h2>
+          <div class="rule-line"></div>
+          <p class="lead">아래 10가지 유형의 용어와 해법은 <b>외워 두는 것</b>이 출발점. 시험에서는 질문을 읽는 순간 해법이 떠올라야 합니다.</p>
+        </div>
+        <div class="ptype-table">
+          <div class="ptype-head">
+            <div>유형</div><div>질문 용어</div><div>해법</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">주제와 구성<small>Main Idea · Organization</small></div>
+            <div class="terms">main idea · primary purpose · primarily concerned · organization</div>
+            <div class="approach"><b>주제 문장 중심</b>으로 글 전체를 요약. 단락별 기능까지 한 줄로 정리.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">추론 1<small>Inference</small></div>
+            <div class="terms">infer · suggest · imply · ~ support which …?</div>
+            <div class="approach">비약 없이 본문 정보를 바탕으로, <b>질문의 본문 단어를 주어로</b> 문장을 재구성.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">추론 2<small>Agree · Disagree</small></div>
+            <div class="terms">agree · disagree</div>
+            <div class="approach"><b>누가 누구에게 / 누가 무엇에</b> 동의하는지 정확히 확인.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">추론 3<small>Compatible</small></div>
+            <div class="terms">most probably · contradictory except · compatible</div>
+            <div class="approach">본문과 <b>모순인지 아닌지</b>를 판단. <em class="em-serif">언급되지 않은</em> 내용은 모순이 아닐 수 있다.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">유사한 상황<small>Similar To</small></div>
+            <div class="terms">most similar to</div>
+            <div class="approach">본문에 언급된 <b>상황 · 원리</b>와 가장 비슷한 경우를 선택.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">구체 내용 파악<small>According To</small></div>
+            <div class="terms">According to the passage / author</div>
+            <div class="approach">질문에 언급된 <b>본문 단어가 등장한 그 자리</b>에 답이 있다.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">문장 · 단락의 기능<small>Function · Relationship</small></div>
+            <div class="terms">function · relationship</div>
+            <div class="approach">해당 문장의 <b>해석 · 요약 · 다른 문장과의 관계</b>를 묻는 문제.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">단어 · 어구 언급 목적<small>In Order To</small></div>
+            <div class="terms">mention ~ in order to · mention ~ primarily to</div>
+            <div class="approach">해당 문장 또는 <b>앞 문장의 keyword</b>를 support하는지 판단.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">단어의 의미<small>Meaning · Means</small></div>
+            <div class="terms">closest in meaning</div>
+            <div class="approach">사전적 의미 중 <b>본문에 발현된 의미</b>. 비유적 의미를 묻기도 함.</div>
+          </div>
+          <div class="ptype-row">
+            <div class="type-name">말투와 태도<small>Tone · Attitude</small></div>
+            <div class="terms">tone · attitude</div>
+            <div class="approach">특정 사항에 사용된 <b>형용사 · 부사</b>를 보면 저자의 태도가 드러난다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 21: TYPE DETAIL — MAIN IDEA -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 주제와 구성</span></div>
+        <div>23 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 01 / 10</div>
+          <h2 class="kr-name">주제와<br>구성</h2>
+          <p class="en-name">Main Idea · Organization</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach"><b>주제 문장 중심</b>으로 글 전체를 요약합니다. 단락별 기능을 한 줄씩 정리해 두면, "글의 <em>구성</em>"을 묻는 문제도 그대로 풀립니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">main idea</span>
+            <span class="term-chip">primary purpose</span>
+            <span class="term-chip">primarily concerned</span>
+            <span class="term-chip">the organization of the passage</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 22: TYPE DETAIL — INFERENCE -->
+    <section class="slide">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 추론 1 · Inference</span></div>
+        <div>24 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 02 / 10</div>
+          <h2 class="kr-name">추론 1</h2>
+          <p class="en-name">Inference</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">비약 없이 본문의 정보만으로 추론합니다. <b>질문의 본문 단어를 주어로</b> 삼아 새 문장을 재구성하면 정답이 보입니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">infer</span>
+            <span class="term-chip highlight">suggest</span>
+            <span class="term-chip highlight">imply</span>
+            <span class="term-chip">~ support which …?</span>
+            <span class="term-chip">Which is supported?</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 23: TYPE DETAIL — AGREE/DISAGREE -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 추론 2 · Agree / Disagree</span></div>
+        <div>25 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 03 / 10</div>
+          <h2 class="kr-name">추론 2</h2>
+          <p class="en-name">Agree · Disagree</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach"><b>누가 누구에게</b> 동의하는지, 또 <b>누가 무엇에</b> 동의하는지를 정확히 확인합니다. 본문에 등장하는 인물 · 그룹별 입장을 표로 정리해 두면 빠릅니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">agree</span>
+            <span class="term-chip highlight">disagree</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 24: TYPE DETAIL — COMPATIBLE -->
+    <section class="slide">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 추론 3 · Compatible</span></div>
+        <div>26 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 04 / 10</div>
+          <h2 class="kr-name">추론 3</h2>
+          <p class="en-name">Compatible · Contradictory</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">본문과 <b>모순인지 아닌지</b>를 판단합니다. 주의: <em class="em-serif">언급되지 않은</em> 내용은 본문과 모순이 아닐 수 있습니다. "없는 것"을 "거짓"으로 착각하지 마세요.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">most probably</span>
+            <span class="term-chip">contradictory except</span>
+            <span class="term-chip">compatible</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25: TYPE DETAIL — SIMILAR TO -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 유사한 상황</span></div>
+        <div>27 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 05 / 10</div>
+          <h2 class="kr-name">유사한<br>상황</h2>
+          <p class="en-name">Similar To</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">본문에 언급된 <b>상황 · 원리</b>를 한 문장으로 추상화한 뒤, 보기에서 동일한 구조의 사례를 고릅니다. 표면적 유사가 아니라 <em class="em-serif">구조의 일치</em>가 정답 기준입니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">most similar to</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 26: TYPE DETAIL — ACCORDING TO -->
+    <section class="slide">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 구체 내용 파악</span></div>
+        <div>28 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 06 / 10</div>
+          <h2 class="kr-name">구체 내용<br>파악</h2>
+          <p class="en-name">According To</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">질문에 언급된 <b>본문 단어가 등장한 바로 그 자리</b>에 답이 있습니다. 본문을 처음부터 뒤지지 말고, 단어를 단서로 위치를 먼저 잡으세요.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">According to the passage</span>
+            <span class="term-chip highlight">According to the author</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 27: TYPE DETAIL — FUNCTION -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 문장 · 단락의 기능</span></div>
+        <div>29 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 07 / 10</div>
+          <h2 class="kr-name">문장 · 단락의<br>기능</h2>
+          <p class="en-name">Function · Relationship</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">해당 문장의 <b>해석 · 요약 · 다른 문장과의 관계</b>를 묻습니다. <em class="em-serif">FAC 표시자</em>로 그 문장이 Fact · Assumption · Conclusion 중 무엇인지를 먼저 판정하면 답이 한 줄로 정리됩니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">function</span>
+            <span class="term-chip highlight">relationship</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 28: TYPE DETAIL — IN ORDER TO -->
+    <section class="slide">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 단어 · 어구 언급 목적</span></div>
+        <div>30 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 08 / 10</div>
+          <h2 class="kr-name">언급 목적</h2>
+          <p class="en-name">In Order To</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">질문의 본문 단어 · 어구가 등장한 문장을 해석한 뒤, 그것이 <b>그 문장 또는 앞 문장의 keyword</b>를 support하는지를 판단합니다. 거의 모든 정답은 "X를 뒷받침하기 위해"로 환원됩니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">mention ~ in order to</span>
+            <span class="term-chip highlight">mention ~ primarily to</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 29: TYPE DETAIL — MEANING -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 단어의 의미</span></div>
+        <div>31 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 09 / 10</div>
+          <h2 class="kr-name">단어의<br>의미</h2>
+          <p class="en-name">Meaning · Means</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">해당 단어의 사전적 의미 중 <b>본문에 발현된 의미</b>를 고릅니다. <em class="em-serif">비유적 의미</em>를 묻는 경우도 잦으니, 문자 그대로의 뜻만 떠올려서는 안 됩니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">closest in meaning</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 30: TYPE DETAIL — TONE -->
+    <section class="slide">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Type · 말투와 태도</span></div>
+        <div>32 / 34</div>
+      </div>
+      <div class="ptype-detail">
+        <div class="left">
+          <div class="role">Type · 10 / 10</div>
+          <h2 class="kr-name">말투와<br>태도</h2>
+          <p class="en-name">Tone · Attitude</p>
+          <div class="approach-label">해법 · Approach</div>
+          <p class="approach">특정 사항에 사용된 <b>형용사 · 부사</b>를 보면 저자의 태도가 드러납니다. 긍정·부정·중립의 단어 결을 한 번에 식별할 수 있어야 합니다.</p>
+        </div>
+        <div class="right">
+          <div class="label">Question Terms · 질문 용어</div>
+          <div>
+            <span class="term-chip highlight">tone</span>
+            <span class="term-chip highlight">attitude</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 33: RECAP · 다시, 세 단계 -->
+    <section class="slide paper">
+      <div class="pagebar">
+        <div class="l"><span class="mark"></span><span>Recap · 다시, 세 단계</span></div>
+        <div>33 / 34</div>
       </div>
       <div>
         <div class="eyebrow">Recap · 한 번 더 새기기</div>
         <h2 class="title">결국은 <em>이 셋</em>입니다.</h2>
         <div class="rule-line"></div>
-        <p class="lead">18개의 트리거 전부는 결국 이 <b>세 단계</b>로 환원됩니다. 빈칸을 마주칠 때 이 순서 그대로 작동시키세요.</p>
+        <p class="lead">오늘 배운 모든 것이 이 <b>세 단계</b>로 수렴합니다. 본문을 마주칠 때 이 순서 그대로 작동시키세요.</p>
         <div class="steps">
           <div class="step">
             <div class="stepname">Step One</div>
             <div class="stepnum">01</div>
-            <h3>5 Zones</h3>
-            <p><b>Zone 5</b>는 <b>Zone 2</b>에 대한 노골적 설명. 힌트와 빈칸은 <b>keyword</b>(동사 · 목적어 · 보어)에 있다.</p>
+            <h3>주제 파악</h3>
+            <p><b>마침표 뒤</b>에서 다섯 가지 <b>주제 장치</b>를 찾고, 후보가 여러 개라면 우선순위 규칙으로 정답을 정한다.</p>
           </div>
           <div class="step">
             <div class="stepname">Step Two</div>
             <div class="stepnum">02</div>
-            <h3>Trigger Words</h3>
-            <p><b>순접 · 역접</b>인지, 답이 <b>동의어 · 반의어</b>인지를 결정. 18개 트리거가 모두 이 두 축으로 정렬된다.</p>
+            <h3>흐름 파악</h3>
+            <p><b>마침표 뒤</b>의 주어와 동사로 각 문장의 <b>FAC 기능</b>을 식별. 모든 단어를 읽지 않는다.</p>
           </div>
           <div class="step">
             <div class="stepname">Step Three</div>
             <div class="stepnum">03</div>
-            <h3>해석과 상식</h3>
-            <p><b>논문에 등장할 수 있는 문장</b>으로 완성. 단어 매칭이 아니라 <b>의미가 통하는 한 문장</b>의 작문.</p>
+            <h3>문제 파악</h3>
+            <p><b>질문 용어</b>로 유형과 해법을, <b>본문 단어</b>로 위치를. 본문 읽기 전에 끝낸다.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 25: CLOSING · 응원 메시지 -->
+    <!-- 34: CLOSING · 응원 메시지 -->
     <section class="slide closing">
       <div class="pagebar">
         <div class="l"><span class="mark"></span><span>Final Word · 오늘 마지막 말</span></div>
-        <div>26 / 26</div>
+        <div>34 / 34</div>
       </div>
       <div class="closing-content">
         <div class="eyebrow">— 수업의 마지막 한 마디 —</div>
         <h1 class="cheer">
           <span class="line">나는 외울 수 있다<em>!</em></span>
-          <span class="line">나는 작문할 수 있다<em>!</em></span>
+          <span class="line">나는 읽을 수 있다<em>!</em></span>
         </h1>
         <div class="cheer-rule"></div>
         <p class="cheer-sig">매 수업 끝에 다 같이 외치는 말</p>
