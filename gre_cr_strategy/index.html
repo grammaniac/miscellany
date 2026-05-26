@@ -1462,17 +1462,24 @@
   }
   .role-chart-row:last-child { border-bottom: none; }
   .role-chart-row .role-cell {
-    padding: 26px 28px;
+    padding: 24px 26px;
     font-family: "Pretendard Variable", "Noto Serif KR", sans-serif;
     font-size: 16.5px;
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.45;
     color: var(--ink-soft);
     word-break: keep-all;
-    white-space: nowrap;
     display: flex;
     align-items: center;
-    overflow: hidden;
+  }
+  .role-chart-row .role-cell .role-name {
+    display: block;
+    font-size: 21px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-top: 4px;
   }
   .role-chart-row .role-cell b {
     color: var(--ink);
@@ -2160,38 +2167,56 @@
         <div class="role-chart">
           <div class="role-chart-row row-however">
             <div class="role-cell left">
-              Argument를 <b>Oppose · Challenge · Question</b>하는 Judgment · Opinion
+              <div>
+                Argument를 <b>Oppose · Challenge · Question</b>하는
+                <span class="role-name">Judgment · Opinion</span>
+              </div>
             </div>
             <div class="connector-cell">
               그러나
               <span class="conn-en">However · But · Yet</span>
             </div>
             <div class="role-cell right">
-              Argument의 <b>Main Conclusion</b>
+              <div>
+                Argument의
+                <span class="role-name">Main Conclusion</span>
+              </div>
             </div>
           </div>
           <div class="role-chart-row row-therefore">
             <div class="role-cell left">
-              Conclusion을 <b>Support</b>하는 Evidence
+              <div>
+                Conclusion을 <b>Support</b>하는
+                <span class="role-name">Evidence</span>
+              </div>
             </div>
             <div class="connector-cell">
               그러므로
               <span class="conn-en">Therefore · Thus · It follows that</span>
             </div>
             <div class="role-cell right">
-              Argument의 <b>Main Conclusion</b>
+              <div>
+                Argument의
+                <span class="role-name">Main Conclusion</span>
+              </div>
             </div>
           </div>
           <div class="role-chart-row row-since">
             <div class="role-cell left">
-              Argument의 <b>Main Conclusion</b>
+              <div>
+                Argument의
+                <span class="role-name">Main Conclusion</span>
+              </div>
             </div>
             <div class="connector-cell">
               왜냐하면
               <span class="conn-en">Since · After all</span>
             </div>
             <div class="role-cell right">
-              Conclusion을 <b>Support</b>하는 Evidence
+              <div>
+                Conclusion을 <b>Support</b>하는
+                <span class="role-name">Evidence</span>
+              </div>
             </div>
           </div>
         </div>
