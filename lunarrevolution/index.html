@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>황도면 기준 달의 공전주기 시뮬레이터</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            background-color: #0b0f19;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 { color: #e2e8f0; margin-bottom: 10px; }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        .canvas-container {
+            position: relative;
+            background-color: #111827;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            padding: 10px;
+        }
+        canvas { border-radius: 8px; background-color: #000; }
+        .controls {
+            flex: 1;
+            min-width: 300px;
+            background-color: #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+        .btn:hover { background-color: #2563eb; }
+        .btn-pause { background-color: #ef4444; }
+        .btn-pause:hover { background-color: #dc2626; }
+        .info-panel {
+            margin-top: 15px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        .status {
+            font-size: 18px;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #111827;
+            border-radius: 6px;
+            border-left: 4px solid #3b82f6;
+        }
+        .legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 12px;
+        }
+        .legend-item { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <h1>황도면 기준 달의 공전 주기 시뮬레이션</h1>
+    <p style="color: #9ca3af; margin-top: 0; text-align: center;">지구의 공전(황도면 이동)과 달의 공전이 결합되어 두 가지 주기가 발생하는 원리</p>
+
+    <div class="container">
+        <div class="canvas-container">
+            <canvas id="orbitCanvas" width="600" height="600"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="playPauseBtn" class="btn">일시정지</button>
+            <button id="resetBtn" class="btn" style="background-color: #4b5563;">처음으로</button>
+            
+            <div id="statusPanel" class="status">경과 일수: 0.0일</div>
+
+            <div class="info-panel">
+                <h3 style="color: #f59e0b; margin-top: 0;">💡 두 주기의 차이점</h3>
+                <p><strong>1. 항성월 (Sidereal Month): 약 27.3일</strong><br>
+                황도면 상의 <strong>먼 우주의 별(절대 좌표)</strong>을 기준으로 달이 지구를 완전히 한 바퀴(360도) 도는 시간입니다.</p>
+                
+                <p><strong>2. 삭망월 (Synodic Month): 약 29.5일</strong><br>
+                태양-지구-달의 <strong>상대적 위치(위상 변화)</strong>를 기준으로 하는 주기입니다. 달이 한 바퀴 도는 동안 지구도 태양 주위를 공전(황도면을 따라 이동)하므로, 달이 태양과 다시 일직선이 되려면 약 2.2일을 더 공전해야 합니다.</p>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item"><span class="dot" style="background: #f59e0b;"></span> 태양 (Sun)</div>
+                <div class="legend-item"><span class="dot" style="background: #3b82f6;"></span> 지구 (Earth)</div>
+                <div class="legend-item"><span class="dot" style="background: #9ca3af;"></span> 달 (Moon)</div>
+                <div class="legend-item"><span class="dot" style="border: 1px dashed #ef4444;"></span> 황도면 기준선 (태양 방향)</div>
+                <div class="legend-item"><span class="dot" style="border: 1px dashed #10b981;"></span> 항성 기준선 (우주 고정 방향)</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('orbitCanvas');
+        const ctx = canvas.getContext('2d');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const statusPanel = document.getElementById('statusPanel');
+
+        let isRunning = true;
+        let time = 0; // Days elapsed
+
+        // 실제 비율을 왜곡하여 화면에 보기 좋게 설정한 상수들
+        const sunX = canvas.width / 2;
+        const sunY = canvas.height / 2;
+        const earthOrbitRadius = 200;
+        const moonOrbitRadius = 45;
+
+        // 속도 정의 (1초에 대략 몇 일 흐르게 할 것인가)
+        const earthSpeed = (2 * Math.PI) / 365; // 1일당 지구 공전 각도
+        const moonSpeed = (2 * Math.PI) / 27.32; // 1일당 달 공전 각도 (항성월 기준)
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. 배경 우주선 (항성 기준선 - 격자 느낌)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for(let i=0; i<canvas.width; i+=50) {
+                ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+            }
+
+            // 2. 태양 그리기
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, 25, 0, 2 * Math.PI);
+            ctx.fillStyle = '#f59e0b';
+            ctx.shadowBlur = 30;
+            ctx.shadowColor = '#f59e0b';
+            ctx.fill();
+            ctx.shadowBlur = 0; // 리셋
+
+            // 3. 지구 위치 계산 (황도면 상의 운동)
+            // 시작점을 오른쪽(0도)으로 잡고 시계방향 공전
+            let earthAngle = time * earthSpeed;
+            let earthX = sunX + earthOrbitRadius * Math.cos(earthAngle);
+            let earthY = sunY + earthOrbitRadius * Math.sin(earthAngle);
+
+            // 지구 궤도 (황도면) 표시
+            ctx.beginPath();
+            ctx.arc(sunX, sunY, earthOrbitRadius, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // 4. 기준선 그리기 (지구 중심 기준)
+            // 항성 기준선 (우주 고정 방향 - 언제나 오른쪽 수평선)
+            ctx.beginPath();
+            ctx.setLineDash([4, 4]);
+            ctx.moveTo(earthX, earthY);
+            ctx.lineTo(earthX + 80, earthY);
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // 황도면 기준선 (태양-지구 연장선, 즉 태양 반대 방향 혹은 태양 방향)
+            ctx.beginPath();
+            ctx.setLineDash([4, 4]);
+            ctx.moveTo(sunX, sunY);
+            ctx.lineTo(earthX + 100 * Math.cos(earthAngle), earthY + 100 * Math.sin(earthAngle));
+            ctx.strokeStyle = '#ef4444';
+            ctx.stroke();
+            ctx.setLineDash([]); // 실선 리셋
+
+            // 5. 지구 그리기
+            ctx.beginPath();
+            ctx.arc(earthX, earthY, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = '#3b82f6';
+            ctx.fill();
+
+            // 6. 달 위치 계산
+            // 달은 지구 기준으로 공전. 초기 위치를 우측(0도)으로 설정
+            let moonAngle = time * moonSpeed; 
+            let moonX = earthX + moonOrbitRadius * Math.cos(moonAngle);
+            let moonY = earthY + moonOrbitRadius * Math.sin(moonAngle);
+
+            // 달 공전 궤도
+            ctx.beginPath();
+            ctx.arc(earthX, earthY, moonOrbitRadius, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(156, 163, 175, 0.3)';
+            ctx.stroke();
+
+            // 달 그리기
+            ctx.beginPath();
+            ctx.arc(moonX, moonY, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = '#e5e7eb';
+            ctx.fill();
+
+            // 7. 실시간 상태 판정 텍스트 레이블
+            // 각도들을 2파이 포맷으로 변환하여 매칭 확인
+            let currentMoonDeg = (moonAngle % (2 * Math.PI)) * (180 / Math.PI);
+            let currentEarthDeg = (earthAngle % (2 * Math.PI)) * (180 / Math.PI);
+            
+            // 텍스트 안내 위치 조정
+            ctx.fillStyle = '#9ca3af';
+            ctx.font = '12px sans-serif';
+            ctx.fillText("항성 기준선 (우주 고정)", earthX + 85, earthY + 4);
+            
+            // 상태창 업데이트
+            updateStatusText(time);
+        }
+
+        function updateStatusText(days) {
+            let displayDays = days.toFixed(1);
+            let periodCycle = (days % 29.53).toFixed(1);
+            
+            let msg = `경과 일수: ${displayDays}일<br>`;
+            
+            // 주기 도달 시 시각적 알림 추가
+            let currentMoonCycleAngle = (time * moonSpeed) % (2 * Math.PI);
+            let relativeAngle = ((time * moonSpeed) - (time * earthSpeed)) % (2 * Math.PI);
+            if (relativeAngle < 0) relativeAngle += 2 * Math.PI;
+
+            if (days > 0) {
+                // 항성월 주기 근처 (27.3일 주기)
+                if (Math.abs((days % 27.3) ) < 0.2 && days > 20) {
+                    msg += `<span style="color:#10b981;">★ 항성월 달성 (~27.3일): 우주 고정 별자리 기준 360도 회전 완료!</span>`;
+                } 
+                // 삭망월 주기 근처 (29.5일 주기)
+                else if (Math.abs((days % 29.5)) < 0.2 && days > 20) {
+                    msg += `<span style="color:#ef4444;">★ 삭망월 달성 (~29.5일): 태양-지구-달 다시 일직선(삭/망)!</span>`;
+                } else {
+                    msg += `<span style="color:#60a5fa;">달이 열심히 황도면 위를 공전 중입니다...</span>`;
+                }
+            }
+            
+            statusPanel.innerHTML = msg;
+        }
+
+        function loop() {
+            if (isRunning) {
+                time += 0.05; // 시간 흐름 속도 조절
+                draw();
+            }
+            requestAnimationFrame(loop);
+        }
+
+        // 이벤트 리스너
+        playPauseBtn.addEventListener('click', () => {
+            isRunning = !isRunning;
+            playPauseBtn.textContent = isRunning ? '일시정지' : '시작';
+            if(isRunning) playPauseBtn.classList.remove('btn-pause');
+            else playPauseBtn.classList.add('btn-pause');
+        });
+
+        resetBtn.addEventListener('click', () => {
+            time = 0;
+            draw();
+            if(!isRunning) {
+                isRunning = true;
+                playPauseBtn.textContent = '일시정지';
+                playPauseBtn.classList.remove('btn-pause');
+            }
+        });
+
+        // 실행
+        loop();
+    </script>
+</body>
+</html>
