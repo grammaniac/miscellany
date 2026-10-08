@@ -1,641 +1,669 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>이심률 Eccentricity — 행성 공전 궤도</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이심률과 세차운동: 빙하기의 리듬</title>
+<meta name="description" content="이심률(eccentricity)의 뜻과 공식, 태양계 행성의 이심률, 지구 자전축의 세차운동(precession)과 기울기 변화 — 세 주기가 겹쳐 빙하기와 간빙기를 만드는 밀란코비치 메커니즘을 그림과 시뮬레이터로 익히는 GRE 배경지식 페이지.">
+<meta property="og:title" content="이심률과 세차운동: 빙하기의 리듬">
+<meta property="og:description" content="궤도의 이탈 정도에서 지구 기후의 10만 년 주기까지 — 이심률·세차·기울기로 읽는 빙하기 메커니즘">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+KR:wght@400;600;700;900&display=swap">
 <style>
-  :root {
-    --bg: #f5f7fa;
-    --panel: #ffffff;
-    --border: #d0daea;
-    --accent: #0077cc;
-    --accent2: #e63900;
-    --gold: #c8860a;
-    --text: #1a2a3a;
-    --muted: #6a8aaa;
-    --orbit-color: #0077cc;
-  }
+:root{
+  color-scheme:light;
+  --paper:#f4efe5;--paper-2:#ebe4d6;--card:#fffcf6;
+  --ink:#1a1712;--ink-2:#4b4439;--ink-3:#7d7465;
+  --line:rgba(26,23,18,.14);--line-2:rgba(26,23,18,.07);
+  --sun:#c9790f;--sun-tint:#f6ebd3;
+  --orbit:#1b5a7a;--orbit-tint:#e1edf3;--orbit-band:#0f3a50;
+  --ice:#2f6f9e;--ice-tint:#e2ecf4;
+  --warm:#b8451b;--warm-tint:#f6e4da;
+  --tilt:#5a6b2b;--tilt-tint:#ebefdd;
+  --prec:#7a2d63;--prec-tint:#f3e6ef;
+  --ok:#2b7a4b;
+  --serif:'Fraunces','Noto Serif KR',Georgia,serif;
+  --serif-ko:'Noto Serif KR','Fraunces',Georgia,serif;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --gutter:clamp(16px,5vw,72px);
+  --shadow:0 1px 2px rgba(26,23,18,.05),0 18px 40px -22px rgba(26,23,18,.28);
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+b,strong{font-weight:700}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+/* nav */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;height:60px;padding:0 var(--gutter);background:rgba(244,239,229,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;font-family:var(--serif);font-weight:600;letter-spacing:.02em}
+.brand-mark{font-family:var(--serif-ko);font-weight:900;font-size:15px;color:var(--orbit)}
+.brand-text{font-size:15px}
+.segs{display:flex;gap:4px;margin-left:auto;list-style:none;overflow-x:auto;scrollbar-width:none}
+.segs::-webkit-scrollbar{display:none}
+.seg{display:block;padding:7px 11px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--ink-2);text-decoration:none;white-space:nowrap;border:1px solid transparent}
+.seg:hover{border-color:var(--line);background:var(--card)}
+.seg.on{background:var(--ink);color:var(--paper)}
+.home{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);text-decoration:none;white-space:nowrap}
+.home:hover{color:var(--ink)}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans KR', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* hero */
+.hero{padding-top:clamp(56px,9vw,110px);padding-bottom:clamp(40px,6vw,72px);border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.hero-title{font-family:var(--serif-ko);font-weight:900;font-size:clamp(40px,7.2vw,88px);line-height:1.04;letter-spacing:-.03em;margin:18px 0 10px}
+.hero-title .sub{display:block;font-family:var(--serif);font-weight:400;font-style:italic;font-size:.42em;letter-spacing:0;color:var(--ink-2);margin-top:14px}
+.hero-row{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;margin-top:34px;align-items:start}
+.lede{font-size:17.5px;color:var(--ink-2);max-width:62ch}
+.lede b{color:var(--ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats div{background:var(--card);border:1px solid var(--line);padding:16px 14px}
+.stats dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.stats dd{font-family:var(--serif);font-size:30px;font-weight:600;letter-spacing:-.02em;margin-top:6px;line-height:1}
+.stats dd small{display:block;font-family:var(--sans);font-size:12px;font-weight:400;color:var(--ink-3);margin-top:8px;letter-spacing:0}
+.formula{font-family:var(--serif);font-style:italic;font-size:1.05em}
+.formula sup,.formula sub{font-style:normal;font-size:.7em}
 
-  /* Starfield */
-  #stars { display: none; }
+/* sections */
+.sec{padding-top:clamp(56px,8vw,96px);padding-bottom:clamp(56px,8vw,96px);border-bottom:1px solid var(--line)}
+.sec-head{max-width:68ch;margin-bottom:34px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc,var(--ink-3))}
+.sec-title{font-family:var(--serif-ko);font-weight:900;font-size:clamp(30px,4.6vw,50px);line-height:1.12;letter-spacing:-.025em;margin:10px 0 6px}
+.sec-en{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-3)}
+.sec-desc{margin-top:16px;font-size:16.5px;color:var(--ink-2)}
+.sec-desc b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);padding:22px 22px 20px;box-shadow:var(--shadow)}
+.card h3{font-family:var(--serif-ko);font-weight:700;font-size:19px;letter-spacing:-.01em;margin-bottom:8px}
+.card h3 small{display:block;font-family:var(--serif);font-weight:400;font-style:italic;font-size:13px;color:var(--ink-3);margin-top:2px}
+.card p{font-size:15px;color:var(--ink-2)}
+.card p+p{margin-top:8px}
+.card.tint{border-top:4px solid var(--acc,var(--ink))}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);background:var(--paper)}
+.note{margin-top:18px;padding:16px 18px;border-left:3px solid var(--acc,var(--ink));background:var(--card);font-size:15px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.mono{font-family:var(--mono)}
+figure{margin:0}
+figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);margin-top:10px}
+svg text{font-family:var(--sans)}
 
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 40px 24px 60px;
-  }
+/* ellipse lab */
+.lab{display:grid;grid-template-columns:1.25fr 1fr;gap:22px;align-items:stretch}
+.lab-canvas{background:var(--card);border:1px solid var(--line);padding:14px;box-shadow:var(--shadow)}
+.lab-canvas svg{display:block;width:100%;height:auto}
+.lab-side{display:flex;flex-direction:column;gap:14px}
+.readout{background:var(--ink);color:var(--paper);padding:18px 20px}
+.readout .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.readout .v{font-family:var(--serif);font-size:44px;font-weight:600;letter-spacing:-.02em;line-height:1;margin-top:6px}
+.readout .shape{margin-top:8px;font-size:14px;opacity:.9}
+.slider{display:block;width:100%}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:var(--line);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--ink);border:3px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--ink);border:3px solid var(--card);cursor:pointer}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:6px}
+.preset{display:flex;flex-wrap:wrap;gap:6px}
+.preset button{font:inherit;font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--ink-2)}
+.preset button:hover{border-color:var(--ink);color:var(--ink)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.kv dt{font-family:var(--mono);font-size:12px;color:var(--ink-3);padding-top:3px}
+.kv dd{color:var(--ink-2)}
 
-  /* Header */
-  header { text-align: center; margin-bottom: 48px; }
-  .title-en {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 8vw, 88px);
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    text-shadow: 0 2px 12px rgba(0,119,204,0.15);
-    line-height: 1;
-  }
-  .title-kr {
-    font-size: 22px;
-    font-weight: 400;
-    letter-spacing: 0.3em;
-    color: var(--muted);
-    margin-top: 8px;
-  }
-  .subtitle {
-    margin-top: 18px;
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    color: var(--muted);
-  }
+/* planets table */
+.ptable{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--card);border:1px solid var(--line)}
+.ptable th,.ptable td{padding:11px 14px;border-bottom:1px solid var(--line-2);text-align:left;vertical-align:middle}
+.ptable th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--paper-2)}
+.ptable td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.bar{position:relative;height:8px;background:var(--line-2);border-radius:4px;overflow:hidden;min-width:120px}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--orbit);border-radius:4px}
+.ptable tr.earth td{background:var(--orbit-tint);font-weight:600}
+.ptable tr.dim td{color:var(--ink-3)}
 
-  /* Main layout */
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 24px;
-    align-items: start;
-  }
+/* cycles */
+.cycle{--acc:var(--ink)}
+.cycle .card{border-top:4px solid var(--acc)}
+.cycle .big{font-family:var(--serif);font-size:34px;font-weight:600;letter-spacing:-.02em;color:var(--acc);line-height:1}
+.cycle .big small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);display:block;margin-top:6px}
+.diagram{background:var(--card);border:1px solid var(--line);padding:14px;margin-top:14px}
+.diagram svg{display:block;width:100%;height:auto}
 
-  @media (max-width: 768px) {
-    .main-grid { grid-template-columns: 1fr; }
-  }
+/* simulator */
+.sim{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:start}
+.sim-ctrl{display:flex;flex-direction:column;gap:18px}
+.ctl{background:var(--card);border:1px solid var(--line);padding:16px 18px}
+.ctl label{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:600;margin-bottom:10px}
+.ctl label span{font-family:var(--mono);font-weight:500;font-size:13px;color:var(--ink-2)}
+.ctl small{display:block;font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.verdict{padding:20px 22px;background:var(--ink);color:var(--paper)}
+.verdict .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.verdict .v{font-family:var(--serif);font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1;margin:6px 0 4px}
+.verdict .v small{font-family:var(--mono);font-size:13px;font-weight:400;opacity:.7;letter-spacing:0}
+.verdict .d{font-size:14px;opacity:.9;margin-top:8px;line-height:1.55}
+.verdict .d b{color:#ffd79a}
+.verdict.cold .d b{color:#a9d4ff}
+.gauge{height:10px;background:rgba(255,255,255,.14);border-radius:5px;margin-top:14px;position:relative;overflow:hidden}
+.gauge i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#4f9fe0,#ffd79a,#f08a4b);border-radius:5px}
+.gauge b{position:absolute;top:-4px;width:2px;height:18px;background:#fff}
+.gauge-lab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;opacity:.7;margin-top:6px}
 
-  /* Canvas panel */
-  .canvas-panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-  }
+/* steps */
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.step{background:var(--card);border:1px solid var(--line);padding:18px 18px 16px;position:relative}
+.step::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--acc,var(--ice))}
+.step h4{font-family:var(--serif-ko);font-weight:700;font-size:17px;margin:6px 0 6px}
+.step p{font-size:14px;color:var(--ink-2)}
+.loop{margin-top:18px;display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch}
+.loop .box{padding:16px 18px;border:1px solid var(--line);background:var(--card);font-size:14.5px}
+.loop .box b{display:block;font-family:var(--serif-ko);font-size:16px;margin-bottom:4px}
+.loop .arrow{font-family:var(--mono);font-size:12px;color:var(--ink-3);text-align:center;line-height:1.3;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.loop .arrow b{font-size:26px;color:var(--ink);font-weight:400}
 
-  canvas {
-    display: block;
-    width: 100%;
-    border-radius: 8px;
-  }
+/* vocab */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.word{background:var(--card);border:1px solid var(--line);padding:18px 20px}
+.word h4{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.01em}
+.word h4 small{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--ink-3);margin-left:8px;letter-spacing:.04em}
+.word .ko{font-size:14.5px;color:var(--ink-2);margin-top:4px}
+.word .ex{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
+.word .ex i{font-family:var(--serif);color:var(--ink)}
 
-  /* Slider */
-  .slider-section {
-    margin-top: 20px;
-  }
-  .slider-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 10px;
-  }
-  .slider-label span:first-child {
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-  .e-value {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    color: var(--accent);
-    text-shadow: none;
-    letter-spacing: 0.05em;
-  }
-  .e-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: -2px;
-    text-align: right;
-  }
+/* quiz */
+.quiz{display:grid;gap:12px}
+.q{background:var(--card);border:1px solid var(--line);padding:18px 20px}
+.q p{font-weight:600;font-size:15.5px}
+.q p .qn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);margin-right:10px}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.opts button{font:inherit;font-size:14px;text-align:left;padding:10px 12px;border:1px solid var(--line);background:var(--paper);cursor:pointer;color:var(--ink-2);line-height:1.45}
+.opts button:hover{border-color:var(--ink)}
+.opts button.ok{background:#e4f1e8;border-color:var(--ok);color:var(--ink)}
+.opts button.no{background:#f7e3df;border-color:var(--warm);color:var(--ink)}
+.q .why{display:none;margin-top:10px;font-size:14px;color:var(--ink-2);padding-top:10px;border-top:1px dashed var(--line)}
+.q.done .why{display:block}
+.score{margin-top:18px;font-family:var(--mono);font-size:13px;color:var(--ink-2)}
 
-  input[type=range] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 10px;
-    border-radius: 5px;
-    background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct, 0%), var(--border) var(--pct, 0%), var(--border) 100%);
-    outline: none;
-    cursor: pointer;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px rgba(0,119,204,0.4);
-    cursor: pointer;
-    transition: box-shadow 0.2s;
-  }
-  input[type=range]::-webkit-slider-thumb:hover {
-    box-shadow: 0 0 20px rgba(0,119,204,0.7);
-  }
+footer{padding-top:40px;padding-bottom:60px;font-size:13px;color:var(--ink-3)}
+footer a{color:var(--ink-2)}
 
-  /* Shape label */
-  .shape-badge {
-    display: inline-block;
-    margin-top: 14px;
-    padding: 8px 22px;
-    border-radius: 999px;
-    font-family: 'Space Mono', monospace;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    border: 2px solid;
-    transition: all 0.3s;
-  }
-
-  /* Right panel */
-  .right-panel { display: flex; flex-direction: column; gap: 16px; }
-
-  .info-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .card-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
-  /* Planet rows */
-  .planet-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(26,42,74,0.5);
-    cursor: pointer;
-    border-radius: 6px;
-    padding: 8px 6px;
-    transition: background 0.2s;
-  }
-  .planet-row:hover { background: rgba(79,195,247,0.05); }
-  .planet-row:last-child { border-bottom: none; }
-  .planet-row.active { background: rgba(79,195,247,0.08); }
-
-  .planet-dot {
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .planet-name {
-    flex: 1;
-    font-size: 16px;
-    font-weight: 500;
-  }
-  .planet-name-en {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-  }
-  .planet-bar-wrap {
-    width: 80px;
-    height: 6px;
-    background: var(--border);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .planet-bar {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.3s;
-  }
-  .planet-ecc {
-    font-family: 'Space Mono', monospace;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--accent);
-    width: 56px;
-    text-align: right;
-  }
-
-  /* Formula card */
-  .formula {
-    font-family: 'Space Mono', monospace;
-    font-size: 17px;
-    text-align: center;
-    padding: 16px;
-    background: rgba(0,119,204,0.06);
-    border: 1px solid rgba(0,119,204,0.2);
-    border-radius: 8px;
-    line-height: 2;
-    color: var(--text);
-  }
-  .formula .sym { color: var(--accent); font-weight: 700; }
-  .formula .sym2 { color: var(--gold); }
-
-  /* Definition card */
-  .definition {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #3a5a7a;
-  }
-  .definition strong { color: var(--accent); font-weight: 700; }
-  .definition .vocab-highlight {
-    display: inline-block;
-    background: rgba(255,112,67,0.15);
-    border: 1px solid rgba(255,112,67,0.3);
-    color: var(--accent2);
-    padding: 2px 10px;
-    border-radius: 4px;
-    font-family: 'Space Mono', monospace;
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  /* Tick marks */
-  .tick-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 6px;
-  }
-  .tick {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--muted);
-  }
-  .tick.highlight { color: var(--accent); }
-
-  .focus-line {
-    width: 2px;
-    height: 2px;
-    background: var(--gold);
-    border-radius: 50%;
-  }
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media(max-width:900px){
+  .hero-row,.grid2,.lab,.sim{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .vocab{grid-template-columns:1fr}
+  .loop{grid-template-columns:1fr}
+  .loop .arrow{transform:rotate(90deg)}
+}
+@media(max-width:560px){
+  .stats{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .stats dd{font-size:22px}
+  .steps,.opts{grid-template-columns:1fr}
+  .topbar{gap:10px}
+  .brand-text{display:none}
+}
 </style>
 </head>
 <body>
 
-<canvas id="stars"></canvas>
+<nav class="topbar" aria-label="본문 이동">
+  <a class="brand" href="#top"><span class="brand-mark">離心</span><span class="brand-text">Eccentricity</span></a>
+  <ol class="segs" style="list-style:none">
+    <li><a class="seg" href="#def">정의</a></li>
+    <li><a class="seg" href="#planets">행성</a></li>
+    <li><a class="seg" href="#cycles">세 주기</a></li>
+    <li><a class="seg" href="#sim">시뮬레이터</a></li>
+    <li><a class="seg" href="#mech">빙하기</a></li>
+    <li><a class="seg" href="#gre">GRE</a></li>
+    <li><a class="seg" href="#quiz">퀴즈</a></li>
+  </ol>
+  <a class="home" href="https://songverbalportal.pages.dev/">PORTAL ↗</a>
+</nav>
 
-<div class="container">
-  <header>
-    <div class="title-en">ECCENTRICITY</div>
-    <div class="title-kr">이심률 — 궤도의 이탈 정도</div>
-    <div class="subtitle">e = c / a &nbsp;|&nbsp; 타원에서 c = 초점거리, a = 장반축</div>
-  </header>
+<header class="hero wrap" id="top">
+  <p class="eyebrow">Orbital mechanics · 離心率 · Milankovitch</p>
+  <h1 class="hero-title">이심률과 세차운동
+    <span class="sub">궤도가 얼마나 찌그러졌는가, 그리고 왜 빙하기가 오는가</span>
+  </h1>
+  <div class="hero-row">
+    <p class="lede">이심률은 <b>궤도가 원에서 얼마나 벗어났는지</b>를 0과 1 사이의 숫자로 나타낸 값입니다. 지구의 이심률은 지금 0.0167로 거의 원에 가깝지만, 이 작은 수가 10만 년을 두고 오르내리고, 그 위에 <b>자전축의 흔들림(세차운동)</b>과 <b>기울기 변화</b>가 겹치면 북반구 여름 햇빛이 달라집니다. 그 차이가 눈을 남기고, 남은 눈이 빙하가 됩니다. 이 페이지는 공식에서 출발해 그 메커니즘까지 갑니다.</p>
+    <dl class="stats">
+      <div><dt>Earth today</dt><dd>0.0167<small>이심률 e</small></dd></div>
+      <div><dt>Precession</dt><dd>~26k<small>자전축 한 바퀴 (년)</small></dd></div>
+      <div><dt>Glacial beat</dt><dd>~100k<small>최근 80만 년의 빙하기 주기</small></dd></div>
+    </dl>
+  </div>
+</header>
 
-  <div class="main-grid">
-    <!-- Canvas -->
-    <div class="canvas-panel">
-      <canvas id="orbit" width="600" height="480"></canvas>
+<!-- 1. 정의 -->
+<section class="sec wrap" id="def" style="--acc:var(--orbit)">
+  <div class="sec-head reveal">
+    <p class="kicker">01 · Definition</p>
+    <h2 class="sec-title">이심률이란</h2>
+    <p class="sec-en">Eccentricity — how far an orbit departs from a circle</p>
+    <p class="sec-desc">타원에는 중심이 하나, 초점이 둘 있습니다. 두 초점이 중심에 붙어 있으면 원이고, 벌어질수록 납작해집니다. <b>이심률 <span class="formula">e = c / a</span></b>는 "중심에서 초점까지의 거리 <span class="formula">c</span>"를 "긴 반지름 <span class="formula">a</span>"로 나눈 값입니다. 행성은 두 초점 중 하나에 태양을 두고 돕니다(케플러 제1법칙). 슬라이더를 움직여 보세요.</p>
+  </div>
 
-      <div class="slider-section">
-        <div class="slider-label">
-          <span>이심률 ECCENTRICITY</span>
-          <div style="text-align:right">
-            <div class="e-value" id="eDisplay">0.00</div>
-            <div class="e-label" id="eShapeLabel">완전한 원 (Circle)</div>
-          </div>
-        </div>
-        <input type="range" id="eccSlider" min="0" max="0.99" step="0.01" value="0">
-        <div class="tick-row">
-          <span class="tick highlight">0</span>
-          <span class="tick">0.25</span>
-          <span class="tick">0.5</span>
-          <span class="tick">0.75</span>
-          <span class="tick highlight">1</span>
-        </div>
-        <div style="margin-top: 10px; display:flex; gap:8px; flex-wrap:wrap">
-          <span class="shape-badge" id="shapeBadge" style="color:#4fc3f7; border-color:#4fc3f7">● 원 Circle</span>
-        </div>
+  <div class="lab reveal">
+    <figure class="lab-canvas">
+      <svg id="ell" viewBox="0 0 640 400" role="img" aria-label="이심률에 따라 변하는 타원 궤도">
+        <defs>
+          <radialGradient id="sg"><stop offset="0" stop-color="#ffe6a8"/><stop offset=".55" stop-color="#e9a23b"/><stop offset="1" stop-color="#c9790f"/></radialGradient>
+        </defs>
+        <ellipse id="e-orbit" cx="320" cy="200" rx="230" ry="230" fill="none" stroke="#1b5a7a" stroke-width="2.2"/>
+        <line id="e-axis" x1="90" y1="200" x2="550" y2="200" stroke="rgba(26,23,18,.18)" stroke-dasharray="3 5"/>
+        <circle id="e-center" cx="320" cy="200" r="3" fill="#1a1712"/>
+        <text id="e-ctext" x="320" y="222" font-size="11" text-anchor="middle" fill="#7d7465">중심</text>
+        <line id="e-cline" x1="320" y1="200" x2="320" y2="200" stroke="#7a2d63" stroke-width="2"/>
+        <text id="e-clab" x="320" y="188" font-size="12" text-anchor="middle" fill="#7a2d63" font-style="italic" font-family="Fraunces,serif">c</text>
+        <circle id="e-f2" cx="320" cy="200" r="4" fill="none" stroke="#7d7465" stroke-width="1.5"/>
+        <text id="e-f2t" x="320" y="236" font-size="11" text-anchor="middle" fill="#7d7465">다른 초점</text>
+        <circle id="e-sun" cx="320" cy="200" r="16" fill="url(#sg)"/>
+        <text id="e-suntext" x="320" y="246" font-size="11.5" text-anchor="middle" fill="#8a5a0a" font-weight="600">태양 (초점)</text>
+        <line x1="320" y1="200" x2="550" y2="200" stroke="#1b5a7a" stroke-width="1.2" opacity=".5"/>
+        <text x="435" y="190" font-size="12" text-anchor="middle" fill="#1b5a7a" font-style="italic" font-family="Fraunces,serif">a</text>
+        <circle id="e-planet" cx="550" cy="200" r="7" fill="#1a1712"/>
+        <text id="e-peri" x="560" y="178" font-size="11" fill="#b8451b" font-weight="600" opacity="0">근일점</text>
+        <text id="e-aph" x="80" y="178" font-size="11" fill="#2f6f9e" font-weight="600" text-anchor="end" opacity="0">원일점</text>
+      </svg>
+      <figcaption>태양을 한 초점에 두고 도는 궤도 · 점은 등속으로 그린 개념도(실제로는 근일점에서 빠름)</figcaption>
+    </figure>
+    <div class="lab-side">
+      <div class="readout">
+        <div class="k">Eccentricity</div>
+        <div class="v" id="e-val">0.000</div>
+        <div class="shape" id="e-shape">완전한 원 — 두 초점이 중심에 겹쳐 있습니다</div>
       </div>
-    </div>
-
-    <!-- Right Panel -->
-    <div class="right-panel">
-
-      <!-- Formula -->
-      <div class="info-card">
-        <div class="card-title">📐 공식 Formula</div>
-        <div class="formula">
-          <span class="sym">e</span> = <span class="sym2">c</span> / <span class="sym2">a</span><br>
-          <span style="font-size:14px; color:var(--muted)">c = 중심~초점 거리</span><br>
-          <span style="font-size:14px; color:var(--muted)">a = 장반축 (긴 반지름)</span>
-        </div>
+      <div>
+        <input class="slider" id="e-range" type="range" min="0" max="0.95" step="0.001" value="0" aria-label="이심률">
+        <div class="ticks"><span>0 원</span><span>0.25</span><span>0.5</span><span>0.75</span><span>→1 포물선</span></div>
       </div>
-
-      <!-- Planets -->
-      <div class="info-card">
-        <div class="card-title">🪐 태양계 행성 이심률</div>
-        <div id="planetList"></div>
+      <div class="preset" aria-label="이심률 예시">
+        <button data-e="0.0167">지구 0.0167</button>
+        <button data-e="0.0934">화성 0.093</button>
+        <button data-e="0.2056">수성 0.206</button>
+        <button data-e="0.2488">명왕성 0.249</button>
+        <button data-e="0.967">핼리 혜성 0.967</button>
       </div>
-
-      <!-- GRE Vocab -->
-      <div class="info-card">
-        <div class="card-title">📚 GRE Vocabulary</div>
-        <div class="definition">
-          수학적 이심률 → <strong>중심에서 벗어난 정도</strong><br><br>
-          영어에서 <span class="vocab-highlight">eccentric</span>은<br>
-          "관습·기준에서 벗어난 사람"<br>
-          즉 <strong>괴짜, 별난 사람</strong>을 뜻함.<br><br>
-          <span class="vocab-highlight">eccentricity</span> = 별남, 기이함<br><br>
-          <em style="color:var(--muted); font-size:14px">"Her eccentricity was endearing."</em>
-        </div>
-      </div>
-
+      <dl class="kv">
+        <dt>e = 0</dt><dd>원. 태양에서 어디서나 같은 거리.</dd>
+        <dt>0 &lt; e &lt; 1</dt><dd>타원. 행성·혜성의 닫힌 궤도.</dd>
+        <dt>e = 1</dt><dd>포물선. 딱 한 번 지나가고 돌아오지 않음.</dd>
+        <dt>e &gt; 1</dt><dd>쌍곡선. 성간 천체 오우무아무아(e≈1.2)처럼 태양계를 탈출.</dd>
+      </dl>
     </div>
   </div>
-</div>
+
+  <div class="grid3 reveal" style="margin-top:22px">
+    <div class="card tint"><h3>근일점과 원일점<small>perihelion · aphelion</small></h3><p>태양에 가장 가까운 점이 근일점(<i>peri-</i> 가까이), 가장 먼 점이 원일점(<i>ap-</i> 멀리). 거리는 각각 <span class="formula">a(1−e)</span>, <span class="formula">a(1+e)</span>. 지구는 <b>1월 초</b>에 근일점(1억 4,710만 km), <b>7월 초</b>에 원일점(1억 5,210만 km)을 지납니다.</p></div>
+    <div class="card tint"><h3>햇빛은 거리 제곱에 반비례<small>inverse-square law</small></h3><p>거리가 3.4% 멀어지면 받는 햇빛은 약 6.9% 줄어듭니다(1.034² ≈ 1.069). 지금 지구가 1월에 7월보다 받는 햇빛이 그만큼 많습니다. 이 "거리 효과"가 바로 이심률이 기후에 끼어드는 통로입니다.</p></div>
+    <div class="card tint"><h3>이름의 뿌리<small>ek + kentron</small></h3><p>그리스어 <i>ek</i>(밖으로) + <i>kentron</i>(중심). 프톨레마이오스 천문학에서 지구가 원의 중심에서 벗어난 자리에 있다는 뜻으로 쓰다가, "중심(관습)에서 벗어난 사람"으로 번졌습니다. 괴짜 <b>eccentric</b>은 천문학 용어의 후손입니다.</p></div>
+  </div>
+</section>
+
+<!-- 2. 행성 -->
+<section class="sec wrap" id="planets" style="--acc:var(--sun)">
+  <div class="sec-head reveal">
+    <p class="kicker">02 · Solar system</p>
+    <h2 class="sec-title">태양계 천체의 이심률</h2>
+    <p class="sec-en">Who runs the roundest race</p>
+    <p class="sec-desc">여덟 행성은 모두 e &lt; 0.21로 원에 가깝습니다. 금성이 가장 둥글고(0.007), 수성이 가장 찌그러졌습니다(0.206). 지구는 두 번째로 둥급니다. 왜소행성과 혜성으로 가면 수치가 확 뜁니다.</p>
+  </div>
+  <div class="reveal" style="overflow-x:auto">
+    <table class="ptable">
+      <thead><tr><th>천체</th><th>Body</th><th>이심률 e</th><th style="width:34%">원에서 벗어난 정도</th><th>근일점 / 원일점 거리 비</th></tr></thead>
+      <tbody>
+        <tr><td>수성</td><td class="mono">Mercury</td><td class="n">0.2056</td><td><div class="bar"><i style="width:20.6%"></i></div></td><td class="n">1 : 1.52</td></tr>
+        <tr><td>금성</td><td class="mono">Venus</td><td class="n">0.0068</td><td><div class="bar"><i style="width:.7%"></i></div></td><td class="n">1 : 1.01</td></tr>
+        <tr class="earth"><td>지구</td><td class="mono">Earth</td><td class="n">0.0167</td><td><div class="bar"><i style="width:1.7%"></i></div></td><td class="n">1 : 1.03</td></tr>
+        <tr><td>화성</td><td class="mono">Mars</td><td class="n">0.0934</td><td><div class="bar"><i style="width:9.3%"></i></div></td><td class="n">1 : 1.21</td></tr>
+        <tr><td>목성</td><td class="mono">Jupiter</td><td class="n">0.0489</td><td><div class="bar"><i style="width:4.9%"></i></div></td><td class="n">1 : 1.10</td></tr>
+        <tr><td>토성</td><td class="mono">Saturn</td><td class="n">0.0565</td><td><div class="bar"><i style="width:5.7%"></i></div></td><td class="n">1 : 1.12</td></tr>
+        <tr><td>천왕성</td><td class="mono">Uranus</td><td class="n">0.0457</td><td><div class="bar"><i style="width:4.6%"></i></div></td><td class="n">1 : 1.10</td></tr>
+        <tr><td>해왕성</td><td class="mono">Neptune</td><td class="n">0.0113</td><td><div class="bar"><i style="width:1.1%"></i></div></td><td class="n">1 : 1.02</td></tr>
+        <tr class="dim"><td>명왕성 (왜소행성)</td><td class="mono">Pluto</td><td class="n">0.2488</td><td><div class="bar"><i style="width:24.9%"></i></div></td><td class="n">1 : 1.66</td></tr>
+        <tr class="dim"><td>핼리 혜성</td><td class="mono">Halley</td><td class="n">0.967</td><td><div class="bar"><i style="width:96.7%"></i></div></td><td class="n">1 : 60</td></tr>
+      </tbody>
+    </table>
+    <figcaption>거리 비 = (1+e)/(1−e). 명왕성은 이심률이 커서 1979–1999년에는 해왕성보다 태양에 가까웠습니다.</figcaption>
+  </div>
+  <div class="note reveal"><b>왜 화성은 지구보다 찌그러졌나.</b> 행성 궤도의 이심률은 고정값이 아니라 이웃 행성의 중력(섭동)으로 수만~수십만 년에 걸쳐 변합니다. 화성은 목성에 가깝고 질량이 작아 더 크게 흔들립니다. 지구도 마찬가지로 <b>0.005에서 0.058 사이</b>를 오갑니다. 다음 절의 주인공이 바로 이 변화입니다.</div>
+</section>
+
+<!-- 3. 세 주기 -->
+<section class="sec wrap" id="cycles">
+  <div class="sec-head reveal">
+    <p class="kicker" style="color:var(--ice)">03 · Three cycles</p>
+    <h2 class="sec-title">지구 궤도의 세 가지 흔들림</h2>
+    <p class="sec-en">Eccentricity · Axial precession · Obliquity</p>
+    <p class="sec-desc">세르비아의 수학자 <b>밀루틴 밀란코비치</b>(1879–1958)는 지구가 받는 햇빛의 양이 세 개의 천문 주기로 달라진다고 계산했습니다. 셋 다 햇빛의 <b>총량</b>은 거의 바꾸지 않습니다. 바꾸는 것은 햇빛의 <b>배분</b>입니다 — 어느 계절에, 어느 위도에 더 가는가.</p>
+  </div>
+
+  <div class="grid3">
+    <article class="card cycle reveal" style="--acc:var(--orbit)">
+      <span class="pill">① Eccentricity</span>
+      <h3 style="margin-top:12px">이심률<small>궤도의 찌그러짐</small></h3>
+      <div class="big">~100,000<small>년 주기 (95k·125k) + 405k년 장주기</small></div>
+      <p style="margin-top:12px">목성과 토성이 당기는 힘 때문에 지구 궤도는 거의 원(e≈0.005)과 조금 찌그러진 타원(e≈0.058) 사이를 오갑니다. e가 크면 근일점과 원일점의 햇빛 차이가 최대 <b>23%</b>까지 벌어지고, e가 0에 가까우면 그 차이가 사라집니다.</p>
+      <p><b>역할:</b> 아래 세차운동 효과의 <b>볼륨 노브</b>. 이심률이 크면 세차의 효과가 커지고, 작으면 세차가 있어도 소용없습니다.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 300 140" aria-label="이심률 변화 개념도">
+          <ellipse cx="150" cy="60" rx="110" ry="50" fill="none" stroke="#1b5a7a" stroke-width="1.6" stroke-dasharray="4 4"/>
+          <ellipse cx="150" cy="60" rx="110" ry="42" fill="none" stroke="#1b5a7a" stroke-width="2"/>
+          <circle cx="178" cy="60" r="6" fill="#e9a23b"/>
+          <text x="150" y="132" font-size="10" text-anchor="middle" fill="#7d7465">둥근 궤도 ⇄ 찌그러진 궤도 (과장)</text>
+        </svg>
+      </div>
+    </article>
+
+    <article class="card cycle reveal" style="--acc:var(--prec)">
+      <span class="pill">② Precession</span>
+      <h3 style="margin-top:12px">세차운동<small>자전축의 회전</small></h3>
+      <div class="big">~26,000<small>년 (축 세차) → 기후 주기 약 23,000·19,000년</small></div>
+      <p style="margin-top:12px">돌아가는 팽이의 축이 비틀거리며 원을 그리듯, 지구 자전축도 약 2만 6천 년에 한 바퀴 원뿔을 그립니다. 태양과 달이 지구의 적도 불룩이를 당기기 때문입니다. 지금 북극이 가리키는 별은 북극성(Polaris)이지만, 1만 2천 년 뒤에는 <b>베가</b>가 북극성이 됩니다.</p>
+      <p><b>기후에서 중요한 점:</b> 축이 돌면 <b>어느 계절에 근일점을 지나는지</b>가 바뀝니다. 지금은 북반구 겨울(1월)에 태양에 가장 가깝습니다. 약 1만 1천 년 뒤에는 북반구 <b>여름</b>에 가장 가까워져 여름은 더 덥고 겨울은 더 춥게 됩니다.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 300 150" aria-label="자전축 세차운동 개념도">
+          <ellipse cx="150" cy="22" rx="52" ry="12" fill="none" stroke="#7a2d63" stroke-width="1.4" stroke-dasharray="3 3"/>
+          <circle cx="150" cy="92" r="30" fill="#e1edf3" stroke="#1b5a7a" stroke-width="1.5"/>
+          <ellipse cx="150" cy="92" rx="30" ry="7" fill="none" stroke="#1b5a7a" stroke-width="1" opacity=".5"/>
+          <line x1="150" y1="92" x2="200" y2="22" stroke="#7a2d63" stroke-width="2.2"/>
+          <line x1="150" y1="92" x2="100" y2="22" stroke="#7a2d63" stroke-width="1.2" stroke-dasharray="3 3" opacity=".6"/>
+          <text x="208" y="18" font-size="10" fill="#7a2d63">지금 (Polaris)</text>
+          <text x="92" y="18" font-size="10" fill="#7a2d63" text-anchor="end">13,000년 뒤 (Vega)</text>
+          <text x="150" y="143" font-size="10" text-anchor="middle" fill="#7d7465">축이 원뿔을 그리며 돈다 · 23.4°는 유지</text>
+        </svg>
+      </div>
+    </article>
+
+    <article class="card cycle reveal" style="--acc:var(--tilt)">
+      <span class="pill">③ Obliquity</span>
+      <h3 style="margin-top:12px">기울기 변화<small>자전축 경사각</small></h3>
+      <div class="big">~41,000<small>년 주기 · 22.1° ⇄ 24.5°</small></div>
+      <p style="margin-top:12px">자전축이 공전면에 대해 기운 각도(지금 23.44°)는 4만 1천 년을 주기로 22.1°와 24.5° 사이를 오갑니다. 기울기가 클수록 <b>계절 차가 커지고</b> 극지방에 여름 햇빛이 더 많이 갑니다. 기울기가 작으면 여름이 서늘해져 눈이 남기 쉽습니다.</p>
+      <p><b>역사적 메모:</b> 약 270만~100만 년 전의 빙하기는 이 4만 1천 년 박자로 왔습니다. 그 뒤 박자가 10만 년으로 바뀐 이유는 아직 완전히 풀리지 않은 문제입니다.</p>
+      <div class="diagram">
+        <svg viewBox="0 0 300 150" aria-label="자전축 기울기 변화 개념도">
+          <line x1="20" y1="92" x2="280" y2="92" stroke="rgba(26,23,18,.25)" stroke-dasharray="3 4"/>
+          <circle cx="150" cy="92" r="30" fill="#ebefdd" stroke="#5a6b2b" stroke-width="1.5"/>
+          <line x1="150" y1="122" x2="150" y2="20" stroke="rgba(26,23,18,.25)"/>
+          <line x1="137" y1="121" x2="163" y2="22" stroke="#5a6b2b" stroke-width="2.2"/>
+          <line x1="128" y1="119" x2="172" y2="26" stroke="#5a6b2b" stroke-width="1.2" stroke-dasharray="3 3" opacity=".6"/>
+          <text x="172" y="20" font-size="10" fill="#5a6b2b">22.1° … 24.5°</text>
+          <text x="150" y="143" font-size="10" text-anchor="middle" fill="#7d7465">기울수록 여름·겨울 차가 커진다</text>
+        </svg>
+      </div>
+    </article>
+  </div>
+
+  <figure class="diagram reveal" style="margin-top:22px;padding:18px 18px 12px">
+    <svg id="waves" viewBox="0 0 900 300" aria-label="세 주기와 그 합의 개념도"></svg>
+    <figcaption>세 주기를 합치면 불규칙해 보이는 곡선이 됩니다. 실제 빙하기 기록(심해 퇴적물의 산소 동위원소)이 바로 이런 모양입니다. 개념도 — 실제 데이터가 아니라 진폭·위상은 설명용입니다.</figcaption>
+  </figure>
+</section>
+
+<!-- 4. 시뮬레이터 -->
+<section class="sec wrap" id="sim" style="--acc:var(--ice)">
+  <div class="sec-head reveal">
+    <p class="kicker">04 · Simulator</p>
+    <h2 class="sec-title">북위 65° 여름의 햇빛</h2>
+    <p class="sec-en">The number that decides an ice age</p>
+    <p class="sec-desc">밀란코비치의 핵심 통찰은 하나입니다. 빙하기를 여는 열쇠는 추운 겨울이 아니라 <b>서늘한 여름</b>이다 — 겨울에 쌓인 눈이 여름에 다 녹지 않으면 빙하가 자란다. 그래서 그는 북반구 대륙이 몰려 있는 <b>북위 65°</b>(스칸디나비아·캐나다 허드슨만)의 <b>하짓날 햇빛</b>을 계산했습니다. 세 값을 바꿔 보세요. 숫자는 하짓날 하루 평균 일사량(W/m²)입니다.</p>
+  </div>
+  <div class="sim reveal">
+    <figure class="lab-canvas">
+      <svg id="orb" viewBox="0 0 640 400" role="img" aria-label="지구 궤도와 하지 위치"></svg>
+      <figcaption>태양을 초점에 둔 지구 궤도(이심률은 보기 좋게 과장) · <span style="color:var(--warm)">■</span> 북반구 하지 · <span style="color:var(--ice)">■</span> 북반구 동지 · 점선은 근일점 방향</figcaption>
+    </figure>
+    <div class="sim-ctrl">
+      <div class="ctl">
+        <label for="s-e">이심률 e <span id="s-e-v">0.0167</span></label>
+        <input type="range" id="s-e" min="0" max="0.06" step="0.0001" value="0.0167">
+        <small>0.005(거의 원) ~ 0.058(최대) 사이를 10만 년 주기로. 지금은 작아지는 중.</small>
+      </div>
+      <div class="ctl">
+        <label for="s-p">근일점이 오는 계절 (세차) <span id="s-p-v">1월 초 · 북반구 겨울</span></label>
+        <input type="range" id="s-p" min="0" max="360" step="1" value="283">
+        <small>자전축이 돌면 근일점을 지나는 달이 바뀝니다. 약 2만 3천 년에 한 바퀴. 북반구 여름에 근일점이 오면 여름 햇빛이 최대.</small>
+      </div>
+      <div class="ctl">
+        <label for="s-t">자전축 기울기 <span id="s-t-v">23.44°</span></label>
+        <input type="range" id="s-t" min="22.1" max="24.5" step="0.01" value="23.44">
+        <small>22.1° ~ 24.5°, 4만 1천 년 주기. 기울수록 고위도 여름 햇빛이 늘어납니다.</small>
+      </div>
+      <div class="preset">
+        <button data-set="0.0167,283,23.44">지금</button>
+        <button data-set="0.019,105,24.2">약 1만 년 전 (홀로세 초, 따뜻)</button>
+        <button data-set="0.0195,290,22.9">약 2만 년 전 (최후 빙하 극대기)</button>
+        <button data-set="0.05,90,24.5">여름 햇빛 최대 조합</button>
+        <button data-set="0.05,270,22.1">여름 햇빛 최소 조합</button>
+      </div>
+      <div class="verdict" id="verdict">
+        <div class="k">65°N · 하짓날 일사량</div>
+        <div class="v"><span id="q-val">478</span> <small>W/m²</small></div>
+        <div class="d" id="q-text"></div>
+        <div class="gauge"><i style="width:100%"></i><b id="q-mark" style="left:50%"></b></div>
+        <div class="gauge-lab"><span>≈ 400 서늘한 여름 · 빙하 성장</span><span>≈ 560 더운 여름 · 빙하 후퇴</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="note reveal"><b>읽는 법.</b> 지금 값은 약 478 W/m²입니다. 실제 지난 수십만 년 동안 이 값은 대략 <b>440에서 550 사이</b>를 오갔고, 그 차이(약 100 W/m², 20% 남짓)가 빙하기와 간빙기를 갈랐습니다. 이심률 슬라이더만 움직이면 숫자가 거의 안 변하는 것을 확인해 보세요 — 그러다 근일점을 여름 쪽으로 돌리면 이심률이 큰 쪽에서 숫자가 크게 뜁니다. 이심률은 <b>혼자서는 힘이 없고, 세차의 효과를 키우거나 죽이는 노브</b>라는 뜻입니다.</div>
+</section>
+
+<!-- 5. 메커니즘 -->
+<section class="sec wrap" id="mech" style="--acc:var(--ice)">
+  <div class="sec-head reveal">
+    <p class="kicker">05 · Mechanism</p>
+    <h2 class="sec-title">빙하기는 이렇게 온다</h2>
+    <p class="sec-en">From a few watts to a kilometer of ice</p>
+    <p class="sec-desc">햇빛 차이는 수십 W/m²에 불과합니다. 그것이 어떻게 캐나다를 3km 두께의 얼음으로 덮을까요. 답은 <b>되먹임(feedback)</b>입니다. 작은 천문학적 방아쇠가 지구 시스템 안의 증폭기를 켭니다.</p>
+  </div>
+  <div class="steps reveal">
+    <div class="step"><h4>방아쇠 — 서늘한 여름</h4><p>세차로 북반구 여름이 원일점 근처에 오고, 기울기가 작고, 이심률이 커서 그 효과가 증폭되는 시기. 65°N 여름 햇빛이 바닥을 칩니다.</p></div>
+    <div class="step"><h4>눈이 남는다</h4><p>겨울에 내린 눈이 여름에 다 녹지 않습니다. 몇 해가 쌓이면 만년설, 수천 년이 쌓이면 빙상(ice sheet). 자기 무게로 다져져 흐르기 시작합니다.</p></div>
+    <div class="step"><h4>알베도 되먹임</h4><p>눈과 얼음은 햇빛의 80~90%를 반사합니다(어두운 땅·바다는 10~20%). 흰 면적이 늘수록 지구는 더 식고, 더 식으니 눈이 더 남습니다.</p></div>
+    <div class="step"><h4>CO₂ 되먹임</h4><p>차가워진 바다가 CO₂를 더 많이 녹여 들입니다. 대기 CO₂가 280ppm에서 180ppm으로 떨어지고(빙하 코어 실측), 온실효과가 약해져 냉각이 전 지구로 번집니다.</p></div>
+  </div>
+
+  <div class="loop reveal">
+    <div class="box" style="border-top:3px solid var(--ice)"><b>빙하기로 들어갈 때</b>서늘한 여름 → 눈 잔류 → 알베도↑ → 냉각 → 바다가 CO₂ 흡수 → 더 냉각. 느리게, 수만 년에 걸쳐 쌓입니다.</div>
+    <div class="arrow"><b>⇄</b><span>같은 되먹임이<br>반대로도 돈다</span></div>
+    <div class="box" style="border-top:3px solid var(--warm)"><b>간빙기로 나올 때</b>여름 햇빛 회복 → 빙상 가장자리 융해 → 어두운 땅 노출, 알베도↓ → 바다가 데워져 CO₂ 방출 → 급속 온난화. 끝은 시작보다 <b>빠릅니다</b>(톱니 모양 기록).</div>
+  </div>
+
+  <div class="grid2 reveal" style="margin-top:22px">
+    <div class="card"><h3>증거 ① 심해 퇴적물의 산소 동위원소<small>δ¹⁸O · 1976년 "빙하기의 박동기"</small></h3><p>바닷물이 증발할 때 가벼운 ¹⁶O가 먼저 날아가 빙상에 갇히므로, 빙하기에는 바다에 무거운 ¹⁸O가 농축됩니다. 유공충 껍데기에 남은 그 비율을 수백만 년치 읽어 보니, 헤이즈·임브리·섀클턴(1976)은 그 안에서 <b>정확히 10만·4만 1천·2만 3천 년 주기</b>를 찾아냈습니다. 밀란코비치의 계산이 발표(1941) 35년 만에 지층에서 확인된 순간입니다.</p></div>
+    <div class="card"><h3>증거 ② 남극 빙하 코어<small>Vostok · EPICA Dome C · 80만 년</small></h3><p>남극 얼음 속 기포는 과거 대기의 표본입니다. 80만 년치 코어는 CO₂가 <b>180ppm(빙하기)과 280ppm(간빙기)</b> 사이를 10만 년 박자로 오갔고, 기온과 거의 같은 걸음으로 움직였음을 보여 줍니다. 궤도가 방아쇠, CO₂가 증폭기라는 그림이 여기서 굳어졌습니다. 참고로 지금 대기 CO₂는 420ppm을 넘어, 이 80만 년의 범위 밖에 있습니다.</p></div>
+  </div>
+
+  <div class="note reveal" style="--acc:var(--prec)"><b>아직 열린 문제 — "10만 년 문제".</b> 이심률 주기(10만 년)는 셋 중 햇빛을 <b>가장 약하게</b> 바꾸는데, 최근 80만 년의 빙하기는 왜 하필 그 박자로 올까요? 유력한 설명은 "이심률이 세차의 크기를 조절하므로, 세차 주기 몇 개가 뭉쳐 10만 년마다 한 번씩 큰 융해를 일으킨다"는 것과, "빙상이 너무 커지면 자기 무게로 불안정해져 4~5번의 세차 주기마다 한 번 무너진다"는 것입니다. 또 하나의 수수께끼는 100만 년 전쯤 박자가 4만 1천 년에서 10만 년으로 바뀐 <b>중기 플라이스토세 전환</b>입니다. GRE 독해 지문이 좋아하는, "가설은 맞지만 설명이 다 끝나지 않은" 과학 이야기입니다.</div>
+</section>
+
+<!-- 6. GRE -->
+<section class="sec wrap" id="gre" style="--acc:var(--warm)">
+  <div class="sec-head reveal">
+    <p class="kicker">06 · For the test</p>
+    <h2 class="sec-title">GRE에서 만나는 이 이야기</h2>
+    <p class="sec-en">Vocabulary and the shape of the passage</p>
+    <p class="sec-desc">밀란코비치 주기는 GRE 독해 과학 지문의 단골 소재입니다. 지문의 뼈대는 거의 늘 같습니다 — <b>가설 제시 → 증거(퇴적물·빙하 코어) → 남은 반론(10만 년 문제)</b>. 이 구조를 알고 읽으면 "저자가 이 이론을 어떻게 평가하는가" 유형이 쉬워집니다. 어휘도 함께 정리합니다.</p>
+  </div>
+  <div class="vocab reveal">
+    <div class="word"><h4>eccentric <small>adj · n</small></h4><p class="ko">중심에서 벗어난 → 별난, 괴짜의 / 괴짜. 명사형 <b>eccentricity</b>(별남; 이심률).</p><p class="ex"><i>The orbit's eccentricity is slight, yet its effect on climate is anything but.</i></p></div>
+    <div class="word"><h4>precession <small>n</small> · precess <small>v</small></h4><p class="ko">세차(歲差)운동. 회전축이 원뿔을 그리며 도는 것. <i>precede</i>(앞서다)와 같은 어근 — 춘분점이 해마다 조금씩 '앞당겨진다'는 데서.</p><p class="ex"><i>Because the axis precesses, the pole star itself is a temporary title.</i></p></div>
+    <div class="word"><h4>obliquity <small>n</small> · oblique <small>adj</small></h4><p class="ko">기울어짐, 경사; 비스듬한, 에두르는. 자전축 경사각을 뜻하는 전문어이자, 말이 "직설적이지 않다"는 뜻의 GRE 어휘.</p><p class="ex"><i>His oblique reply left the question effectively unanswered.</i></p></div>
+    <div class="word"><h4>perihelion · aphelion <small>n</small></h4><p class="ko">근일점 · 원일점. <i>peri-</i>(둘레·가까이) / <i>ap(o)-</i>(떨어져) + <i>helios</i>(태양). 달 궤도라면 perigee · apogee.</p><p class="ex"><i>Earth reaches perihelion in early January, not in summer.</i></p></div>
+    <div class="word"><h4>insolation <small>n</small></h4><p class="ko">일사량 — 지표가 받는 태양 복사. <b>insulation</b>(단열)과 철자 한 글자 차이. 밀란코비치 지문의 핵심어.</p><p class="ex"><i>Summer insolation at 65°N, not global mean temperature, paces the ice ages.</i></p></div>
+    <div class="word"><h4>perturbation <small>n</small> · perturb <small>v</small></h4><p class="ko">(궤도의) 섭동; 교란, 동요. 다른 천체의 중력이 궤도를 흔드는 것. 심리적으로는 '불안하게 하다'.</p><p class="ex"><i>Jupiter's perturbations slowly stretch and relax Earth's orbit.</i></p></div>
+    <div class="word"><h4>albedo <small>n</small></h4><p class="ko">반사율. 라틴어 <i>albus</i>(흰). 얼음은 높고 바다는 낮다 — 되먹임 설명에 꼭 나오는 말.</p><p class="ex"><i>Rising albedo amplifies the initial cooling.</i></p></div>
+    <div class="word"><h4>pacemaker · periodicity <small>n</small></h4><p class="ko">박동기(리듬을 정하는 것) · 주기성. 1976년 논문 제목 "Variations in the Earth's Orbit: Pacemaker of the Ice Ages"에서.</p><p class="ex"><i>Orbital periodicity sets the tempo; feedbacks supply the volume.</i></p></div>
+  </div>
+</section>
+
+<!-- 7. 퀴즈 -->
+<section class="sec wrap" id="quiz" style="--acc:var(--ok)">
+  <div class="sec-head reveal">
+    <p class="kicker">07 · Check</p>
+    <h2 class="sec-title">확인 퀴즈</h2>
+    <p class="sec-en">Eight questions</p>
+  </div>
+  <div class="quiz reveal" id="quizbox"></div>
+  <p class="score" id="score"></p>
+</section>
+
+<footer class="wrap">
+  <p>송종옥 · GRE Verbal 배경지식 시리즈 · <a href="https://songverbalportal.pages.dev/">수업 포털</a> · 수치 출처: NASA 행성 자료, Berger & Loutre (1991) 궤도 요소, EPICA Dome C 빙하 코어, Hays·Imbrie·Shackleton (1976). 시뮬레이터의 일사량은 표준 하짓날 일평균 공식으로 계산한 근사치입니다.</p>
+</footer>
 
 <script>
-// ── Starfield ────────────────────────────────────────
-const sc = document.getElementById('stars');
-const sx = sc.getContext('2d');
-sc.width = window.innerWidth;
-sc.height = window.innerHeight;
-const stars = Array.from({length: 220}, () => ({
-  x: Math.random() * sc.width,
-  y: Math.random() * sc.height,
-  r: Math.random() * 1.4 + 0.2,
-  a: Math.random()
-}));
-function drawStars() {
-  sx.clearRect(0,0,sc.width,sc.height);
-  stars.forEach(s => {
-    sx.beginPath();
-    sx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-    sx.fillStyle = `rgba(180,210,255,${s.a})`;
-    sx.fill();
+(function(){
+  // reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // nav highlight
+  const segs=[...document.querySelectorAll('.seg')];
+  const secs=segs.map(s=>document.querySelector(s.getAttribute('href')));
+  const nio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){segs.forEach(s=>s.classList.toggle('on',s.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(s=>s&&nio.observe(s));
+
+  // ── ellipse lab ──
+  const R=document.getElementById('e-range');
+  const $=id=>document.getElementById(id);
+  const A=230, cx=320, cy=200;
+  let ang=0, raf;
+  function shape(e){
+    if(e<0.005)return '완전한 원 — 두 초점이 중심에 겹쳐 있습니다';
+    if(e<0.05)return '거의 원 — 눈으로는 구분이 어렵습니다 (지구는 여기)';
+    if(e<0.25)return '약간 찌그러진 타원 — 수성·화성이 이 범위';
+    if(e<0.6)return '뚜렷한 타원 — 태양이 중심에서 눈에 띄게 벗어남';
+    return '길쭉한 타원 — 혜성 궤도. 태양 곁을 스치고 멀리 사라졌다 돌아옵니다';
+  }
+  function draw(){
+    const e=parseFloat(R.value);
+    const a=A, b=a*Math.sqrt(1-e*e), c=a*e;
+    // put sun at focus (cx + ?). Keep ellipse centered; sun at cx+c
+    $('e-orbit').setAttribute('rx',a); $('e-orbit').setAttribute('ry',b);
+    $('e-sun').setAttribute('cx',cx+c); $('e-suntext').setAttribute('x',cx+c);
+    $('e-f2').setAttribute('cx',cx-c); $('e-f2t').setAttribute('x',cx-c);
+    $('e-f2').style.opacity=$('e-f2t').style.opacity=e>0.02?1:0;
+    $('e-cline').setAttribute('x2',cx+c); $('e-clab').setAttribute('x',cx+c/2);
+    $('e-clab').style.opacity=e>0.06?1:0; $('e-ctext').style.opacity=e>0.02?1:0;
+    $('e-peri').style.opacity=$('e-aph').style.opacity=e>0.08?1:0;
+    $('e-val').textContent=e.toFixed(3); $('e-shape').textContent=shape(e);
+    // planet
+    const px=cx+a*Math.cos(ang), py=cy-b*Math.sin(ang);
+    $('e-planet').setAttribute('cx',px); $('e-planet').setAttribute('cy',py);
+  }
+  function tick(){ang+=0.012;draw();raf=requestAnimationFrame(tick)}
+  R.addEventListener('input',draw);
+  document.querySelectorAll('#def .preset button').forEach(b=>b.addEventListener('click',()=>{R.value=b.dataset.e;draw()}));
+  draw(); tick();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else tick()});
+
+  // ── waves diagram ──
+  (function(){
+    const svg=$('waves'); const W=900,H=300; const rows=[
+      {k:'이심률 ~100k',p:100,amp:.45,col:'#1b5a7a'},
+      {k:'기울기 ~41k',p:41,amp:.6,col:'#5a6b2b'},
+      {k:'세차 ~23k',p:23,amp:.7,col:'#7a2d63'}];
+    let out='';
+    const x0=215,x1=W-20,span=800; // kyr
+    const path=(fn,y,h)=>{let d='';for(let i=0;i<=400;i++){const t=i/400*span;const x=x0+(x1-x0)*i/400;const yy=y-fn(t)*h;d+=(i?'L':'M')+x.toFixed(1)+' '+yy.toFixed(1)}return d};
+    rows.forEach((r,i)=>{const y=38+i*52;out+=`<text x="12" y="${y+4}" font-size="11.5" fill="${r.col}" font-weight="600">${r.k}</text>`;
+      out+=`<path d="${path(t=>Math.sin(2*Math.PI*t/r.p)*r.amp,y,18)}" fill="none" stroke="${r.col}" stroke-width="1.6"/>`});
+    const comb=t=>{const e=.5+.5*Math.sin(2*Math.PI*t/100);return (e*Math.sin(2*Math.PI*t/23)*.7+Math.sin(2*Math.PI*t/41)*.6+Math.sin(2*Math.PI*t/100)*.45)/1.75};
+    const y=232;
+    out+=`<text x="12" y="${y-6}" font-size="11.5" fill="#1a1712" font-weight="700">합 (65°N 여름 햇빛)</text>`;
+    out+=`<text x="12" y="${y+10}" font-size="10" fill="#7d7465">이심률이 세차 진폭을 조절</text>`;
+    out+=`<path d="${path(comb,y,42)}" fill="none" stroke="#1a1712" stroke-width="2"/>`;
+    out+=`<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="rgba(26,23,18,.2)" stroke-dasharray="3 4"/>`;
+    for(let k=0;k<=8;k++){const x=x0+(x1-x0)*k/8;out+=`<text x="${x}" y="${H-6}" font-size="10.5" text-anchor="middle" fill="#7d7465">${k===0?'800k년 전':k===8?'지금':(800-k*100)+'k'}</text>`}
+    svg.innerHTML=out;
+  })();
+
+  // ── simulator ──
+  const S0=1361, lat=65*Math.PI/180;
+  function insol(e,peri,tilt){
+    const d=tilt*Math.PI/180, w=peri*Math.PI/180;
+    const rho=(1-e*e)/(1+e*Math.sin(w)); // r/a at NH summer solstice
+    let c=-Math.tan(lat)*Math.tan(d); c=Math.max(-1,Math.min(1,c)); const h0=Math.acos(c);
+    const q=S0/Math.PI/(rho*rho)*(h0*Math.sin(lat)*Math.sin(d)+Math.cos(lat)*Math.cos(d)*Math.sin(h0));
+    return {q,rho};
+  }
+  const sE=$('s-e'),sP=$('s-p'),sT=$('s-t');
+  function season(w){ // 근일점의 태양 황경: 0=춘분(3/20), 90=하지, 180=추분, 270=동지 → 대략 하루 1°
+    const d=new Date(Date.UTC(2001,2,20)); d.setUTCDate(d.getUTCDate()+Math.round(((w%360)+360)%360/0.9856));
+    const mo=d.getUTCMonth()+1, day=d.getUTCDate();
+    const part=day<=10?'초':day<=20?'중순':'말';
+    const nh=(w>45&&w<135)?'북반구 여름':(w>225&&w<315)?'북반구 겨울':(w>=135&&w<=225)?'북반구 가을':'북반구 봄';
+    return `${mo}월 ${part} · ${nh}`;
+  }
+  function drawOrbit(e,peri,tilt){
+    const svg=$('orb'); const W=640,H=400,cx=320,cy=200;
+    const ex=Math.min(0.55,e*9); // exaggerate
+    const a=215,b=a*Math.sqrt(1-ex*ex),c=a*ex;
+    // orbit centered; sun at focus (cx+c,cy); perihelion direction = +x. Earth position angle measured from perihelion.
+    // NH summer solstice true anomaly ν = 90° − ϖ (solar longitude 90 minus perihelion longitude)
+    const nuS=(90-peri)*Math.PI/180, nuW=nuS+Math.PI;
+    const pos=nu=>{const r=(1-ex*ex)/(1+ex*Math.cos(nu))*a;return [cx+c+r*Math.cos(nu),cy-r*Math.sin(nu)]};
+    const [sx,sy]=pos(nuS),[wx,wy]=pos(nuW);
+    const td=tilt; const tl=(x,y,col)=>`<g transform="translate(${x} ${y})"><circle r="13" fill="${col}" opacity=".18"/><circle r="11" fill="#e1edf3" stroke="${col}" stroke-width="1.6"/><line x1="${(-13*Math.sin(td*Math.PI/180)).toFixed(1)}" y1="${(13*Math.cos(td*Math.PI/180)).toFixed(1)}" x2="${(13*Math.sin(td*Math.PI/180)).toFixed(1)}" y2="${(-13*Math.cos(td*Math.PI/180)).toFixed(1)}" stroke="${col}" stroke-width="2"/></g>`;
+    const ps=pos(0);
+    svg.innerHTML=`
+      <ellipse cx="${cx}" cy="${cy}" rx="${a}" ry="${b}" fill="none" stroke="#1b5a7a" stroke-width="2"/>
+      <line x1="${cx+c}" y1="${cy}" x2="${ps[0]}" y2="${ps[1]}" stroke="#c9790f" stroke-dasharray="3 4" stroke-width="1.2"/>
+      <text x="${ps[0]+6}" y="${ps[1]-8}" font-size="11" fill="#8a5a0a">근일점</text>
+      <circle cx="${cx+c}" cy="${cy}" r="17" fill="url(#sg2)"/>
+      <defs><radialGradient id="sg2"><stop offset="0" stop-color="#ffe6a8"/><stop offset=".55" stop-color="#e9a23b"/><stop offset="1" stop-color="#c9790f"/></radialGradient></defs>
+      ${tl(sx,sy,'#b8451b')}<text x="${sx}" y="${sy+30}" font-size="11.5" text-anchor="middle" fill="#b8451b" font-weight="600">북반구 하지</text>
+      ${tl(wx,wy,'#2f6f9e')}<text x="${wx}" y="${wy+30}" font-size="11.5" text-anchor="middle" fill="#2f6f9e" font-weight="600">북반구 동지</text>
+      <text x="20" y="${H-14}" font-size="11" fill="#7d7465">하지 때 태양 거리 r/a = ${insol(e,peri,tilt).rho.toFixed(4)}</text>`;
+  }
+  function upd(){
+    const e=parseFloat(sE.value),p=parseFloat(sP.value),t=parseFloat(sT.value);
+    $('s-e-v').textContent=e.toFixed(4); $('s-p-v').textContent=season(p); $('s-t-v').textContent=t.toFixed(2)+'°';
+    const {q}=insol(e,p,t), q0=insol(0.0167,283,23.44).q;
+    $('q-val').textContent=Math.round(q);
+    const d=q-q0; const pct=(d/q0*100).toFixed(1);
+    let txt, cls='';
+    if(d<-25){txt=`지금보다 <b>${Math.abs(Math.round(d))} W/m² 적음</b> (${pct}%). 여름이 서늘해 겨울눈이 남기 쉽습니다 — <b>빙하가 자라는 쪽</b>.`;cls='cold'}
+    else if(d>25){txt=`지금보다 <b>${Math.round(d)} W/m² 많음</b> (+${pct}%). 여름이 더워 빙상 가장자리가 녹습니다 — <b>간빙기로 가는 쪽</b>.`}
+    else txt=`지금과 비슷합니다 (${d>=0?'+':''}${Math.round(d)} W/m²). 큰 변화가 생기려면 세 요소가 같은 방향으로 겹쳐야 합니다.`;
+    $('q-text').innerHTML=txt; $('verdict').className='verdict '+cls;
+    $('q-mark').style.left=Math.max(0,Math.min(100,(q-400)/160*100))+'%';
+    drawOrbit(e,p,t);
+  }
+  [sE,sP,sT].forEach(s=>s.addEventListener('input',upd));
+  document.querySelectorAll('#sim .preset button').forEach(b=>b.addEventListener('click',()=>{const [e,p,t]=b.dataset.set.split(',');sE.value=e;sP.value=p;sT.value=t;upd()}));
+  upd();
+
+  // ── quiz ──
+  const Q=[
+    {q:'이심률 e = c / a 에서 c는 무엇인가?',o:['타원의 둘레','중심에서 초점까지의 거리','짧은 반지름','근일점과 원일점 사이 거리'],a:1,w:'c는 중심–초점 거리, a는 장반축. 두 초점이 중심에 붙으면 c=0, 즉 원(e=0).'},
+    {q:'여덟 행성 중 궤도가 가장 둥근 것은?',o:['지구','금성','해왕성','화성'],a:1,w:'금성 0.0068. 지구(0.0167)는 두 번째, 해왕성(0.0113)이 그 사이. 수성(0.206)이 가장 찌그러짐.'},
+    {q:'지구가 태양에 가장 가까운(근일점) 때는?',o:['북반구 여름, 7월 초','북반구 겨울, 1월 초','춘분','추분'],a:1,w:'1월 초. 그래서 지금은 북반구 겨울이 상대적으로 온화하고 여름이 상대적으로 서늘합니다. 세차로 약 1만 1천 년 뒤엔 반대가 됩니다.'},
+    {q:'자전축 세차운동의 결과로 바뀌는 것은?',o:['자전축 기울기의 크기','1년의 길이','근일점을 지나는 계절','지구–태양 평균 거리'],a:2,w:'세차는 축의 방향을 돌릴 뿐 기울기(23.4°)는 유지합니다. 그 결과 어느 계절에 근일점이 오는지가 약 2만 3천 년 주기로 바뀝니다.'},
+    {q:'밀란코비치가 빙하기의 열쇠로 본 것은?',o:['북반구의 추운 겨울','북위 65° 여름 일사량','적도 해수면 온도','남극의 겨울 일사량'],a:1,w:'겨울이 아무리 추워도 눈은 내립니다. 문제는 그 눈이 여름에 녹느냐. 대륙이 많은 북위 65°의 여름 햇빛이 결정적입니다.'},
+    {q:'이심률이 기후에서 하는 역할을 가장 잘 설명한 것은?',o:['연간 총 일사량을 크게 바꾼다','세차운동 효과의 크기를 조절한다','자전축 기울기를 바꾼다','계절의 순서를 바꾼다'],a:1,w:'이심률 자체가 바꾸는 총 일사량은 0.2% 미만. 대신 근일점·원일점 차이를 키우거나 없애서 세차의 효과를 증폭·소거합니다.'},
+    {q:'빙하기 때 대기 CO₂ 농도(빙하 코어 실측)는 대략?',o:['약 180 ppm','약 280 ppm','약 420 ppm','약 1,000 ppm'],a:0,w:'빙하기 180ppm, 간빙기 280ppm. 차가운 바다가 CO₂를 더 녹여 들이는 되먹임 때문. 현재는 420ppm 이상으로 80만 년 범위 밖.'},
+    {q:'"obliquity"의 두 가지 뜻으로 옳은 짝은?',o:['이심률 / 괴짜','자전축 기울기 / 에두름(간접성)','세차 / 선행','근일점 / 접근'],a:1,w:'천문학에서는 자전축 경사각(22.1°–24.5°), 일반 어휘로는 oblique(비스듬한, 직설적이지 않은)의 명사형.'}
+  ];
+  const box=$('quizbox'); let done=0,right=0;
+  Q.forEach((it,i)=>{
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML=`<p><span class="qn">Q${String(i+1).padStart(2,'0')}</span>${it.q}</p><div class="opts">${it.o.map((o,j)=>`<button type="button" data-j="${j}">${o}</button>`).join('')}</div><div class="why">${it.w}</div>`;
+    d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      if(d.classList.contains('done'))return; d.classList.add('done'); done++;
+      const j=+b.dataset.j; if(j===it.a){b.classList.add('ok');right++}else{b.classList.add('no');d.querySelectorAll('button')[it.a].classList.add('ok')}
+      $('score').textContent=`${done} / ${Q.length} 풀이 · 정답 ${right}`+(done===Q.length?(right===Q.length?' — 전부 맞혔습니다.':' — 틀린 문항의 해설을 다시 읽어 보세요.'):'');
+    }));
+    box.appendChild(d);
   });
-}
-drawStars();
-window.addEventListener('resize', () => {
-  sc.width = window.innerWidth; sc.height = window.innerHeight; drawStars();
-});
-
-// ── Planets ──────────────────────────────────────────
-const planets = [
-  { name: '수성', en: 'Mercury', ecc: 0.206, color: '#b0bec5' },
-  { name: '금성', en: 'Venus',   ecc: 0.007, color: '#fff176' },
-  { name: '지구', en: 'Earth',   ecc: 0.017, color: '#4fc3f7' },
-  { name: '화성', en: 'Mars',    ecc: 0.093, color: '#ff7043' },
-  { name: '목성', en: 'Jupiter', ecc: 0.049, color: '#ffcc80' },
-  { name: '토성', en: 'Saturn',  ecc: 0.057, color: '#f9a825' },
-  { name: '천왕성', en: 'Uranus', ecc: 0.047, color: '#80deea' },
-  { name: '해왕성', en: 'Neptune',ecc: 0.010, color: '#5c6bc0' },
-];
-
-const maxEcc = 0.21;
-const list = document.getElementById('planetList');
-planets.forEach((p, i) => {
-  const row = document.createElement('div');
-  row.className = 'planet-row';
-  row.dataset.idx = i;
-  row.innerHTML = `
-    <div class="planet-dot" style="background:${p.color}"></div>
-    <div>
-      <div class="planet-name">${p.name}</div>
-      <div class="planet-name-en">${p.en}</div>
-    </div>
-    <div class="planet-bar-wrap">
-      <div class="planet-bar" style="width:${(p.ecc/maxEcc)*100}%; background:${p.color}"></div>
-    </div>
-    <div class="planet-ecc">e=${p.ecc}</div>
-  `;
-  row.addEventListener('click', () => {
-    slider.value = p.ecc;
-    slider.dispatchEvent(new Event('input'));
-    document.querySelectorAll('.planet-row').forEach(r => r.classList.remove('active'));
-    row.classList.add('active');
-  });
-  list.appendChild(row);
-});
-
-// ── Orbit Canvas ─────────────────────────────────────
-const canvas = document.getElementById('orbit');
-const ctx = canvas.getContext('2d');
-const W = canvas.width, H = canvas.height;
-const cx = W/2, cy = H/2;
-
-let animPlanet = 0; // angle for animated planet
-let animFrame;
-let currentEcc = 0;
-let prevEcc = 0;
-let transitionT = 0;
-
-function getShapeInfo(e) {
-  if (e === 0) return { label: '완전한 원 (Circle)', badge: '● 원  Circle', color: '#0077cc' };
-  if (e < 0.3) return { label: '거의 원형 타원 (Near-circular Ellipse)', badge: '◯ 타원  Ellipse', color: '#0077cc' };
-  if (e < 0.7) return { label: '타원 (Ellipse)', badge: '◯ 타원  Ellipse', color: '#0055aa' };
-  if (e < 0.95) return { label: '납작한 타원 (Elongated Ellipse)', badge: '◯ 타원  Ellipse', color: '#c07000' };
-  return { label: '포물선에 근접 (Near-Parabola)', badge: '∪ 포물선 근접', color: '#cc2200' };
-}
-
-function drawOrbit(e) {
-  ctx.clearRect(0, 0, W, H);
-
-  // Background (white)
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, W, H);
-
-  // Ellipse parameters
-  const a = 200; // semi-major axis
-  const c = a * e; // focus distance
-  const b = Math.sqrt(a*a - c*c); // semi-minor axis
-
-  // Focus position (Sun is at right focus)
-  const focusX = cx + c;
-  const focusY = cy;
-
-  // ── Draw orbit path ──
-  ctx.save();
-  ctx.translate(cx, cy);
-  ctx.beginPath();
-  ctx.ellipse(0, 0, a, b, 0, 0, Math.PI * 2);
-  ctx.strokeStyle = 'rgba(0,90,180,0.85)';
-    ctx.lineWidth = 4.5;
-  ctx.setLineDash([8, 8]);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.restore();
-
-  // ── Draw axes labels ──
-  // Semi-major axis (a)
-  ctx.save();
-  ctx.setLineDash([6,6]);
-  ctx.strokeStyle = 'rgba(160,110,0,0.85)';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.lineTo(cx + a, cy);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = '#a07000';
-  ctx.font = 'italic bold 22px Space Mono, monospace';
-  ctx.fillText('a', cx + a/2 - 6, cy - 14);
-  ctx.restore();
-
-  // c distance
-  if (e > 0.01) {
-    ctx.save();
-    ctx.setLineDash([6,6]);
-    ctx.strokeStyle = 'rgba(200,50,0,0.85)';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(focusX, focusY);
-    ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#c03000';
-    ctx.font = 'italic bold 20px Space Mono, monospace';
-    const midCX = (cx + focusX) / 2;
-    ctx.fillText('c', midCX - 6, cy + 24);
-    ctx.restore();
-  }
-
-  // ── Sun ──
-  const sunGlow = ctx.createRadialGradient(focusX, focusY, 0, focusX, focusY, 42);
-  sunGlow.addColorStop(0, 'rgba(255,230,100,0.95)');
-  sunGlow.addColorStop(0.35, 'rgba(255,160,30,0.55)');
-  sunGlow.addColorStop(1, 'rgba(255,100,0,0)');
-  ctx.beginPath();
-  ctx.arc(focusX, focusY, 42, 0, Math.PI*2);
-  ctx.fillStyle = sunGlow;
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.arc(focusX, focusY, 16, 0, Math.PI*2);
-  ctx.fillStyle = '#FFD54F';
-  ctx.strokeStyle = '#c08000';
-  ctx.lineWidth = 2;
-  ctx.fill();
-  ctx.stroke();
-
-  ctx.fillStyle = 'rgba(120,80,0,1)';
-  ctx.font = 'bold 16px Noto Sans KR, sans-serif';
-  ctx.fillText('☀ 태양', focusX + 20, focusY - 20);
-
-  // ── Other focus (empty) ──
-  if (e > 0.05) {
-    const emptyFocusX = cx - c;
-    ctx.beginPath();
-    ctx.arc(emptyFocusX, focusY, 7, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(200,50,0,0.75)';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(150,30,0,1)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(150,30,0,1)';
-    ctx.font = 'bold 16px Space Mono, monospace';
-    ctx.fillText('F₂', emptyFocusX - 14, focusY + 28);
-  }
-
-  // ── Animated planet ──
-  const px = cx + a * Math.cos(animPlanet) - c;
-  const py = cy + b * Math.sin(animPlanet);
-
-  // Line from sun to planet (radius vector)
-  ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(focusX, focusY);
-  ctx.lineTo(px, py);
-  ctx.strokeStyle = 'rgba(0,90,180,0.4)';
-  ctx.lineWidth = 2.5;
-  ctx.stroke();
-  ctx.restore();
-
-  // Planet glow
-  const pGlow = ctx.createRadialGradient(px, py, 0, px, py, 28);
-  pGlow.addColorStop(0, 'rgba(0,120,220,0.5)');
-  pGlow.addColorStop(1, 'rgba(0,120,220,0)');
-  ctx.beginPath();
-  ctx.arc(px, py, 28, 0, Math.PI*2);
-  ctx.fillStyle = pGlow;
-  ctx.fill();
-
-  ctx.beginPath();
-  ctx.arc(px, py, 13, 0, Math.PI*2);
-  ctx.fillStyle = '#0077cc';
-  ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = 2.5;
-  ctx.fill();
-  ctx.stroke();
-
-  // ── Info overlay ──
-  ctx.fillStyle = '#0055aa';
-  ctx.font = '700 22px Space Mono, monospace';
-  ctx.fillText(`e = ${e.toFixed(2)}`, 18, 36);
-
-  ctx.fillStyle = '#a07000';
-  ctx.font = '700 16px Space Mono, monospace';
-  ctx.fillText(`a = ${a}px`, 18, 62);
-  ctx.fillStyle = '#c03000';
-  ctx.fillText(`c = ${Math.round(c)}px`, 18, 84);
-  ctx.fillStyle = '#006699';
-  ctx.fillText(`b = ${Math.round(b)}px`, 18, 106);
-
-  // perihelion / aphelion labels
-  if (e > 0.05) {
-    // Perihelion (closest)
-    const perX = cx + (a - c) - c;
-    ctx.fillStyle = 'rgba(140,90,0,1)';
-    ctx.font = 'bold 15px Noto Sans KR, sans-serif';
-    ctx.fillText('근일점', perX - 26, cy + 30);
-
-    // Aphelion (farthest)
-    const aphX = cx - (a + c) - c;
-    ctx.fillStyle = 'rgba(0,70,160,1)';
-    ctx.fillText('원일점', aphX - 22, cy + 30);
-  }
-}
-
-// Kepler speed: dθ/dt ∝ 1/r² (simplified)
-function keplerSpeed(angle, e) {
-  const a = 200;
-  const c = a * e;
-  const r = Math.sqrt(Math.pow(a * Math.cos(angle) - c, 2) + Math.pow(Math.sqrt(a*a - c*c) * Math.sin(angle), 2));
-  return 2200 / (r * r + 1);
-}
-
-function animate() {
-  const e = parseFloat(slider.value);
-  animPlanet -= keplerSpeed(animPlanet, e) * 0.00012;
-  drawOrbit(e);
-  animFrame = requestAnimationFrame(animate);
-}
-
-// ── Slider ───────────────────────────────────────────
-const slider = document.getElementById('eccSlider');
-const eDisplay = document.getElementById('eDisplay');
-const eShapeLabel = document.getElementById('eShapeLabel');
-const shapeBadge = document.getElementById('shapeBadge');
-
-slider.addEventListener('input', () => {
-  const e = parseFloat(slider.value);
-  const pct = (e / 0.99 * 100).toFixed(1);
-  slider.style.setProperty('--pct', pct + '%');
-  eDisplay.textContent = e.toFixed(2);
-  const info = getShapeInfo(e);
-  eShapeLabel.textContent = info.label;
-  shapeBadge.textContent = info.badge;
-  shapeBadge.style.color = info.color;
-  shapeBadge.style.borderColor = info.color;
-});
-
-// Init
-slider.style.setProperty('--pct', '0%');
-animate();
+})();
 </script>
 </body>
 </html>

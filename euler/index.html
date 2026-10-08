@@ -1,325 +1,623 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>오일러 공식 시각화</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오일러 공식: 회전을 적는 가장 짧은 문장</title>
+<meta name="description" content="레온하르트 오일러의 생애, 오일러 공식 e^(ix) = cos x + i sin x 의 뜻과 직관, 그리고 이 공식이 강물의 흐름 같은 유체역학에 어떻게 쓰이는지 — 복소평면 회전과 유선 시뮬레이터로 익히는 GRE 배경지식 페이지.">
+<meta property="og:title" content="오일러 공식: 회전을 적는 가장 짧은 문장">
+<meta property="og:description" content="e^(iπ) + 1 = 0 에서 돌 주위를 지나는 강물까지 — 오일러 공식과 유체역학">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+KR:wght@400;600;700;900&display=swap">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #0F1B3C;
-    color: #f5f5f5;
-    min-height: 100vh;
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  h1 {
-    color: #E8B43A;
-    font-size: 1.4rem;
-    margin-bottom: 4px;
-    text-align: center;
-  }
-  .subtitle {
-    font-size: 0.85rem;
-    opacity: 0.7;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  .canvas-wrap {
-    width: 100%;
-    max-width: 360px;
-    aspect-ratio: 1;
-    background: #fff;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-  canvas { width: 100%; height: 100%; display: block; }
-  .formula {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(232,180,58,0.3);
-    border-radius: 10px;
-    padding: 14px 16px;
-    width: 100%;
-    max-width: 360px;
-    font-family: 'Times New Roman', serif;
-    font-size: 1.1rem;
-    text-align: center;
-    margin-bottom: 16px;
-    line-height: 1.6;
-  }
-  .formula .yellow { color: #E8B43A; font-weight: bold; }
-  .controls {
-    width: 100%;
-    max-width: 360px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 10px;
-    padding: 16px;
-  }
-  .slider-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-  .slider-label { font-size: 0.85rem; min-width: 60px; }
-  input[type="range"] {
-    flex: 1;
-    accent-color: #E8B43A;
-  }
-  .angle-display {
-    font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
-    color: #E8B43A;
-    min-width: 70px;
-    text-align: right;
-  }
-  .preset-row {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-  }
-  .preset-btn {
-    flex: 1;
-    min-width: 60px;
-    background: rgba(232,180,58,0.15);
-    color: #E8B43A;
-    border: 1px solid rgba(232,180,58,0.4);
-    border-radius: 6px;
-    padding: 8px 4px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  .preset-btn:active { background: rgba(232,180,58,0.3); }
-  .play-btn {
-    width: 100%;
-    background: #E8B43A;
-    color: #0F1B3C;
-    border: none;
-    border-radius: 6px;
-    padding: 10px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  .play-btn:active { opacity: 0.8; }
-  .note {
-    font-size: 0.78rem;
-    opacity: 0.65;
-    text-align: center;
-    margin-top: 14px;
-    max-width: 360px;
-    line-height: 1.5;
-  }
+:root{
+  color-scheme:light;
+  --paper:#f4efe5;--paper-2:#ebe4d6;--card:#fffcf6;
+  --ink:#1a1712;--ink-2:#4b4439;--ink-3:#7d7465;
+  --line:rgba(26,23,18,.14);--line-2:rgba(26,23,18,.07);
+  --re:#1b5a7a;--re-tint:#e1edf3;
+  --im:#b8451b;--im-tint:#f6e4da;
+  --gold:#8f6312;--gold-tint:#f4eedb;
+  --water:#1f6f8b;--water-deep:#0f3a50;--water-tint:#e0eef2;
+  --plum:#7a2d63;--plum-tint:#f3e6ef;
+  --ok:#2b7a4b;
+  --serif:'Fraunces','Noto Serif KR',Georgia,serif;
+  --serif-ko:'Noto Serif KR','Fraunces',Georgia,serif;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --gutter:clamp(16px,5vw,72px);
+  --shadow:0 1px 2px rgba(26,23,18,.05),0 18px 40px -22px rgba(26,23,18,.28);
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
+.f{font-family:var(--serif);font-style:italic}
+.f sup{font-style:normal;font-size:.72em}
+.eq{font-family:var(--serif);font-size:1.08em;white-space:nowrap}
+.eq i{font-style:italic}
+.eq sup{font-size:.7em;vertical-align:super;line-height:0}
+
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:18px;height:60px;padding:0 var(--gutter);background:rgba(244,239,229,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:baseline;gap:8px;text-decoration:none;font-family:var(--serif);font-weight:600}
+.brand-mark{font-family:var(--serif);font-style:italic;font-weight:700;font-size:17px;color:var(--re)}
+.brand-text{font-size:15px}
+.segs{display:flex;gap:4px;margin-left:auto;list-style:none;overflow-x:auto;scrollbar-width:none}
+.segs::-webkit-scrollbar{display:none}
+.seg{display:block;padding:7px 11px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--ink-2);text-decoration:none;white-space:nowrap;border:1px solid transparent}
+.seg:hover{border-color:var(--line);background:var(--card)}
+.seg.on{background:var(--ink);color:var(--paper)}
+.home{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);text-decoration:none;white-space:nowrap}
+
+.hero{padding-top:clamp(56px,9vw,110px);padding-bottom:clamp(40px,6vw,72px);border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.hero-title{font-family:var(--serif-ko);font-weight:900;font-size:clamp(40px,7.2vw,88px);line-height:1.04;letter-spacing:-.03em;margin:18px 0 10px}
+.hero-title .sub{display:block;font-family:var(--serif);font-weight:400;font-style:italic;font-size:.42em;letter-spacing:0;color:var(--ink-2);margin-top:14px}
+.hero-row{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;margin-top:34px;align-items:start}
+.lede{font-size:17.5px;color:var(--ink-2);max-width:62ch}
+.lede b{color:var(--ink)}
+.identity{background:var(--ink);color:var(--paper);padding:26px 26px 22px;text-align:center}
+.identity .eq{font-size:clamp(34px,4.5vw,50px);display:block;line-height:1.2}
+.identity .eq .c1{color:#9cc8e6}.identity .eq .c2{color:#f0a37b}.identity .eq .c3{color:#f1d58a}
+.identity small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;opacity:.65;margin-top:12px;text-transform:uppercase}
+.identity p{font-size:13.5px;opacity:.85;margin-top:10px;line-height:1.55}
+
+.sec{padding-top:clamp(56px,8vw,96px);padding-bottom:clamp(56px,8vw,96px);border-bottom:1px solid var(--line)}
+.sec-head{max-width:68ch;margin-bottom:34px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc,var(--ink-3))}
+.sec-title{font-family:var(--serif-ko);font-weight:900;font-size:clamp(30px,4.6vw,50px);line-height:1.12;letter-spacing:-.025em;margin:10px 0 6px}
+.sec-en{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--ink-3)}
+.sec-desc{margin-top:16px;font-size:16.5px;color:var(--ink-2)}
+.sec-desc b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);padding:22px 22px 20px;box-shadow:var(--shadow)}
+.card h3{font-family:var(--serif-ko);font-weight:700;font-size:19px;letter-spacing:-.01em;margin-bottom:8px}
+.card h3 small{display:block;font-family:var(--serif);font-weight:400;font-style:italic;font-size:13px;color:var(--ink-3);margin-top:2px}
+.card p{font-size:15px;color:var(--ink-2)}
+.card p+p{margin-top:8px}
+.card.tint{border-top:4px solid var(--acc,var(--ink))}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);background:var(--paper)}
+.note{margin-top:18px;padding:16px 18px;border-left:3px solid var(--acc,var(--ink));background:var(--card);font-size:15px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+figure{margin:0}
+figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--ink-3);margin-top:10px}
+svg text{font-family:var(--sans)}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--line);margin-top:8px}
+.tl div{padding:18px 16px 14px 0;border-right:1px dashed var(--line)}
+.tl div:last-child{border-right:0}
+.tl b{display:block;font-family:var(--serif);font-size:26px;font-weight:600;color:var(--re);letter-spacing:-.02em}
+.tl span{display:block;font-size:13.5px;color:var(--ink-2);margin-top:6px}
+.symbols{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.sym{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);padding:10px 14px}
+.sym b{font-family:var(--serif);font-style:italic;font-size:24px;color:var(--re);min-width:28px;text-align:center}
+.sym span{font-size:13px;color:var(--ink-2)}
+
+/* circle lab */
+.lab{display:grid;grid-template-columns:1.15fr 1fr;gap:22px;align-items:stretch}
+.lab-canvas{background:var(--card);border:1px solid var(--line);padding:14px;box-shadow:var(--shadow)}
+.lab-canvas svg{display:block;width:100%;height:auto}
+.lab-side{display:flex;flex-direction:column;gap:14px}
+.readout{background:var(--ink);color:var(--paper);padding:18px 20px}
+.readout .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;opacity:.65}
+.readout .eq{display:block;font-size:clamp(22px,2.6vw,30px);margin-top:8px;line-height:1.3;white-space:normal}
+.readout .eq .re{color:#9cc8e6}.readout .eq .im{color:#f0a37b}
+.readout .deg{font-family:var(--mono);font-size:13px;opacity:.75;margin-top:8px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;background:var(--line);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--ink);border:3px solid var(--card);box-shadow:0 0 0 1px var(--line);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--ink);border:3px solid var(--card);cursor:pointer}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:6px}
+.preset{display:flex;flex-wrap:wrap;gap:6px}
+.preset button,.btn{font:inherit;font-size:12.5px;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--ink-2)}
+.preset button:hover,.btn:hover{border-color:var(--ink);color:var(--ink)}
+.btn.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.kv dt{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink-3);padding-top:1px}
+.kv dd{color:var(--ink-2)}
+
+/* why */
+.reason{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.reason .card ol{padding-left:20px;font-size:15px;color:var(--ink-2)}
+.reason .card li+li{margin-top:8px}
+.reason .card li b{color:var(--ink)}
+details{background:var(--card);border:1px solid var(--line);padding:14px 18px;margin-top:14px}
+summary{cursor:pointer;font-weight:600;font-size:15px}
+details p{font-size:14.5px;color:var(--ink-2);margin-top:10px}
+.series{font-family:var(--serif);font-size:15.5px;line-height:2;color:var(--ink);overflow-x:auto;white-space:nowrap;padding:6px 0}
+.series .re{color:var(--re)}.series .im{color:var(--im)}
+
+/* flow */
+.flow{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;align-items:start}
+.flow-canvas{background:var(--card);border:1px solid var(--line);padding:10px;box-shadow:var(--shadow)}
+canvas{display:block;width:100%;height:auto;background:#eef4f6}
+.ctl{background:var(--card);border:1px solid var(--line);padding:16px 18px}
+.ctl label{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:600;margin-bottom:10px}
+.ctl label span{font-family:var(--mono);font-weight:500;font-size:13px;color:var(--ink-2)}
+.ctl small{display:block;font-size:12.5px;color:var(--ink-3);margin-top:8px}
+.flow-side{display:flex;flex-direction:column;gap:14px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:22px;height:6px;border-radius:3px;vertical-align:middle;margin-right:6px}
+.derive{background:var(--paper-2);border:1px solid var(--line);padding:16px 18px;font-size:14.5px;color:var(--ink-2)}
+.derive .eq{display:block;margin:6px 0;font-size:17px;white-space:normal}
+.derive b{color:var(--ink)}
+
+/* venturi */
+.vent{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.vent svg{display:block;width:100%;height:auto;background:var(--card);border:1px solid var(--line)}
+.gauges{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g{background:var(--card);border:1px solid var(--line);padding:14px 16px}
+.g .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.g .v{font-family:var(--serif);font-size:30px;font-weight:600;letter-spacing:-.02em;margin-top:4px;line-height:1}
+.g .v small{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--ink-3);margin-left:4px;letter-spacing:0}
+.g .bar{height:8px;background:var(--line-2);border-radius:4px;margin-top:10px;overflow:hidden}
+.g .bar i{display:block;height:100%;border-radius:4px;background:var(--acc,var(--water))}
+
+/* apps */
+.apps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+/* vocab */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.word{background:var(--card);border:1px solid var(--line);padding:18px 20px}
+.word h4{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.01em}
+.word h4 small{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--ink-3);margin-left:8px;letter-spacing:.04em}
+.word .ko{font-size:14.5px;color:var(--ink-2);margin-top:4px}
+.word .ex{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
+.word .ex i{font-family:var(--serif);color:var(--ink)}
+
+/* quiz */
+.quiz{display:grid;gap:12px}
+.q{background:var(--card);border:1px solid var(--line);padding:18px 20px}
+.q p{font-weight:600;font-size:15.5px}
+.q p .qn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3);margin-right:10px}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.opts button{font:inherit;font-size:14px;text-align:left;padding:10px 12px;border:1px solid var(--line);background:var(--paper);cursor:pointer;color:var(--ink-2);line-height:1.45}
+.opts button:hover{border-color:var(--ink)}
+.opts button.ok{background:#e4f1e8;border-color:var(--ok);color:var(--ink)}
+.opts button.no{background:#f7e3df;border-color:var(--im);color:var(--ink)}
+.q .why{display:none;margin-top:10px;font-size:14px;color:var(--ink-2);padding-top:10px;border-top:1px dashed var(--line)}
+.q.done .why{display:block}
+.score{margin-top:18px;font-family:var(--mono);font-size:13px;color:var(--ink-2)}
+
+footer{padding-top:40px;padding-bottom:60px;font-size:13px;color:var(--ink-3)}
+footer a{color:var(--ink-2)}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media(max-width:900px){
+  .hero-row,.grid2,.lab,.reason,.flow,.vent{grid-template-columns:1fr}
+  .grid3,.apps{grid-template-columns:1fr}
+  .tl{grid-template-columns:1fr 1fr}
+  .tl div{border-right:0;border-bottom:1px dashed var(--line)}
+  .vocab{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .opts{grid-template-columns:1fr}
+  .topbar{gap:10px}
+  .brand-text{display:none}
+  .gauges{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
-  <h1>오일러 공식</h1>
-  <div class="subtitle">슬라이더를 움직여 점이 도는 모습을 보세요</div>
 
-  <div class="canvas-wrap">
-    <canvas id="canvas" width="720" height="720"></canvas>
-  </div>
+<nav class="topbar" aria-label="본문 이동">
+  <a class="brand" href="#top"><span class="brand-mark">e<sup style="font-size:.6em">iπ</sup></span><span class="brand-text">Euler</span></a>
+  <ol class="segs" style="list-style:none">
+    <li><a class="seg" href="#man">인물</a></li>
+    <li><a class="seg" href="#formula">공식</a></li>
+    <li><a class="seg" href="#why">왜 그런가</a></li>
+    <li><a class="seg" href="#fluid">강물</a></li>
+    <li><a class="seg" href="#apps">응용</a></li>
+    <li><a class="seg" href="#gre">GRE</a></li>
+    <li><a class="seg" href="#quiz">퀴즈</a></li>
+  </ol>
+  <a class="home" href="https://songverbalportal.pages.dev/">PORTAL ↗</a>
+</nav>
 
-  <div class="formula">
-    e<sup>i·<span class="yellow" id="angle-text">0.00</span></sup> = 
-    <span class="yellow" id="cos-val">1.00</span> + 
-    <span class="yellow" id="sin-val">0.00</span>·i
-  </div>
-
-  <div class="controls">
-    <div class="slider-row">
-      <span class="slider-label">각도 x</span>
-      <input type="range" id="slider" min="0" max="628" value="0">
-      <span class="angle-display" id="angle-display">0°</span>
+<header class="hero wrap" id="top">
+  <p class="eyebrow">Mathematics · Leonhard Euler · 1707–1783</p>
+  <h1 class="hero-title">오일러 공식
+    <span class="sub">회전을 적는 가장 짧은 문장, 그리고 강물이 흐르는 법</span>
+  </h1>
+  <div class="hero-row">
+    <p class="lede"><span class="eq"><i>e</i><sup><i>ix</i></sup> = cos <i>x</i> + <i>i</i> sin <i>x</i></span> — 지수함수와 삼각함수, 전혀 다른 두 세계가 허수 <span class="f">i</span> 하나로 이어집니다. 이 식은 "<b>e의 허수 거듭제곱은 회전이다</b>"라고 읽으면 됩니다. 회전을 한 글자로 쓸 수 있게 되자 전기·파동·양자역학이 이 언어를 썼고, 유체역학에서는 <b>강물이 돌을 돌아 흐르는 모양</b>을 복소수 한 줄로 그릴 수 있게 되었습니다. 이 페이지는 공식을 눈으로 돌려 본 뒤, 그 강물까지 갑니다.</p>
+    <div class="identity">
+      <span class="eq"><span class="c1"><i>e</i><sup><i>iπ</i></sup></span> + <span class="c2">1</span> = <span class="c3">0</span></span>
+      <small>Euler's identity</small>
+      <p>수학의 다섯 상수 <span class="f">e, i, π, 1, 0</span>이 한 줄에. <span class="f">x</span>에 π를 넣으면 cos π = −1, sin π = 0 이므로 <span class="f">e<sup>iπ</sup> = −1</span>. 물리학자 파인먼은 이 식을 "우리의 보석"이라 불렀습니다.</p>
     </div>
+  </div>
+</header>
 
-```
-<div class="preset-row">
-  <button class="preset-btn" data-val="0">0</button>
-  <button class="preset-btn" data-val="157">π/2</button>
-  <button class="preset-btn" data-val="314">π</button>
-  <button class="preset-btn" data-val="471">3π/2</button>
-  <button class="preset-btn" data-val="628">2π</button>
-</div>
+<!-- 1. 인물 -->
+<section class="sec wrap" id="man" style="--acc:var(--re)">
+  <div class="sec-head reveal">
+    <p class="kicker">01 · The man</p>
+    <h2 class="sec-title">레온하르트 오일러</h2>
+    <p class="sec-en">Leonhard Euler — the most prolific mathematician in history</p>
+    <p class="sec-desc">스위스 바젤에서 목사의 아들로 태어나, 상트페테르부르크와 베를린의 왕립 학술원에서 일생을 보냈습니다. 서른 한 살에 오른쪽 눈을, 예순 넷에 거의 모든 시력을 잃었지만 생산력은 오히려 늘었습니다 — 머릿속으로 계산해 비서에게 받아쓰게 했고, 눈이 먼 뒤 17년 동안 전체 저작의 <b>절반 가까이</b>를 썼습니다. 지금 수학책에 있는 기호의 상당수가 그가 정한 것입니다.</p>
+  </div>
+  <div class="tl reveal">
+    <div><b>1707</b><span>바젤 출생. 열세 살에 대학 입학, 요한 베르누이에게 배움</span></div>
+    <div><b>1727</b><span>상트페테르부르크 학술원으로. 다니엘 베르누이와 동료가 됨</span></div>
+    <div><b>1736</b><span>쾨니히스베르크 다리 문제 해결 — 그래프 이론의 탄생</span></div>
+    <div><b>1748</b><span>『무한해석 입문』에서 오일러 공식 발표</span></div>
+    <div><b>1757</b><span>유체의 운동방정식(오일러 방정식) 발표. 1783년 상트페테르부르크에서 사망</span></div>
+  </div>
+  <div class="symbols reveal">
+    <div class="sym"><b>e</b><span>자연상수 2.718… 기호를 정함 (1727)</span></div>
+    <div class="sym"><b>i</b><span>√−1 을 <i>i</i>로 (1777)</span></div>
+    <div class="sym"><b>π</b><span>원주율 기호를 널리 퍼뜨림</span></div>
+    <div class="sym"><b>f(x)</b><span>함수 표기 (1734)</span></div>
+    <div class="sym"><b>Σ</b><span>합의 기호 (1755)</span></div>
+    <div class="sym"><b>Δ</b><span>차분 · 변화량</span></div>
+  </div>
+  <div class="grid3 reveal" style="margin-top:22px">
+    <div class="card tint"><h3>바젤 문제<small>1734 · 1 + 1/4 + 1/9 + 1/16 + … = π²/6</small></h3><p>제곱수 역수의 합이 원주율과 관계있다는, 아무도 예상 못 한 답. 스물일곱 살의 오일러를 유럽 전체에 알린 결과입니다.</p></div>
+    <div class="card tint"><h3>다면체 공식<small>V − E + F = 2</small></h3><p>어떤 볼록 다면체든 꼭짓점 − 모서리 + 면 = 2. 정육면체는 8 − 12 + 6 = 2. 모양이 아니라 '연결 방식'만 보는 수학, 위상수학의 출발점입니다.</p></div>
+    <div class="card tint"><h3>생산력<small>약 850편 · 전집 80여 권</small></h3><p>사후 수십 년 동안 학술원 저널은 그가 남긴 원고를 계속 실었습니다. 라플라스의 말: "오일러를 읽어라, 오일러를 읽어라. 그가 우리 모두의 스승이다."</p></div>
+  </div>
+</section>
 
-<button class="play-btn" id="play-btn">▶ 자동 회전</button>
-```
+<!-- 2. 공식 -->
+<section class="sec wrap" id="formula" style="--acc:var(--im)">
+  <div class="sec-head reveal">
+    <p class="kicker">02 · The formula</p>
+    <h2 class="sec-title">공식을 눈으로 돌려 보기</h2>
+    <p class="sec-en">A point on the unit circle</p>
+    <p class="sec-desc">복소수 <span class="f">a + bi</span>를 가로축 <span class="f">a</span>(실수), 세로축 <span class="f">b</span>(허수)인 평면의 점으로 찍으면, <span class="eq"><i>e</i><sup><i>ix</i></sup></span>는 언제나 <b>반지름 1인 원 위의 점</b>이고, <span class="f">x</span>는 그 점의 <b>각도</b>(라디안)입니다. 가로 좌표가 cos <span class="f">x</span>, 세로 좌표가 sin <span class="f">x</span> — 공식은 이 사실을 적은 것뿐입니다. 슬라이더를 움직여 보세요.</p>
+  </div>
+  <div class="lab reveal">
+    <figure class="lab-canvas">
+      <svg id="uc" viewBox="0 0 640 440" role="img" aria-label="복소평면 단위원 위의 점">
+        <line x1="40" y1="220" x2="600" y2="220" stroke="rgba(26,23,18,.25)"/>
+        <line x1="320" y1="20" x2="320" y2="420" stroke="rgba(26,23,18,.25)"/>
+        <text x="596" y="238" font-size="12" text-anchor="end" fill="#7d7465">실수축 Re</text>
+        <text x="328" y="30" font-size="12" fill="#7d7465">허수축 Im</text>
+        <circle cx="320" cy="220" r="180" fill="none" stroke="#1a1712" stroke-width="1.6"/>
+        <text x="506" y="214" font-size="12" fill="#7d7465">1</text><text x="128" y="214" font-size="12" fill="#7d7465" text-anchor="end">−1</text>
+        <text x="328" y="46" font-size="12" fill="#7d7465"><tspan font-style="italic" font-family="Fraunces,serif">i</tspan></text>
+        <text x="328" y="404" font-size="12" fill="#7d7465">−<tspan font-style="italic" font-family="Fraunces,serif">i</tspan></text>
+        <path id="uc-arc" d="" fill="rgba(184,69,27,.12)" stroke="#b8451b" stroke-width="1.2"/>
+        <line id="uc-cos" x1="320" y1="220" x2="500" y2="220" stroke="#1b5a7a" stroke-width="5" stroke-linecap="round"/>
+        <line id="uc-sin" x1="500" y1="220" x2="500" y2="220" stroke="#b8451b" stroke-width="5" stroke-linecap="round"/>
+        <line id="uc-ray" x1="320" y1="220" x2="500" y2="220" stroke="#1a1712" stroke-width="1.6"/>
+        <circle id="uc-pt" cx="500" cy="220" r="8" fill="#1a1712"/>
+        <text id="uc-cost" x="410" y="246" font-size="12.5" fill="#1b5a7a" font-weight="600" text-anchor="middle">cos x</text>
+        <text id="uc-sint" x="512" y="222" font-size="12.5" fill="#b8451b" font-weight="600">sin x</text>
+        <text id="uc-xt" x="355" y="212" font-size="12.5" fill="#b8451b" font-style="italic" font-family="Fraunces,serif">x</text>
+      </svg>
+      <figcaption>가로 막대 = 실수부 cos x · 세로 막대 = 허수부 sin x · 색칠한 부채꼴 = 각도 x (라디안)</figcaption>
+    </figure>
+    <div class="lab-side">
+      <div class="readout">
+        <div class="k">e<sup>ix</sup> at this angle</div>
+        <span class="eq"><i>e</i><sup><i>i</i>·<span id="r-x">0.00</span></sup> = <span class="re" id="r-re">1.000</span><span id="r-sign"> + </span><span class="im" id="r-im">0.000</span> <i>i</i></span>
+        <div class="deg" id="r-deg">x = 0 rad = 0°</div>
+      </div>
+      <div>
+        <input id="uc-range" type="range" min="0" max="6.2832" step="0.001" value="0" aria-label="각도 x">
+        <div class="ticks"><span>0</span><span>π/2</span><span>π</span><span>3π/2</span><span>2π</span></div>
+      </div>
+      <div class="preset">
+        <button data-x="0">0</button>
+        <button data-x="0.7854">π/4</button>
+        <button data-x="1.5708">π/2 → <i>i</i></button>
+        <button data-x="3.1416">π → −1</button>
+        <button data-x="4.7124">3π/2 → −<i>i</i></button>
+        <button class="btn" id="uc-play">▶ 자동 회전</button>
+      </div>
+      <dl class="kv">
+        <dt>x = 0</dt><dd><span class="f">e<sup>0</sup> = 1</span>. 출발점, 실수축 위.</dd>
+        <dt>x = π/2</dt><dd><span class="f">e<sup>iπ/2</sup> = i</span>. 90° 돌면 허수축에 닿습니다 — <b>i는 "90° 회전"</b>이라는 뜻.</dd>
+        <dt>x = π</dt><dd><span class="f">e<sup>iπ</sup> = −1</span>. 반 바퀴. 여기서 오일러 항등식이 나옵니다.</dd>
+        <dt>x = 2π</dt><dd>한 바퀴 돌아 다시 1. 그래서 <span class="f">e<sup>ix</sup></span>는 2π마다 되풀이되는 <b>주기함수</b>입니다.</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="note reveal"><b>곱셈 = 회전.</b> 두 복소수를 곱하면 각도는 더해지고 길이는 곱해집니다: <span class="eq"><i>e</i><sup><i>ia</i></sup> · <i>e</i><sup><i>ib</i></sup> = <i>e</i><sup><i>i</i>(<i>a</i>+<i>b</i>)</sup></span>. 지수법칙 그대로입니다. 삼각함수로 같은 말을 하려면 덧셈정리 네 줄이 필요하지만, 오일러 공식으로는 지수 하나를 더하면 끝입니다. 이 "회전을 덧셈으로 바꾸는 힘"이 공학 전체가 이 식을 쓰는 이유입니다.</div>
+</section>
 
+<!-- 3. 왜 -->
+<section class="sec wrap" id="why" style="--acc:var(--plum)">
+  <div class="sec-head reveal">
+    <p class="kicker">03 · Why it works</p>
+    <h2 class="sec-title">왜 지수가 원을 그리는가</h2>
+    <p class="sec-en">Two ways to see it — motion, then series</p>
+    <p class="sec-desc">증명은 여러 가지지만, 외울 필요 없이 <b>이해되는</b> 설명은 하나입니다. 지수함수의 정의에서 출발합니다.</p>
+  </div>
+  <div class="reason reveal">
+    <div class="card tint">
+      <h3>움직임으로 보기<small>속도가 항상 위치에 수직이면 원운동</small></h3>
+      <ol>
+        <li><span class="f">e<sup>t</sup></span>의 정의: <b>변화율이 자기 자신과 같은</b> 함수. 지금 값이 크면 그만큼 빨리 자랍니다.</li>
+        <li><span class="f">e<sup>it</sup></span>의 변화율은 <span class="f">i · e<sup>it</sup></span>. 즉 속도 = 위치에 <span class="f">i</span>를 곱한 것.</li>
+        <li>그런데 <span class="f">i</span>를 곱하는 것은 <b>90° 회전</b>입니다(위 실험에서 π/2를 눌러 보세요). 속도가 위치에 늘 수직이라는 뜻.</li>
+        <li>위치에 수직으로만 움직이면 중심에서 멀어지지도 가까워지지도 못합니다 — <b>원을 돌 수밖에</b> 없습니다. 길이 1에서 출발했으니 반지름 1, 속도 크기도 1이니 시간 <span class="f">t</span>만큼 돈 각도가 <span class="f">t</span>. 그래서 <span class="f">e<sup>it</sup> = cos t + i sin t</span>.</li>
+      </ol>
+      <p style="margin-top:12px">돌에 끈을 매어 돌릴 때 끈의 장력이 늘 돌의 속도에 수직인 것과 같은 그림입니다.</p>
+    </div>
+    <div>
+      <div class="card tint" style="--acc:var(--re)">
+        <h3>급수로 보기<small>테일러 전개를 나란히 놓으면</small></h3>
+        <p><span class="f">e<sup>x</sup></span>를 무한급수로 쓰고 <span class="f">x</span> 자리에 <span class="f">ix</span>를 넣으면, <span class="f">i² = −1, i³ = −i, i⁴ = 1</span>이 네 박자로 반복되며 항이 실수 묶음과 허수 묶음으로 갈립니다.</p>
+        <div class="series">
+          <span class="f">e<sup>ix</sup></span> = <span class="re">1 − x²/2! + x⁴/4! − …</span> + <i>i</i> (<span class="im">x − x³/3! + x⁵/5! − …</span>)
+        </div>
+        <p>왼쪽 묶음은 정확히 cos <span class="f">x</span>의 급수, 오른쪽은 sin <span class="f">x</span>의 급수입니다. 오일러가 1748년에 쓴 방법이 바로 이것입니다.</p>
+      </div>
+      <details>
+        <summary>왜 "가장 아름다운 식"이라고 하는가</summary>
+        <p>다섯 개의 기본 상수 — 덧셈의 항등원 0, 곱셈의 항등원 1, 원의 π, 성장의 <span class="f">e</span>, 회전의 <span class="f">i</span> — 가 세 개의 기본 연산(덧셈·곱셈·거듭제곱)으로 한 번씩만 묶입니다. 서로 다른 분야(산술·기하·해석·대수)에서 따로 태어난 수들이 한 문장에 들어온 것이 놀라움의 핵심입니다. 1988년 『Mathematical Intelligencer』 독자 투표에서 '가장 아름다운 정리' 1위였습니다.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 유체 -->
+<section class="sec wrap" id="fluid" style="--acc:var(--water)">
+  <div class="sec-head reveal">
+    <p class="kicker">04 · Into the river</p>
+    <h2 class="sec-title">강물은 어떻게 돌을 돌아 흐르는가</h2>
+    <p class="sec-en">Euler's formula meets Euler's equations</p>
+    <p class="sec-desc">먼저 이름을 정리합니다. 유체역학에는 <b>오일러 방정식</b>(1757)이 있습니다 — 점성이 없는 유체 알갱이에 뉴턴의 법칙 "힘 = 질량 × 가속도"를 적은 것입니다. 이것과 <b>오일러 공식</b>은 다른 결과입니다. 그런데 둘이 만나는 자리가 있습니다. 강이나 바람처럼 <b>얇게, 소용돌이 없이</b> 흐르는 2차원 흐름은 오일러 방정식의 해가 <b>복소함수</b> 하나로 적히고, 그 복소함수를 읽는 사전이 바로 오일러 공식 <span class="f">z = r e<sup>iθ</sup></span>입니다. 돌 하나가 박힌 강을 그려 보겠습니다.</p>
   </div>
 
-  <div class="note">
-    💡 x = π (180°) 일 때 점이 정확히 -1에 닿습니다.<br>
-    이게 바로 e<sup>iπ</sup> = -1 이에요.
+  <div class="flow reveal">
+    <figure class="flow-canvas">
+      <canvas id="fc" width="900" height="560" aria-label="원기둥 주위의 유선"></canvas>
+      <figcaption>유선(물 알갱이가 지나는 길) · 색이 붉을수록 빠르고 압력이 낮음 · 복소 퍼텐셜 <span class="f">w(z) = U(z + a²/z) − (iΓ/2π) ln z</span>로 계산</figcaption>
+    </figure>
+    <div class="flow-side">
+      <div class="ctl">
+        <label for="f-u">강물 속도 U <span id="f-u-v">1.0</span></label>
+        <input id="f-u" type="range" min="0.4" max="2" step="0.05" value="1">
+        <small>멀리서 들어오는 균일한 흐름. 돌 옆을 지날 때는 이보다 최대 2배까지 빨라집니다.</small>
+      </div>
+      <div class="ctl">
+        <label for="f-g">순환 Γ (돌이 물을 휘감는 정도) <span id="f-g-v">0</span></label>
+        <input id="f-g" type="range" min="-8" max="8" step="0.25" value="0">
+        <small>0이면 위아래 대칭. 0이 아니면 한쪽이 빨라지고 압력이 낮아져 <b>옆으로 미는 힘(양력)</b>이 생깁니다 — 회전하는 공이 휘는 이유, 비행기 날개가 뜨는 이유와 같은 수학.</small>
+      </div>
+      <div class="legend"><span><i style="background:#1f6f8b"></i>느림 · 압력 높음</span><span><i style="background:#e9a23b"></i>보통</span><span><i style="background:#c2410c"></i>빠름 · 압력 낮음</span></div>
+      <div class="derive">
+        <b>오일러 공식이 들어가는 자리.</b> 돌 주위의 위치를 <span class="f">z = r e<sup>iθ</sup></span>(돌 중심에서 거리 r, 각도 θ)로 쓰고 퍼텐셜에 넣으면
+        <span class="eq">a²/z = (a²/r) <i>e</i><sup>−<i>iθ</i></sup> = (a²/r)(cos θ − <i>i</i> sin θ)</span>
+        이렇게 실수부와 허수부가 갈라집니다. 허수부를 모으면
+        <span class="eq">ψ = U (r − a²/r) sin θ</span>
+        이것이 <b>유선 함수</b> — ψ가 같은 점들을 이으면 물길이 됩니다. r = a(돌 표면)에서 ψ = 0, 즉 물이 돌을 뚫지 않고 표면을 따라 흐릅니다. 오일러 공식이 없으면 이 한 줄을 삼각함수 네 줄로 풀어 써야 합니다.
+      </div>
+    </div>
   </div>
+
+  <div class="grid2 reveal" style="margin-top:22px">
+    <div class="card tint">
+      <h3>오일러 방정식 — 물 알갱이의 뉴턴 법칙<small>1757 · "Principes généraux du mouvement des fluides"</small></h3>
+      <p>강물 속 작은 물 덩어리를 따라가며 묻습니다. "무엇이 너를 밀고 있나?" 답은 둘 — <b>압력 차이</b>(압력 높은 쪽에서 낮은 쪽으로 밀림)와 <b>중력</b>. 점성(끈적임)은 무시합니다. 그래서 식은</p>
+      <p class="eq" style="font-size:17px;margin-top:8px;white-space:normal">밀도 × 가속도 = −(압력의 기울기) + 밀도 × 중력</p>
+      <p style="margin-top:8px">이것이 오일러 방정식입니다. 점성을 더한 것이 나비에–스토크스 방정식이고, 그 완전한 해의 존재는 아직 100만 달러가 걸린 미해결 문제입니다.</p>
+    </div>
+    <div class="card tint">
+      <h3>베르누이 — 오일러 방정식을 한 물길 따라 적분하면<small>Daniel Bernoulli, Hydrodynamica 1738</small></h3>
+      <p>소용돌이 없는 정상류에서 오일러 방정식을 유선을 따라 더하면 <b>속도가 빠른 곳은 압력이 낮다</b>는 결론이 나옵니다:</p>
+      <p class="eq" style="font-size:17px;margin-top:8px;white-space:normal">½ρv² + p + ρgh = 일정</p>
+      <p style="margin-top:8px">위 그림에서 돌 옆구리(속도 2U)가 붉고, 돌 바로 앞뒤(속도 0, 정체점)가 푸른 이유입니다. 강이 좁아지는 곳에서 물살이 빨라지고 수면이 낮아지는 것, 굽이의 바깥쪽이 더 깎여 나가는 것도 같은 식으로 설명됩니다. 베르누이는 오일러의 친구였습니다.</p>
+    </div>
+  </div>
+
+  <div class="sec-head reveal" style="margin-top:40px;margin-bottom:22px">
+    <h3 class="sec-title" style="font-size:clamp(22px,3vw,30px)">직접 보기 — 좁아지는 물길</h3>
+    <p class="sec-desc" style="margin-top:8px">같은 양의 물이 지나가야 하니(연속 방정식), 폭이 반으로 줄면 속도는 두 배. 베르누이에 따라 압력은 떨어집니다. 폭을 조절해 보세요.</p>
+  </div>
+  <div class="vent reveal">
+    <svg id="vs" viewBox="0 0 600 260" role="img" aria-label="좁아지는 수로"></svg>
+    <div>
+      <div class="ctl">
+        <label for="v-w">좁은 구간 폭 <span id="v-w-v">50%</span></label>
+        <input id="v-w" type="range" min="25" max="100" step="1" value="50">
+        <small>들어오는 쪽 폭을 100%로 둔 비율.</small>
+      </div>
+      <div class="gauges" style="margin-top:12px">
+        <div class="g"><div class="k">속도 (들어올 때 = 1)</div><div class="v" id="v-sp">2.0<small>×</small></div><div class="bar"><i id="v-spb" style="width:50%"></i></div></div>
+        <div class="g" style="--acc:var(--im)"><div class="k" style="text-transform:none">동압 ½ρv² (들어올 때 = 1)</div><div class="v" id="v-pr">4.0<small>×</small></div><div class="bar"><i id="v-prb" style="width:25%"></i></div></div>
+      </div>
+      <p class="note" style="margin-top:12px"><b>이게 왜 오일러인가.</b> 베르누이 식 자체는 오일러 방정식을 적분한 결과이고, 2차원 흐름 전체를 한 번에 그리려면 위의 복소 퍼텐셜이 필요합니다. 즉 오일러는 이 그림의 두 층 — <b>힘의 법칙(방정식)</b>과 <b>그 해를 적는 언어(공식)</b> — 를 둘 다 만든 사람입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 응용 -->
+<section class="sec wrap" id="apps" style="--acc:var(--gold)">
+  <div class="sec-head reveal">
+    <p class="kicker">05 · Everywhere</p>
+    <h2 class="sec-title">회전이 있는 곳마다</h2>
+    <p class="sec-en">Where e<sup>ix</sup> shows up</p>
+    <p class="sec-desc">"주기적으로 되풀이되는 것"은 모두 원 위의 점으로 볼 수 있고, 그러면 오일러 공식이 그것을 지수 하나로 바꿔 줍니다. 미분·적분이 삼각함수보다 지수함수에서 훨씬 쉬우므로, 공학은 계산을 복소수로 옮겨서 한 뒤 마지막에 실수부만 읽습니다.</p>
+  </div>
+  <div class="apps reveal">
+    <div class="card tint"><span class="pill">Electricity</span><h3 style="margin-top:12px">교류 전기<small>페이저 phasor</small></h3><p>콘센트의 전압은 1초에 60번 오르내리는 사인파. 전기공학자는 이것을 <span class="f">V e<sup>iωt</sup></span>로 쓰고, 축전기·코일이 전류를 "90° 미루거나 당기는" 것을 <span class="f">i</span>를 곱하는 것으로 처리합니다. 미분방정식이 대수 문제로 바뀝니다.</p></div>
+    <div class="card tint"><span class="pill">Sound · Light</span><h3 style="margin-top:12px">파동과 푸리에 변환<small>e<sup>i(kx − ωt)</sup></small></h3><p>소리·빛·수면파는 모두 <span class="f">e<sup>i(kx−ωt)</sup></span>(위치 x에서 k, 시간 t에서 ω만큼 도는 회전)로 씁니다. 어떤 신호든 이런 회전들의 합으로 쪼개는 것이 푸리에 변환 — MP3, JPEG, MRI, 노이즈 캔슬링의 수학입니다.</p></div>
+    <div class="card tint"><span class="pill">Quantum</span><h3 style="margin-top:12px">양자역학<small>슈뢰딩거 방정식의 i</small></h3><p>입자의 파동함수는 복소수이고, 시간이 가면 <span class="f">e<sup>−iEt/ħ</sup></span>만큼 돕니다. 측정값은 그 길이의 제곱(확률)이라 회전 자체는 보이지 않지만, 두 상태가 겹칠 때 각도 차이가 간섭무늬를 만듭니다. 슈뢰딩거 방정식 맨 앞의 <span class="f">i</span>가 바로 그 회전입니다.</p></div>
+  </div>
+</section>
+
+<!-- 6. GRE -->
+<section class="sec wrap" id="gre" style="--acc:var(--im)">
+  <div class="sec-head reveal">
+    <p class="kicker">06 · For the test</p>
+    <h2 class="sec-title">GRE에서 만나는 이 이야기</h2>
+    <p class="sec-en">Vocabulary and the shape of the passage</p>
+    <p class="sec-desc">수학사 지문은 GRE 독해에서 "한 인물의 업적 재평가" 유형으로 자주 나옵니다 — <b>통설 소개 → 저자의 수정(실은 더 중요한 것은 …) → 근거</b>. 오일러라면 "기호를 만든 사람"이라는 통설과 "분야 자체를 만든 사람"이라는 수정이 짝이 됩니다. 함께 나오는 어휘를 정리합니다.</p>
+  </div>
+  <div class="vocab reveal">
+    <div class="word"><h4>prolific <small>adj</small></h4><p class="ko">다작의, 많이 낳는. 라틴어 <i>proles</i>(자손). 오일러를 수식하는 거의 고정된 형용사.</p><p class="ex"><i>Euler remained astonishingly prolific even after losing his sight.</i></p></div>
+    <div class="word"><h4>polymath <small>n</small></h4><p class="ko">박식가, 여러 분야에 두루 통달한 사람. <i>poly</i>(많은) + <i>manthanein</i>(배우다).</p><p class="ex"><i>A polymath, he wrote on optics, shipbuilding, and music as readily as on number theory.</i></p></div>
+    <div class="word"><h4>elegant · elegance <small>adj · n</small></h4><p class="ko">(증명·이론이) 우아한 — 적은 가정으로 많은 것을 설명하는. 수학 지문에서 '맞다'보다 높은 칭찬.</p><p class="ex"><i>The identity is prized less for its utility than for its elegance.</i></p></div>
+    <div class="word"><h4>notation <small>n</small></h4><p class="ko">표기법, 기호 체계. 좋은 표기법이 사고를 바꾼다는 논지로 자주 등장.</p><p class="ex"><i>Much of modern notation — f(x), Σ, e, i — is Euler's.</i></p></div>
+    <div class="word"><h4>rigor · rigorous <small>n · adj</small></h4><p class="ko">엄밀함. 18세기 수학(오일러)과 19세기 수학(코시·바이어슈트라스)을 대비할 때의 축 — 오일러는 직관이 앞서고 엄밀함은 뒤따랐다는 평.</p><p class="ex"><i>Euler's manipulations of infinite series, dazzling but not rigorous by later standards, almost always led him to correct results.</i></p></div>
+    <div class="word"><h4>counterintuitive <small>adj</small></h4><p class="ko">직관에 반하는. 바젤 문제의 답 π²/6처럼.</p><p class="ex"><i>That a sum of reciprocals of squares should involve π struck contemporaries as counterintuitive.</i></p></div>
+    <div class="word"><h4>viscosity · viscous <small>n · adj</small></h4><p class="ko">점성(끈적임). 오일러 방정식은 점성을 무시한 '이상 유체'; 꿀처럼 점성이 큰 흐름에는 안 맞음.</p><p class="ex"><i>Euler's equations describe an inviscid fluid — one without viscosity.</i></p></div>
+    <div class="word"><h4>turbulent · laminar <small>adj</small></h4><p class="ko">난류의(소용돌이치는) · 층류의(결 따라 매끈한). 위 시뮬레이터는 층류·비회전 흐름의 그림.</p><p class="ex"><i>Past a certain speed the smooth laminar flow breaks into turbulent eddies.</i></p></div>
+  </div>
+</section>
+
+<!-- 7. 퀴즈 -->
+<section class="sec wrap" id="quiz" style="--acc:var(--ok)">
+  <div class="sec-head reveal">
+    <p class="kicker">07 · Check</p>
+    <h2 class="sec-title">확인 퀴즈</h2>
+    <p class="sec-en">Eight questions</p>
+  </div>
+  <div class="quiz reveal" id="quizbox"></div>
+  <p class="score" id="score"></p>
+</section>
+
+<footer class="wrap">
+  <p>송종옥 · GRE Verbal 배경지식 시리즈 · <a href="https://songverbalportal.pages.dev/">수업 포털</a> · 유선 그림은 비점성·비회전 2차원 퍼텐셜 흐름(원기둥 주위, 순환 포함)을 4차 룽게–쿠타로 적분한 것입니다. 실제 강물은 점성과 난류 때문에 돌 뒤에 후류(와류)가 생깁니다.</p>
+</footer>
 
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const slider = document.getElementById('slider');
-const playBtn = document.getElementById('play-btn');
-const angleText = document.getElementById('angle-text');
-const cosVal = document.getElementById('cos-val');
-const sinVal = document.getElementById('sin-val');
-const angleDisplay = document.getElementById('angle-display');
+(function(){
+  const $=id=>document.getElementById(id);
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const segs=[...document.querySelectorAll('.seg')];
+  const nio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){segs.forEach(s=>s.classList.toggle('on',s.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-40% 0px -55% 0px'});
+  segs.forEach(s=>{const t=document.querySelector(s.getAttribute('href'));if(t)nio.observe(t)});
 
-const W = canvas.width, H = canvas.height;
-const cx = W / 2, cy = H / 2;
-const R = 240;
-
-let isPlaying = false;
-let animFrame = null;
-
-function draw(xVal) {
-  // x is from 0 to 6.28 (2π)
-  const x = xVal / 100;
-  const cosX = Math.cos(x);
-  const sinX = Math.sin(x);
-  
-  ctx.clearRect(0, 0, W, H);
-  
-  // Background grid
-  ctx.strokeStyle = '#e8e8e8';
-  ctx.lineWidth = 1;
-  for (let i = -3; i <= 3; i++) {
-    if (i === 0) continue;
-    ctx.beginPath();
-    ctx.moveTo(cx + i * R / 1.5, 0);
-    ctx.lineTo(cx + i * R / 1.5, H);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(0, cy + i * R / 1.5);
-    ctx.lineTo(W, cy + i * R / 1.5);
-    ctx.stroke();
+  // ── unit circle ──
+  const R=$('uc-range'), cx=320, cy=220, rad=180; let playing=false, raf;
+  function draw(){
+    const x=parseFloat(R.value), px=cx+rad*Math.cos(x), py=cy-rad*Math.sin(x);
+    $('uc-pt').setAttribute('cx',px); $('uc-pt').setAttribute('cy',py);
+    $('uc-ray').setAttribute('x2',px); $('uc-ray').setAttribute('y2',py);
+    $('uc-cos').setAttribute('x2',px);
+    $('uc-sin').setAttribute('x1',px); $('uc-sin').setAttribute('x2',px); $('uc-sin').setAttribute('y2',py);
+    const big=x>Math.PI?1:0, ar=48;
+    $('uc-arc').setAttribute('d',x<0.01?'':`M${cx} ${cy} L${cx+ar} ${cy} A${ar} ${ar} 0 ${big} 0 ${cx+ar*Math.cos(x)} ${cy-ar*Math.sin(x)} Z`);
+    $('uc-cost').setAttribute('x',cx+rad*Math.cos(x)/2); $('uc-cost').setAttribute('y',cy+(Math.sin(x)>=0?24:-12));
+    $('uc-sint').setAttribute('x',px+(Math.cos(x)>=0?12:-12)); $('uc-sint').setAttribute('text-anchor',Math.cos(x)>=0?'start':'end'); $('uc-sint').setAttribute('y',cy-rad*Math.sin(x)/2+4); $('uc-sint').style.opacity=Math.abs(Math.sin(x))>0.12?1:0; $('uc-cost').style.opacity=Math.abs(Math.cos(x))>0.12?1:0;
+    $('uc-xt').setAttribute('x',cx+62*Math.cos(x/2)-4); $('uc-xt').setAttribute('y',cy-62*Math.sin(x/2)+5); $('uc-xt').style.opacity=x>0.3?1:0;
+    $('r-x').textContent=x.toFixed(2); $('r-re').textContent=Math.cos(x).toFixed(3);
+    $('r-sign').textContent=Math.sin(x)<0?' − ':' + '; $('r-im').textContent=Math.abs(Math.sin(x)).toFixed(3);
+    const pi=x/Math.PI; $('r-deg').textContent=`x = ${x.toFixed(2)} rad = ${(pi).toFixed(2)}π = ${Math.round(x*180/Math.PI)}°`;
   }
-  
-  // Axes
-  ctx.strokeStyle = '#666';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(0, cy); ctx.lineTo(W, cy);
-  ctx.moveTo(cx, 0); ctx.lineTo(cx, H);
-  ctx.stroke();
-  
-  // Axis labels
-  ctx.fillStyle = '#666';
-  ctx.font = 'bold 22px sans-serif';
-  ctx.fillText('실수축 (cos)', W - 130, cy - 10);
-  ctx.fillText('허수축 (sin·i)', cx + 12, 28);
-  
-  // Tick marks for ±1
-  ctx.fillStyle = '#999';
-  ctx.font = '20px sans-serif';
-  ctx.fillText('1', cx + R + 8, cy + 22);
-  ctx.fillText('-1', cx - R - 28, cy + 22);
-  ctx.fillText('i', cx + 8, cy - R - 4);
-  ctx.fillText('-i', cx + 8, cy + R + 22);
-  
-  // Unit circle
-  ctx.strokeStyle = '#0F1B3C';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, Math.PI * 2);
-  ctx.stroke();
-  
-  // Trail (path traveled so far)
-  ctx.strokeStyle = '#E8B43A';
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, -x, true);
-  ctx.stroke();
-  
-  // Point position
-  const px = cx + R * cosX;
-  const py = cy - R * sinX;
-  
-  // Radius line from origin to point
-  ctx.strokeStyle = '#0F1B3C';
-  ctx.lineWidth = 2;
-  ctx.setLineDash([6, 4]);
-  ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.lineTo(px, py);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  
-  // Projection lines (showing cos and sin components)
-  ctx.strokeStyle = '#999';
-  ctx.lineWidth = 1.5;
-  ctx.setLineDash([3, 3]);
-  ctx.beginPath();
-  ctx.moveTo(px, py);
-  ctx.lineTo(px, cy);
-  ctx.moveTo(px, py);
-  ctx.lineTo(cx, py);
-  ctx.stroke();
-  ctx.setLineDash([]);
-  
-  // Point itself
-  ctx.fillStyle = '#E8B43A';
-  ctx.strokeStyle = '#0F1B3C';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(px, py, 12, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.stroke();
-  
-  // Origin point
-  ctx.fillStyle = '#0F1B3C';
-  ctx.beginPath();
-  ctx.arc(cx, cy, 5, 0, Math.PI * 2);
-  ctx.fill();
-  
-  // Update text
-  angleText.textContent = x.toFixed(2);
-  cosVal.textContent = cosX.toFixed(2);
-  sinVal.textContent = sinX.toFixed(2);
-  const deg = Math.round(x * 180 / Math.PI);
-  angleDisplay.textContent = deg + '°';
-}
+  const draw2=draw;
+  R.addEventListener('input',()=>{stop();draw2()});
+  document.querySelectorAll('#formula .preset button[data-x]').forEach(b=>b.addEventListener('click',()=>{stop();R.value=b.dataset.x;draw2()}));
+  function step(){let x=parseFloat(R.value)+0.012;if(x>6.2832)x-=6.2832;R.value=x;draw2();raf=requestAnimationFrame(step)}
+  function stop(){playing=false;cancelAnimationFrame(raf);$('uc-play').classList.remove('on');$('uc-play').textContent='▶ 자동 회전'}
+  $('uc-play').addEventListener('click',()=>{if(playing){stop()}else{playing=true;$('uc-play').classList.add('on');$('uc-play').textContent='■ 멈춤';step()}});
+  draw2();
 
-slider.addEventListener('input', (e) => {
-  if (isPlaying) togglePlay();
-  draw(parseInt(e.target.value));
-});
+  // ── cylinder flow ──
+  const cv=$('fc'), ctx=cv.getContext('2d'), W=cv.width, H=cv.height;
+  const a=70, ox=W*0.42, oy=H/2;
+  function vel(x,y,U,G){ // relative to cylinder centre
+    const r2=x*x+y*y, r4=r2*r2, a2=a*a;
+    let u=U*(1-a2*(x*x-y*y)/r4), v=-U*(2*a2*x*y/r4);
+    const k=G*a/(2*Math.PI*r2)*1; // circulation scaled by a for slider feel
+    u+=-k*y*18; v+=k*x*18;
+    return [u,v];
+  }
+  function col(s,U){ // speed relative to U → colour
+    const t=Math.max(0,Math.min(1,(s/U-0.4)/1.6));
+    const c1=[31,111,139],c2=[233,162,59],c3=[194,65,12];
+    const m=t<0.5?[c1,c2,t*2]:[c2,c3,(t-0.5)*2];
+    const c=m[0].map((v,i)=>Math.round(v+(m[1][i]-v)*m[2]));
+    return `rgb(${c[0]},${c[1]},${c[2]})`;
+  }
+  function drawFlow(){
+    const U=parseFloat($('f-u').value), G=parseFloat($('f-g').value);
+    $('f-u-v').textContent=U.toFixed(2); $('f-g-v').textContent=G.toFixed(2);
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#eef4f6'; ctx.fillRect(0,0,W,H);
+    const n=26, h=2.2;
+    for(let i=0;i<n;i++){
+      let y0=-H/2+ (i+0.5)*H/n; let x=-ox+2, y=y0;
+      // skip seeds that would hit the cylinder (they wrap around anyway)
+      let px=x,py=y; ctx.lineWidth=1.6;
+      for(let s=0;s<2600;s++){
+        const k1=vel(x,y,U,G), k2=vel(x+h/2*k1[0],y+h/2*k1[1],U,G), k3=vel(x+h/2*k2[0],y+h/2*k2[1],U,G), k4=vel(x+h*k3[0],y+h*k3[1],U,G);
+        const dx=h/6*(k1[0]+2*k2[0]+2*k3[0]+k4[0]), dy=h/6*(k1[1]+2*k2[1]+2*k3[1]+k4[1]);
+        const nx=x+dx, ny=y+dy; const sp=Math.hypot(k1[0],k1[1]);
+        if(nx*nx+ny*ny<a*a*1.0||ox+nx>W||Math.abs(ny)>H/2+40)break;
+        ctx.strokeStyle=col(sp,U); ctx.beginPath(); ctx.moveTo(ox+px,oy-py); ctx.lineTo(ox+nx,oy-ny); ctx.stroke();
+        px=nx;py=ny;x=nx;y=ny;
+        if(Math.hypot(dx,dy)<1e-4)break;
+      }
+    }
+    // cylinder
+    ctx.beginPath(); ctx.arc(ox,oy,a,0,Math.PI*2); ctx.fillStyle='#5e564b'; ctx.fill();
+    ctx.strokeStyle='#1a1712'; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fffcf6'; ctx.font='600 14px Pretendard, sans-serif'; ctx.textAlign='center'; ctx.fillText('돌',ox,oy+5);
+    // stagnation markers (G=0 only)
+    ctx.font='12px Pretendard, sans-serif'; ctx.fillStyle='#4b4439'; ctx.textAlign='left';
+    ctx.fillText('← 강물 U',14,24);
+    ctx.textAlign='right'; ctx.fillText('2U · 압력 최저',ox+a+150,oy-a-12);
+    ctx.beginPath(); ctx.moveTo(ox,oy-a-6); ctx.lineTo(ox+a+30,oy-a-12); ctx.strokeStyle='rgba(26,23,18,.35)'; ctx.lineWidth=1; ctx.stroke();
+    if(Math.abs(G)>0.01){ctx.textAlign='left';ctx.fillStyle='#b8451b';ctx.fillText(G>0?'↑ 위쪽이 빠름 → 위로 미는 힘(양력)':'↓ 아래쪽이 빠름 → 아래로 미는 힘',ox+a+20,H-18)}
+  }
+  $('f-u').addEventListener('input',drawFlow); $('f-g').addEventListener('input',drawFlow);
+  drawFlow();
 
-document.querySelectorAll('.preset-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (isPlaying) togglePlay();
-    const val = parseInt(btn.dataset.val);
-    slider.value = val;
-    draw(val);
+  // ── venturi ──
+  const vs=$('vs');
+  function drawV(){
+    const w=parseInt($('v-w').value,10), f=w/100; const sp=1/f, pr=sp*sp;
+    $('v-w-v').textContent=w+'%'; $('v-sp').innerHTML=sp.toFixed(1)+'<small>×</small>'; $('v-pr').innerHTML=pr.toFixed(1)+'<small>×</small>';
+    $('v-spb').style.width=Math.min(100,sp/4*100)+'%'; $('v-prb').style.width=Math.min(100,pr/16*100)+'%';
+    const H0=160, h=H0*f, cy=130; const top=cy-H0/2, bot=cy+H0/2, t2=cy-h/2, b2=cy+h/2;
+    const wall=`M20 ${top} L170 ${top} C250 ${top} 250 ${t2} 320 ${t2} L420 ${t2} C480 ${t2} 480 ${top} 580 ${top}`;
+    const wall2=`M20 ${bot} L170 ${bot} C250 ${bot} 250 ${b2} 320 ${b2} L420 ${b2} C480 ${b2} 480 ${bot} 580 ${bot}`;
+    const region=`${wall} L580 ${bot} C480 ${bot} 480 ${b2} 420 ${b2} L320 ${b2} C250 ${b2} 250 ${bot} 170 ${bot} L20 ${bot} Z`;
+    let lines='';
+    for(let i=1;i<=6;i++){const yy=top+H0*i/7, y2=t2+h*i/7;lines+=`<path d="M20 ${yy} L170 ${yy} C250 ${yy} 250 ${y2} 320 ${y2} L420 ${y2} C480 ${y2} 480 ${yy} 580 ${yy}" fill="none" stroke="#1f6f8b" stroke-width="1.2" opacity=".55"/>`}
+    const c=col(sp,1);
+    vs.innerHTML=`<rect width="600" height="260" fill="#fffcf6"/>
+      <path d="${region}" fill="#e0eef2"/>
+      <rect x="320" y="${t2}" width="100" height="${h}" fill="${c}" opacity=".35"/>
+      ${lines}
+      <path d="${wall}" fill="none" stroke="#1a1712" stroke-width="2.5"/><path d="${wall2}" fill="none" stroke="#1a1712" stroke-width="2.5"/>
+      <text x="60" y="${cy+5}" font-size="13" fill="#1a1712" font-weight="600">v = 1</text>
+      <text x="370" y="${cy+5}" font-size="13" fill="#1a1712" font-weight="700" text-anchor="middle">v = ${sp.toFixed(1)}</text>
+      <text x="60" y="${bot+26}" font-size="11.5" fill="#7d7465">폭 100% · 압력 높음</text>
+      <text x="370" y="${bot+26}" font-size="11.5" fill="#7d7465" text-anchor="middle">폭 ${w}% · 압력 낮음</text>
+      <text x="300" y="${top-14}" font-size="11.5" fill="#7d7465" text-anchor="middle">같은 양의 물이 지나간다 → 좁으면 빨라진다 (연속 방정식)</text>`;
+  }
+  $('v-w').addEventListener('input',drawV); drawV();
+
+  // ── quiz ──
+  const Q=[
+    {q:'오일러 공식 e^(ix) = cos x + i sin x 에서 x는 무엇인가?',o:['원의 반지름','복소평면에서 점의 각도(라디안)','허수부의 크기','e의 값'],a:1,w:'e^(ix)는 반지름 1인 원 위의 점이고, x는 실수축에서 잰 각도입니다. 가로 좌표가 cos x, 세로 좌표가 sin x.'},
+    {q:'e^(iπ/2) 의 값은?',o:['−1','i','0','1'],a:1,w:'90° 돌면 허수축의 1, 즉 i. 그래서 "i를 곱하는 것 = 90° 회전"입니다.'},
+    {q:'오일러 항등식 e^(iπ) + 1 = 0 에 등장하지 않는 상수는?',o:['π','e','√2','0'],a:2,w:'다섯 상수는 e, i, π, 1, 0. √2는 들어 있지 않습니다.'},
+    {q:'"지수가 원을 그리는" 직관적 이유로 옳은 것은?',o:['지수함수는 항상 양수이므로','e^(it)의 변화율이 i·e^(it), 즉 속도가 위치에 늘 수직이므로','sin과 cos가 주기함수이므로','허수는 크기가 없으므로'],a:1,w:'속도가 위치에 항상 수직이면 중심과의 거리가 변할 수 없습니다 — 원운동. 끈에 매단 돌과 같은 그림.'},
+    {q:'유체역학의 "오일러 방정식"은 무엇을 적은 것인가?',o:['물의 밀도와 온도의 관계','점성 없는 유체 알갱이에 대한 뉴턴의 운동 법칙','물결의 파장과 속도의 관계','소용돌이의 개수'],a:1,w:'밀도×가속도 = −압력 기울기 + 중력. 점성을 더하면 나비에–스토크스 방정식.'},
+    {q:'돌 주위를 흐르는 2차원 흐름에서 오일러 공식이 하는 일은?',o:['물의 점성을 계산한다','위치 z = r·e^(iθ)를 넣어 복소 퍼텐셜을 실수부·허수부(유선 함수)로 가른다','난류를 예측한다','돌의 밀도를 구한다'],a:1,w:'a²/z = (a²/r)e^(−iθ) 를 cos θ − i sin θ 로 풀어 허수부를 모으면 유선 함수 ψ = U(r − a²/r) sin θ 가 나옵니다.'},
+    {q:'베르누이 원리에 따르면, 흐름이 빨라지는 곳의 압력은?',o:['높아진다','낮아진다','변하지 않는다','0이 된다'],a:1,w:'½ρv² + p = 일정. 속도가 오르면 압력이 내려갑니다. 돌 옆구리(2U)가 압력 최저인 이유.'},
+    {q:'오일러를 수식하는 형용사로 가장 흔한 것은?',o:['reticent','prolific','frugal','obscure'],a:1,w:'prolific(다작의). 약 850편, 전집 80여 권. 시력을 잃은 뒤 생산력이 오히려 늘었습니다.'}
+  ];
+  const box=$('quizbox'); let done=0,right=0;
+  Q.forEach((it,i)=>{
+    const d=document.createElement('div'); d.className='q';
+    d.innerHTML=`<p><span class="qn">Q${String(i+1).padStart(2,'0')}</span>${it.q}</p><div class="opts">${it.o.map((o,j)=>`<button type="button" data-j="${j}">${o}</button>`).join('')}</div><div class="why">${it.w}</div>`;
+    d.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      if(d.classList.contains('done'))return; d.classList.add('done'); done++;
+      const j=+b.dataset.j; if(j===it.a){b.classList.add('ok');right++}else{b.classList.add('no');d.querySelectorAll('button')[it.a].classList.add('ok')}
+      $('score').textContent=`${done} / ${Q.length} 풀이 · 정답 ${right}`+(done===Q.length?(right===Q.length?' — 전부 맞혔습니다.':' — 틀린 문항의 해설을 다시 읽어 보세요.'):'');
+    }));
+    box.appendChild(d);
   });
-});
-
-function togglePlay() {
-  isPlaying = !isPlaying;
-  playBtn.textContent = isPlaying ? '⏸ 일시정지' : '▶ 자동 회전';
-  if (isPlaying) animate();
-  else if (animFrame) cancelAnimationFrame(animFrame);
-}
-
-function animate() {
-  let val = parseInt(slider.value);
-  val = (val + 2) % 629;
-  slider.value = val;
-  draw(val);
-  if (isPlaying) animFrame = requestAnimationFrame(animate);
-}
-
-playBtn.addEventListener('click', togglePlay);
-
-// Initial draw
-draw(0);
+})();
 </script>
-
 </body>
 </html>
